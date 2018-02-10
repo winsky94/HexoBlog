@@ -22,8 +22,7 @@ categories:
 
 具体流程：先在本机搭建好hexo环境，push到git仓库，再部署到服务器上
 
-# 准备工作
-## 本地安配置hexo环境
+# 本地安配置hexo环境
 在本地用hexo搭建一个个人博客很简单，分分钟可以搞定。如果以前没有接触过，可以参考我前面的博文：[个人博客Hexo搭建][2]
 
 ## 提交到远程仓库
@@ -34,17 +33,129 @@ categories:
 然后在本地`hexo`目录初始化本地仓库并提交到`github`
 ```
 git init
-git add * 
+git add .
 git commit -m "first commit"
 git remote add origin git@github.com:winsky94/HexoBlog.git
 git push -u origin master
 ```
 
+注意，如果以前没有配置`github`的`SSH`提交，可以参考这篇博文[GitHub的SSH提交配置][5]
+
+# VPS配置
+我使用的是[搬瓦工VPS][1]。服务器上安装好了`nodejs,git,nginx`，具体不会的可以谷歌一下
+### 将代码从`github`上拉取下来
+同样，这里也需要在服务器上配置`github`的`SSH`登录。参考[GitHub的SSH提交配置][5]
+```
+mkdir /home/blog
+git init
+git remote add origin git@github.com:winsky94/HexoBlog.git
+git pull origin master
+```
+
+## 安装hexo模块
+```
+cd /home/blog
+npm install hexo-cli -g
+npm install
+```
+
+## hexo静态编译
+```
+hexo g
+```
+这一步会在`/home/blog`目录下生成一个`public`目录，这里面就是编译后的静态文件目录，其实这时候直接访问里面的html文件即可看到完整的效果了，只不过还需要一个服务来运行它
+
+## 配置nginx
+进入nginx服务配置文件目录`/usr/local/nginx/conf/vhost`，新建一个配置文件`blog.conf`，内容为
+```
+server
+	{
+        listen 80;
+        server_name blog.winsky.wang ;
+
+		location / {
+			proxy_set_header HOST $host;
+			proxy_set_header X-Forwarded-Proto $scheme;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        	proxy_pass http://localhost:4000/;
+        }
+    }
+```
+重载nginx，使配置生效`nginx -s reload`。然后就可以通过[http://blog.winsky.wang][http://blog.winsky.wang]来访问博客了
+
+# Git WebHooks 自动化部署
+是不是觉得每次写完文章还要登录服务器去执行一次git pull很麻烦？最起码对我这个“懒人”来说，这样很耗时啊
+
+幸运的是，`git`有很多钩子，可以在仓库发生变化的时候触发，类似`js`中的事件。`WebHooks`就是在你本地执行`git push`的时候，远程仓库会检测到仓库的变化，并发送一个请求到我们配置好的`WebHooks`
 
 
+实现WebHooks自动化部署的推荐条件：
+- 服务器端配置ssh认证
+- 服务器端配置nodejs服务，接收`github`发来的请求
 
+## 服务器webhook配置
+由于`hexo`是基于`NodeJS`的，所以这里用`NodeJS`来接收`github`的`push`事件。
+安装依赖库`github-webhook-handler`：
+```
+npm install -g github-webhook-handler
+```
+安装完成之后配置`webhooks.js`
+```
+var http = require('http')
+var createHandler = require('github-webhook-handler')
+var handler = createHandler({ path: '/webhooks_push', secret: 'winsky_nju' })
+// 上面的 secret 保持和 GitHub 后台设置的一致
+function run_cmd(cmd, args, callback) {
+  var spawn = require('child_process').spawn;
+  var child = spawn(cmd, args);
+  var resp = "";
+  child.stdout.on('data', function(buffer) { resp += buffer.toString(); });
+  child.stdout.on('end', function() { callback (resp) });
+}
+handler.on('error', function (err) {
+  console.error('Error:', err.message)
+})
+handler.on('push', function (event) {
+  console.log('Received a push event for %s to %s',
+    event.payload.repository.name,
+    event.payload.ref);
+    run_cmd('sh', ['./deploy.sh'], function(text){ console.log(text) });
+})
+try {
+  http.createServer(function (req, res) {
+    handler(req, res, function (err) {
+      res.statusCode = 404
+      res.end('no such location')
+    })
+  }).listen(6666)
+}catch(err){
+  console.error('Error:', err.message)
+}
+```
+其中`secret`要和`github`仓库中`webhooks`设置的一致，`6666`是监听端口可以随便改，不要冲突就行，`./deploy.sh`是接收到`push`事件时需要执行的`shell`脚本，与`webhooks.js`都存放在博客目录下；`path: '/webhooks_push'`是`github`通知服务器的地址，完整的地址是这样的`http://blog.winsky.wang:6666/webhooks_push`
 
+配置`./deploy.sh`
+```
+cd /home/blog/
+git reset --hard
+git pull origin master  
+hexo generate
+```
 
+然后运行`node webhooks.js`，就可以实现本地更新`push`到`github`，服务器会自动更新部署博客。
+
+最后要将进程加入守护，通过`pm2`来实现
+```
+npm install pm2 --global
+```
+然后通过`pm2`启动`webhooks.js`
+```
+pm2 start /home/blog/webhooks.js 
+```
+
+## 自启动
+参考[服务器重启后自动运行hexo服务][]
 
 
 > [通过Git Hooks自动部署Hexo到VPS](https://blog.yizhilee.com/post/deploy-hexo-to-vps/)
@@ -54,3 +165,4 @@ git push -u origin master
 [2]: http://blog.winsky.wang/2018/02/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2Hexo%E6%90%AD%E5%BB%BA/ "快速搭建自己的个人博客"
 [3]: http://blog.winsky.wang/2018/02/04/Hexo%E5%8D%9A%E5%AE%A2Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/ "主题美化"
 [4]: http://blog.winsky.wang/2018/02/06/%E5%A6%82%E4%BD%95%E8%AE%A9%E8%B0%B7%E6%AD%8C%E5%92%8C%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/ "SEO优化"
+[5]: http://blog.csdn.net/oDeviloo/article/details/52654590 "GitHub的SSH提交配置"
