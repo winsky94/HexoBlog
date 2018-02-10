@@ -150,7 +150,9 @@ server
     }
 }
 ```
-然后配置`git.winsky.wang`的域名解析，完整的地址是这样的`http://git.winsky.wang/webhooks_push`
+然后配置`git.winsky.wang`的域名解析
+
+最后git上配置的地址是：`http://git.winsky.wang/webhooks_push`
 
 ## 配置`./deploy.sh`
 ```
