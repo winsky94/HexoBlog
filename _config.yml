@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://blog.winsky.wang
+url: https://blog.winsky.wang
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -85,7 +85,7 @@ avatar: /images/avatar.png
 # title, chinese available
 links_title: 友情链接
 links:
-  winsky小站: http://blog.winsky.wang
+  winsky小站: https://blog.winsky.wang
   
 # Sitemap Setting
 sitemap:

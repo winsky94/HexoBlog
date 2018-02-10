@@ -77,8 +77,8 @@ server
 		proxy_set_header X-Forwarded-Proto $scheme;
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-       	proxy_pass http://localhost:4000/;
-       }
+   	proxy_pass http://localhost:4000/;
+  }
 }
 ```
 重载nginx，使配置生效`nginx -s reload`。然后就可以通过[http://blog.winsky.wang](http://blog.winsky.wang)来访问博客了
@@ -185,7 +185,7 @@ pm2 start /home/blog/webhooks.js
 
 ---
 [1]: https://bwh1.net/aff.php?aff=24742 "搬瓦工VPS"
-[2]: http://blog.winsky.wang/2018/02/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2Hexo%E6%90%AD%E5%BB%BA/ "快速搭建自己的个人博客"
-[3]: http://blog.winsky.wang/2018/02/04/Hexo%E5%8D%9A%E5%AE%A2Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/ "主题美化"
-[4]: http://blog.winsky.wang/2018/02/06/%E5%A6%82%E4%BD%95%E8%AE%A9%E8%B0%B7%E6%AD%8C%E5%92%8C%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/ "SEO优化"
+[2]: https://blog.winsky.wang/2018/02/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2Hexo%E6%90%AD%E5%BB%BA/ "快速搭建自己的个人博客"
+[3]: https://blog.winsky.wang/2018/02/04/Hexo%E5%8D%9A%E5%AE%A2Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/ "主题美化"
+[4]: https://blog.winsky.wang/2018/02/06/%E5%A6%82%E4%BD%95%E8%AE%A9%E8%B0%B7%E6%AD%8C%E5%92%8C%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/ "SEO优化"
 [5]: http://blog.csdn.net/oDeviloo/article/details/52654590 "GitHub的SSH提交配置"

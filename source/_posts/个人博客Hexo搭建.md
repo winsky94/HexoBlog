@@ -68,4 +68,4 @@ theme: next # 修改成你的主题文件夹名
 
 ---
 [1]: https://bwh1.net/aff.php?aff=24742 "搬瓦工VPS"
-[2]: http://blog.winsky.wang/2018/02/04/Hexo%E5%8D%9A%E5%AE%A2Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/ "Hexo博客Next主题配置"
+[2]: https://blog.winsky.wang/2018/02/04/Hexo%E5%8D%9A%E5%AE%A2Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/ "Hexo博客Next主题配置"
