@@ -98,7 +98,7 @@ server
 由于`hexo`是基于`NodeJS`的，所以这里用`NodeJS`来接收`github`的`push`事件。
 安装依赖库`github-webhook-handler`：
 ```
-npm install -g github-webhook-handler
+npm install github-webhook-handler
 ```
 安装完成之后配置`webhooks.js`
 ```
@@ -133,9 +133,27 @@ try {
   console.error('Error:', err.message)
 }
 ```
-其中`secret`要和`github`仓库中`webhooks`设置的一致，`6666`是监听端口可以随便改，不要冲突就行，`./deploy.sh`是接收到`push`事件时需要执行的`shell`脚本，与`webhooks.js`都存放在博客目录下；`path: '/webhooks_push'`是`github`通知服务器的地址，完整的地址是这样的`http://blog.winsky.wang:6666/webhooks_push`
+其中`secret`要和`github`仓库中`webhooks`设置的一致，`6666`是监听端口可以随便改，不要冲突就行，`./deploy.sh`是接收到`push`事件时需要执行的`shell`脚本，与`webhooks.js`都存放在博客目录下；`path: '/webhooks_push'`是`github`通知服务器的地址
 
-配置`./deploy.sh`
+因为我们的服务器上使用了`Nginx`，所以这里我们也需要使用`Nginx`来转发6666端口。在`Nginx`配置文件目录下新建一个`webhooks.conf`，内容如下：
+```
+server
+	{
+        listen 80;
+        server_name git.winsky.wang ;
+
+		location / {
+			proxy_set_header HOST $host;
+			proxy_set_header X-Forwarded-Proto $scheme;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        	proxy_pass http://localhost:6666/;
+        }
+    }
+```
+然后配置`git.winsky.wang`的域名解析，完整的地址是这样的`http://git.winsky.wang/webhooks_push`
+
+## 配置`./deploy.sh`
 ```
 cd /home/blog/
 git reset --hard
