@@ -6,8 +6,8 @@ tags:
   - HEXO
   - Next
   - 博客
-categories: Hexo博客
----
+categories: 
+  - Hexo博客
 ---
 前面我们介绍了如何在[搬瓦工VPS][1]上[快速搭建自己的个人博客][2],不会的小伙伴赶快去学习一下
 

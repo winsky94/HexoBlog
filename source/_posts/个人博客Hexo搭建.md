@@ -5,8 +5,8 @@ updated: 2018-02-04 10:26:43
 tags:
 	- HEXO
 	- 博客
-categories: Hexo博客
----
+categories: 
+    - Hexo博客
 ---
 # 前言
 最近沉迷各种折腾，无心学习 T^T
