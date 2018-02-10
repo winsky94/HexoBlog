@@ -175,7 +175,11 @@ pm2 start /home/blog/webhooks.js
 参考[服务器重启后自动运行hexo服务][]
 
 
-> [通过Git Hooks自动部署Hexo到VPS](https://blog.yizhilee.com/post/deploy-hexo-to-vps/)
+> [快速搭建Hexo博客+webhook自动部署+全站HTTPS](http://www.gaoshilei.com/2017/10/30/hexo-init/)
+
+> [给你的项目增加Webhooks，自动进行部署](https://excaliburhan.com/post/add-webhooks-to-your-project.html)
+
+> [使用Github的webhooks进行网站自动化部署](https://aotu.io/notes/2016/01/07/auto-deploy-website-by-webhooks-of-github/index.html)
 
 ---
 [1]: https://bwh1.net/aff.php?aff=24742 "搬瓦工VPS"
