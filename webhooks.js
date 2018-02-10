@@ -7,7 +7,6 @@ function run_cmd(cmd, args, callback) {
   var child = spawn(cmd, args);
   var resp = "";
   child.stdout.on('data', function(buffer) { resp += buffer.toString(); });
-  console.log(resp)
   child.stdout.on('end', function() { callback (resp) });
 }
 handler.on('error', function (err) {
