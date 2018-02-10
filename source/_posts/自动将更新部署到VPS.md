@@ -68,18 +68,18 @@ hexo g
 进入nginx服务配置文件目录`/usr/local/nginx/conf/vhost`，新建一个配置文件`blog.conf`，内容为
 ```
 server
-	{
-        listen 80;
-        server_name blog.winsky.wang ;
+{
+	listen 80;
+    server_name blog.winsky.wang ;
 
-		location / {
-			proxy_set_header HOST $host;
-			proxy_set_header X-Forwarded-Proto $scheme;
-			proxy_set_header X-Real-IP $remote_addr;
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        	proxy_pass http://localhost:4000/;
-        }
-    }
+	location / {
+		proxy_set_header HOST $host;
+		proxy_set_header X-Forwarded-Proto $scheme;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       	proxy_pass http://localhost:4000/;
+       }
+}
 ```
 重载nginx，使配置生效`nginx -s reload`。然后就可以通过[http://blog.winsky.wang](http://blog.winsky.wang)来访问博客了
 
@@ -137,18 +137,18 @@ try {
 因为我们的服务器上使用了`Nginx`，所以这里我们也需要使用`Nginx`来转发6666端口。在`Nginx`配置文件目录下新建一个`webhooks.conf`，内容如下：
 ```
 server
-	{
-        listen 80;
-        server_name git.winsky.wang ;
+{
+    listen 80;
+    server_name git.winsky.wang ;
 
-		location / {
-			proxy_set_header HOST $host;
-			proxy_set_header X-Forwarded-Proto $scheme;
-			proxy_set_header X-Real-IP $remote_addr;
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        	proxy_pass http://localhost:6666/;
-        }
+	location / {
+		proxy_set_header HOST $host;
+		proxy_set_header X-Forwarded-Proto $scheme;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://localhost:6666/;
     }
+}
 ```
 然后配置`git.winsky.wang`的域名解析，完整的地址是这样的`http://git.winsky.wang/webhooks_push`
 
