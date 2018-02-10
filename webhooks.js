@@ -7,15 +7,14 @@ function run_cmd(cmd, args, callback) {
   var child = spawn(cmd, args);
   var resp = "";
   child.stdout.on('data', function(buffer) { resp += buffer.toString(); });
+  console.log(resp)
   child.stdout.on('end', function() { callback (resp) });
 }
 handler.on('error', function (err) {
   console.error('Error:', err.message)
 })
 handler.on('push', function (event) {
-  console.log('Received a push event for %s to %s',
-    event.payload.repository.name,
-    event.payload.ref);
+    console.log('Received a push event for %s to %s',event.payload.repository.name,event.payload.ref);
     run_cmd('sh', ['/home/blog/deploy.sh'], function(text){ console.log(text) });
 })
 try {

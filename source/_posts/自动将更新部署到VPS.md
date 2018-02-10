@@ -81,17 +81,17 @@ server
         }
     }
 ```
-重载nginx，使配置生效`nginx -s reload`。然后就可以通过[http://blog.winsky.wang][http://blog.winsky.wang]来访问博客了
+重载nginx，使配置生效`nginx -s reload`。然后就可以通过[http://blog.winsky.wang](http://blog.winsky.wang)来访问博客了
 
 # Git WebHooks 自动化部署
-是不是觉得每次写完文章还要登录服务器去执行一次git pull很麻烦？最起码对我这个“懒人”来说，这样很耗时啊
+是不是觉得每次写完文章还要登录服务器去执行一次`git pull`很麻烦？最起码对我这个“懒人”来说，这样很耗时啊
 
 幸运的是，`git`有很多钩子，可以在仓库发生变化的时候触发，类似`js`中的事件。`WebHooks`就是在你本地执行`git push`的时候，远程仓库会检测到仓库的变化，并发送一个请求到我们配置好的`WebHooks`
 
 
 实现WebHooks自动化部署的推荐条件：
-- 服务器端配置ssh认证
-- 服务器端配置nodejs服务，接收`github`发来的请求
+- 服务器端配置`ssh`认证
+- 服务器端配置`nodejs`服务，接收`github`发来的请求
 
 ## 服务器webhook配置
 由于`hexo`是基于`NodeJS`的，所以这里用`NodeJS`来接收`github`的`push`事件。
