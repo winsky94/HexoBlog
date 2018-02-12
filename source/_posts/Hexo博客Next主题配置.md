@@ -1,7 +1,7 @@
 ---
 title: Hexo博客Next主题配置
 date: 2018-02-04 10:49:21
-updated: 2018-02-04 10:49:21
+updated: 2018-02-12 10:47:11
 tags:
   - HEXO
   - Next
@@ -268,6 +268,15 @@ auto_excerpt:
 ## 关闭打开文章自动跳转到more
 - 编辑`主题配置文件`
 - 修改`scroll_to_more`值为`false`
+
+## fontawesome图标显示问题
+* 2018-02-12更新*
+今天早上打开博客发现导航的图标不能正常显示了。然而本地启动确实正常了。经过一番检查，发现是服务器上无法加载`fontawesome`的`css`。没办法，只能自己指定`fontawesome`的`css`的地址了
+
+编辑`主题配置文件`，指定`fontAwesome`的`cdn`地址
+```
+fontawesome: https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
+```
 
 # 集成第三方服务
 ## 百度统计
