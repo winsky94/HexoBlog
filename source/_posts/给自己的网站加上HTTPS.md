@@ -1,7 +1,7 @@
 ---
 title: 给自己的网站加上HTTPS
 date: 2018-02-11 10:24:13
-updated: 2018-02-11 10:24:13
+updated: 2018-02-12 11:30:34
 tags:
   - HTTPS
 categories: 
@@ -114,6 +114,10 @@ vi /usr/bin/yum  #将文件头部的#!/usr/bin/python 改成#!/usr/bin/python2.6
 
 > [搬瓦工VPS申请Let’s Encrypt免费SSL证书时报错解决办法](https://www.wn789.com/14419.html)
 
+
+## 遗留问题
+*2018-02-12更新*
+百度的自动推送代码，虽然提供了`https`的接口，但是`https`请求回来的代码仍然是去请求`http`，导致不能正确`baidu_push`
 ---
 [1]: https://letsencrypt.org/ "Let's Encrypt"
 [2]: https://certbot.eff.org/ "Certbot"
