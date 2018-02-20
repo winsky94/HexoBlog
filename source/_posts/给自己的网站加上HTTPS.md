@@ -118,6 +118,7 @@ vi /usr/bin/yum  #将文件头部的#!/usr/bin/python 改成#!/usr/bin/python2.6
 ## 遗留问题
 *2018-02-12更新*
 百度的自动推送代码，虽然提供了`https`的接口，但是`https`请求回来的代码仍然是去请求`http`，导致不能正确`baidu_push`
----
+
+
 [1]: https://letsencrypt.org/ "Let's Encrypt"
 [2]: https://certbot.eff.org/ "Certbot"

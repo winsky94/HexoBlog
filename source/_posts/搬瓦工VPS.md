@@ -22,7 +22,6 @@ categories:
 
 
 
----
 [1]: https://bwh1.net/aff.php?aff=24742 "搬瓦工"
 [2]: https://bwh1.net/aff.php?aff=24742&pid=43 "SPECIAL 10G KVM PROMO V3 - LOS ANGELES - CHINA DIRECT ROUTE"
 [3]: https://bwh1.net/aff.php?aff=24742&pid=56 "SPECIAL 10G KVM PROMO V3 - LOS ANGELES - CN2"

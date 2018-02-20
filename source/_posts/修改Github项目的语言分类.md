@@ -1,7 +1,7 @@
 ---
 title: 修改Github项目的语言分类
-date: 2018-02-10 15:26:14
-updated: 2018-02-10 15:26:14
+date: 2018-02-20 15:26:14
+updated: 2018-02-20 15:26:14
 tags:
   - Git
 categories: 
@@ -25,7 +25,9 @@ categories:
 
 在`TaoCode`上还存在着大大小小近10个项目，如今`TaoCode`即将停止服务，所以我便想着将自己的代码迁移到[Github][3]上来。`Github`本身提供了从`SVN`导入仓库的功能，这个使用起来很方便。然鹅，导入的项目被`Github`自动识别成了`JavaScript`语言，我可是纯正的`Java web`项目啊。那要怎么修改Github项目的语言分类呢？？
 
-注意，前方高能~~~下面正式介绍如何修改Github项目的语言分类
+注意，前方高能~~~
+
+下面正式介绍如何修改Github项目的语言分类
 
 在项目目录中创建一个名为`.gitattributes`的文件，添加以下代码：
 ```
@@ -44,7 +46,6 @@ categories:
 ```
 其他可以自由变通
 
----
 [1]: http://code.taobao.org/ "TaoCode"
 [2]: http://taocode-uploads.oss-cn-hangzhou.aliyuncs.com/Snip20180125_2.png "taocode下线通知"
 [3]: https://github.com/winsky94 "Github"
