@@ -8,5 +8,5 @@ Disallow: /fonts/
 Disallow: /lib/
 Disallow: /fancybox/
 
-Sitemap: http://blog.winsky.wang/sitemap.xml
-Sitemap: http://blog.winsky.wang/baidusitemap.xml
+Sitemap: https://blog.winsky.wang/sitemap.xml
+Sitemap: https://blog.winsky.wang/baidusitemap.xml
