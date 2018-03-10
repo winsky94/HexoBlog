@@ -184,7 +184,7 @@ pm2 start /home/blog/webhooks.js
 > [使用Github的webhooks进行网站自动化部署](https://aotu.io/notes/2016/01/07/auto-deploy-website-by-webhooks-of-github/index.html)
 
 
-[1]: https://bwh1.net/aff.php?aff=24742 "搬瓦工VPS"
+[1]: https://bwh1.net/aff.php?aff=29080 "搬瓦工VPS"
 [2]: https://blog.winsky.wang/2018/02/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2Hexo%E6%90%AD%E5%BB%BA/ "快速搭建自己的个人博客"
 [3]: https://blog.winsky.wang/2018/02/04/Hexo%E5%8D%9A%E5%AE%A2Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/ "主题美化"
 [4]: https://blog.winsky.wang/2018/02/06/%E5%A6%82%E4%BD%95%E8%AE%A9%E8%B0%B7%E6%AD%8C%E5%92%8C%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/ "SEO优化"
