@@ -189,3 +189,4 @@ pm2 start /home/blog/webhooks.js
 [3]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/Hexo%E5%8D%9A%E5%AE%A2Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/ "主题美化"
 [4]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E8%AE%A9%E8%B0%B7%E6%AD%8C%E5%92%8C%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/ "SEO优化"
 [5]: http://blog.csdn.net/oDeviloo/article/details/52654590 "GitHub的SSH提交配置"
+[6]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%90%AF%E5%8A%A8/ "博客自启动"
