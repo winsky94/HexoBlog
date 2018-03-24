@@ -126,6 +126,7 @@
             </div>
           {% endif %}
 
+          <!-- 原版
           {# Blogroll #}
           {% if theme.links %}
             <div class="links-of-blogroll motion-element {{ "links-of-blogroll-" + theme.links_layout | default('inline') }}">
@@ -135,11 +136,29 @@
               </div>
               <ul class="links-of-blogroll-list">
                 {% for name, link in theme.links %}
-                  <span class="links-of-author-item" style="text-align:left">
-                      <a href="{{ link }}" title="{{ name }}" target="_blank">
-                        {{ name }}
-                      </a>
-                    </span>
+                  <li class="links-of-blogroll-item">
+                    <a href="{{ link }}" title="{{ name }}" target="_blank">
+                      {{ name }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+          -->
+
+          {# Blogroll #}
+          {% if theme.links %}
+            <div class="links-of-blogroll motion-element">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-{{ theme.links_icon || 'globe' }} fa-fw"></i>
+                {{ theme.links_title }}
+              </div>
+              <ul class="links-of-blogroll-list">
+                {% for name, link in theme.links %}
+                  <li class="links-of-blogroll-item">
+                    <a href="{{ link }}" title="{{ name }}" target="_blank">{{ name }}</a>
+                  </li>
                 {% endfor %}
               </ul>
             </div>
