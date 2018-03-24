@@ -85,7 +85,8 @@ avatar: /images/avatar.png
 # title, chinese available
 links_title: 友情链接
 links:
-  winsky小站: https://blog.winsky.wang
+  winsky小站: https://blog.winsky.wang/
+  winsky wiki: https://wiki.winsky.wang/
   
 # Sitemap Setting
 sitemap:
