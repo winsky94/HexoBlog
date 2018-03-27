@@ -1,5 +1,5 @@
 ---
-title: 修改Github项目的语言分类
+title: Java内存管理及GC机制
 date: 2018-03-18 16:04:14
 updated: 2018-03-18 16:04:14
 tags:
