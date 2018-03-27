@@ -36,11 +36,11 @@ MAINTENANCE: KiwiVM control panel is temporarily unavailable. Please try again i
 
 挖个坑，后面有空来补一下`Linux`系统中存储用户名和密码的`/etc/passwd`和`/etc/shadow`两个文件中内容的具体含义
 
-[ ] [/etc/passwd文件详解][3]
-[ ] [/etc/shadow文件详解][4]
+- [ ] [/etc/passwd文件详解][3]
+- [ ] [/etc/shadow文件详解][4]
 
 
 [1]: https://bwh1.net/aff.php?aff=29080 "搬瓦工VPS"
-[2]: "root 帐户无法登陆解决办法"
+[2]: https://blog.winsky.wang/Linux/root%E5%B8%90%E6%88%B7%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/ "root 帐户无法登陆解决办法"
 [3]: "/etc/passwd文件详解"
 [4]: "/etc/shadow文件详解"
