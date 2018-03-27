@@ -6,7 +6,6 @@ tags:
   - Java
   - JVM
 categories: 
-  - 学习
   - Java
   - JVM
 ---
