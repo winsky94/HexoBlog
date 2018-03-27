@@ -50,4 +50,4 @@ categories:
 	我就遇到过一种特殊情况，`passwd`文件的换行符变成了`DOS`格式，结果`linux`系统认为`shell`路径是`/bin/bash^M`，返回路径不存在错误，导致了`root`无法登录。所以还要保证`passwd`文件的换行符是`unix`格式。
 
 
-[1] https://blog.winsky.wang/Linux/%E4%B8%80%E6%AC%A1%E7%89%B9%E6%AE%8A%E7%9A%84root%E5%AF%86%E7%A0%81%E9%94%99%E8%AF%AF%E7%BB%8F%E5%8E%86/ "一次特殊的root密码错误经历"
+[1]: https://blog.winsky.wang/Linux/%E4%B8%80%E6%AC%A1%E7%89%B9%E6%AE%8A%E7%9A%84root%E5%AF%86%E7%A0%81%E9%94%99%E8%AF%AF%E7%BB%8F%E5%8E%86/ "一次特殊的root密码错误经历"
