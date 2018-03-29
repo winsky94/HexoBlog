@@ -159,4 +159,4 @@ Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=10m; supp
 
 
 [1]: https://blog.winsky.wang/Java/JVM/Java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%8F%8AGC%E6%9C%BA%E5%88%B6/ "Java内存管理及GC机制"
-[2]: "Java8移除永久代"
+[2]: https://blog.winsky.wang/Java/JVM/Java8%E7%A7%BB%E9%99%A4%E6%B0%B8%E4%B9%85%E4%BB%A3/ "Java8移除永久代"
