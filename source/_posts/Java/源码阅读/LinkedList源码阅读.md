@@ -9,6 +9,7 @@ categories:
   - Java
   - 源码阅读
 ---
+
 在日常的开发中，我们使用的比较多的可能是ArrayList，前面我们也进行了[ArrayList源码阅读][1]。ArrayList不能维护元素插入的顺序，当我们需要保持元素的插入顺序时，就需要使用LinkedList了。今天我们就来简单分析一下LinkedList的源码实现。
 
 > 本文基于JDK1.8
