@@ -94,7 +94,7 @@ HashMap在resize操作的时候会造成线程不安全。下面将举两个可�
     在get的时候，如果get的key的桶索引和[3,A]和[7,B]一样，那么就会陷入死循环。
 
 # fail-fast策略
-如果在使用迭代器的过程中有其他线程修改了map，那么将抛出ConcurrentModificationException，这就是所谓fail-fast策略。
+如果在使用迭代器的过程中有其他线程修改了map，将抛出ConcurrentModificationException，这就是所谓fail-fast策略。
 
 这一策略在源码中的实现是通过modCount域，modCount顾名思义就是修改次数，对HashMap内容的修改都将增加这个值，那么在迭代器初始化过程中会将这个值赋给迭代器的expectedModCount。
 ```Java
