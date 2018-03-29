@@ -174,8 +174,7 @@ private void grow(int minCapacity) {
     elementData = Arrays.copyOf(elementData, newCapacity);
 }
 ```
-我们可以看到grow方法将数组扩容为原数组的1.5倍，调用的是Arrays.copy
-方法。在JDK6及之前的版本中，采用的还不是右移的方法。
+我们可以看到grow方法将数组扩容为原数组的1.5倍，调用的是Arrays.copy方法。在JDK6及之前的版本中，采用的还不是右移的方法。
 ```Java
 int newCapacity = (oldCapacity * 3)/2 + 1;
 ```
