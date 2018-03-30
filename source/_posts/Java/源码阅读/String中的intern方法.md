@@ -76,7 +76,7 @@ public static void main(String[] args) {
 - JDK 7下：`false false`
 
 ## JDK 6的解释
-![image](https://tech.meituan.com/img/in_depth_understanding_string_intern/jdk6.png)
+![image](https://pic.winsky.wang/images/2018/03/30/jdk6.jpg)
 
 > 注：图中绿色线条代表`string`对象的内容指向。黑色线条代表地址指向。
 
@@ -93,7 +93,7 @@ public static void main(String[] args) {
 
 正式因为字符串常量池移动到`JAVA Heap`区域后，再来解释为什么会有上述的打印结果。
 
-![image](https://tech.meituan.com/img/in_depth_understanding_string_intern/jdk7_1.png)
+![image](https://pic.winsky.wang/images/2018/03/30/jdk7_1.jpg)
 
 - 在第一段代码中，先看`s3`和`s4`字符串。`String s3 = new String("1") + new String("1");`，这句代码中现在生成了2个对象，是字符串常量池中的“1” 和`JAVA Heap`中的`s3`引用指向的对象。中间还有2个匿名的`new String("1")`我们不去讨论它们。此时`s3`引用对象内容是"11"，但此时常量池中是没有 “11”对象的。
 - 接下来`s3.intern();`这一句代码，是将`s3`中的“11”字符串放入`String`常量池中，因为此时常量池中不存在“11”字符串，因此常规做法是跟`JDK6`图中表示的那样，在常量池中生成一个 "11" 的对象，关键点是`JDK7`中常量池不在`Perm`区域了，这块做了调整。常量池中不需要再存储一份对象了，可以直接存储堆中的引用。这份引用指向`s3`引用的对象。也就是说引用地址是相同的。
