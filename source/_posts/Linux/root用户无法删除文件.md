@@ -43,13 +43,13 @@ u：与s相反，当设定为u时，数据内容其实还存在磁盘中，可�
 
 # 应用举例
 1. 用chattr命令防止系统中某个关键文件被修改：
-	# chattr +i /etc/resolv.conf
+	`# chattr +i /etc/resolv.conf`
 
-	然后用mv /etc/resolv.conf等命令操作于该文件，都是得到Operation not permitted 的结果。vim编辑该文件时会提示W10: Warning: Changing a readonly file错误。要想修改此文件就要把i属性去掉： chattr -i /etc/resolv.conf
+	然后用`mv /etc/resolv.conf`等命令操作于该文件，都是得到`Operation not permitted`的结果。`vim`编辑该文件时会提示`W10: Warning: Changing a readonly file`错误。要想修改此文件就要把i属性去掉： `chattr -i /etc/resolv.conf`
 
-	# lsattr /etc/resolv.conf
+	`# lsattr /etc/resolv.conf`
 	会显示如下属性
-	----i-------- /etc/resolv.conf
+	`----i-------- /etc/resolv.conf`
 
 2. 让某个文件只能往里面追加数据，但不能删除，适用于各种日志文件：
-	# chattr +a /var/log/messages
+	`# chattr +a /var/log/messages`
