@@ -8,7 +8,9 @@ categories:
   - Spring
 ---
 
-当通过Spring容器创建一个Bean实例时，不仅可以完成Bean实例的实例化，还可以为Bean指定特定的作用域。本文介绍了Spring中Bean的作用域的用法，作用域包括singleton、prototype、request、session和globalsession5种。
+当通过Spring容器创建一个Bean实例时，不仅可以完成Bean实例的实例化，还可以为Bean指定特定的作用域。
+
+本文介绍了Spring中Bean的作用域的用法，作用域包括singleton、prototype、request、session和globalsession5种。
 
 <!-- more -->
 
