@@ -18,7 +18,7 @@ HTTP报文是面向文本的，报文中的每一个字段都是一些ASCII码�
 
 一个HTTP请求报文由**请求行（request line）、请求头部（header）、空行和请求数据**4个部分组成，下图给出了请求报文的一般格式。
 
-![image](http://pic.dotwintech.com/5832cc77ea1dbbdc281758e48b5d49c5)
+![image](https://pic.winsky.wang/images/2018/04/16/5832cc77ea1dbbdc281758e48b5d49c5.jpg)
 
 ## 请求行
 请求行由**请求方法字段、URL字段和HTTP协议版本字段**3个字段组成，它们用空格分隔。例如，GET /index.html HTTP/1.1。
