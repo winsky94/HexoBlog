@@ -4,9 +4,9 @@ date: 2018-04-15 00:24:16
 updated: 2018-04-15 00:24:16
 tags:
   - MySQL
+  - MySQL配置
 categories: 
   - 数据库
-  - MySQL配置
 ---
 
 今天环院的同学反馈说，河流生态地图应用出bug了，我上去一看，MySQL数据库提示`Too many connections`。出现这个错，是由于连接数过多，需要增加连接数。我在配置系统的时候明明已经在`/etc/my.cnf`中添加了`max_connections = 1000`，但是，实际连接数一直被限制在214。
