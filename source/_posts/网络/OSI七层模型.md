@@ -14,7 +14,7 @@ categories:
 
 <!-- more -->
 
-![image](https://upload-images.jianshu.io/upload_images/1156719-afc57efbe98be4f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/557)
+![image](https://pic.winsky.wang/images/2018/04/16/557.png)
 
 # 七层模型介绍
 - 物理层
