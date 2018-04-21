@@ -1,5 +1,5 @@
 ---
-title: 浅谈model, Orm, Dao之间的区别
+title: 浅谈Model、ORM、DAO之间的区别
 date: 2018-04-21 14:16:14
 updated: 2018-04-21 14:16:14
 tags:
