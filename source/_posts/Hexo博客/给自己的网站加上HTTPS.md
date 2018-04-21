@@ -110,7 +110,7 @@ vi /usr/bin/yum  #将文件头部的#!/usr/bin/python 改成#!/usr/bin/python2.6
 ## 端口占用
 在执行`certbot certonly --standalone -d blog.winsky.wang`时会提示端口占用，这是因为服务器上`Nginx`服务开着，占用了端口，所以在安装、更新证书的时候需要先停止`Nginx`服务
 
-> [Let's Encrypt 使用教程，免费的SSL证书，让你的网站拥抱 HTTPS](https://diamondfsd.com/article/e221b455-b0e7-40b7-a6c7-9bb7e3e35657)
+> [Let's Encrypt 使用教程，免费的SSL证书，让你的网站拥抱 HTTPS](https://diamondfsd.com/lets-encrytp-hand-https/)
 
 > [搬瓦工VPS申请Let’s Encrypt免费SSL证书时报错解决办法](https://www.wn789.com/14419.html)
 
