@@ -100,8 +100,7 @@ systemctl restart  mysqld.service
 
 一把辛酸泪啊~~
 
-> [version 5.7 
-MySQL 5.7 Reference Manual：Too many connections](https://dev.mysql.com/doc/refman/5.7/en/too-many-connections.html)
+> [version 5.7 MySQL 5.7 Reference Manual：Too many connections](https://dev.mysql.com/doc/refman/5.7/en/too-many-connections.html)
 
 
 
