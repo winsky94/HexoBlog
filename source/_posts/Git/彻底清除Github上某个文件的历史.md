@@ -33,7 +33,7 @@ git gc --prune=now
 git gc --aggressive --prune=now
 ```
 
-**注意上面的FILE_PATH要是路径而不只是文件名字，例如src/main/java/com/ysy/demo/filename.java**
+**注意上面的FILE_PATH要是路径而不只是文件名字，例如src/main/java/filename.java**
 
 亲测有效
 
