@@ -67,8 +67,3 @@ servlet有三个名字：
 - 客户知道的URL名`<url-pattern>/Ch1Servlet</url-pattern>`
 - 部署人员知道的秘密的内部名`<servlet-name>Ch1Servlet</servlet-name>`
 - 实际文件名`<servlet-class>ch1Servlet.Ch1Servlet</servlet-class>`
-
-
-> 转自 [web开发中web容器的作用（如tomcat）][1]
-
-[1]: https://liuchi.coding.me/2016/07/16/web%E5%BC%80%E5%8F%91%E4%B8%ADweb%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%88%E5%A6%82tomcat%EF%BC%89/ "web开发中web容器的作用（如tomcat）"
