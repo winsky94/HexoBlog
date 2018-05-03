@@ -73,11 +73,11 @@ server
     server_name blog.winsky.wang ;
 
 	location / {
-		proxy_set_header HOST $host;
-		proxy_set_header X-Forwarded-Proto $scheme;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-   	proxy_pass http://localhost:4000/;
+    proxy_set_header HOST $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass http://localhost:4000/;
   }
 }
 ```
@@ -138,16 +138,16 @@ try {
 ```
 server
 {
-    listen 80;
-    server_name git.winsky.wang ;
+  listen 80;
+  server_name git.winsky.wang ;
 
 	location / {
 		proxy_set_header HOST $host;
 		proxy_set_header X-Forwarded-Proto $scheme;
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_pass http://localhost:6666/;
-    }
+    proxy_pass http://localhost:6666/;
+  }
 }
 ```
 然后配置`git.winsky.wang`的域名解析
