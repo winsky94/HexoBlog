@@ -72,7 +72,7 @@ nginx -s quit  ：完整有序的停止nginx
 
 具体配置方法，可以参照下面这篇博文
 
-> [Nginx配置教程]
+> [Nginx配置教程][4]
 
 [1]: https://pic.winsky.wang/images/2018/05/03/Nginx.png "Nginx安装目录"
 [2]: https://pic.winsky.wang/images/2018/05/03/Nginxcfdc5.png "Nginx默认主页"
