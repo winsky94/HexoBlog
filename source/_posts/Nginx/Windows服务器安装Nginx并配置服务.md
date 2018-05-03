@@ -16,6 +16,7 @@ Nginx以事件驱动的方式编写，所以有非常好的性能，同时也是
 因为学校的服务器大多数是Windows Server的环境，所以本文总结了几次Windows上Nginx安装配置的过程，以作记录。
 
 > 服务器采用Windows Server 2012 R2
+
 <!-- more -->
 
 # 安装
