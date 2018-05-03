@@ -20,10 +20,10 @@ server
 {
     listen 80;
     server_name blog.winsky.wang ;
-		
-	location / {
-		proxy_set_header HOST $host;
-		proxy_set_header X-Forwarded-Proto $scheme;
+
+    location / {
+        proxy_set_header HOST $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_pass http://localhost:4000/;
@@ -95,7 +95,7 @@ http {
         location = /50x.html {
             root   html;
         }
-		
+
 		location /t/ {
 			proxy_set_header HOST $host;
 			proxy_set_header X-Forwarded-Proto $scheme;
