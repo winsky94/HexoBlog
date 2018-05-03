@@ -107,4 +107,4 @@ http {
 }
 ```
 
-[1]: "Windows服务器安装Nginx并配置服务"
+[1]: https://blog.winsky.wang/Windows/将自己的程序配置成Windows服务/ "Windows服务器安装Nginx并配置服务"

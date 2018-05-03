@@ -76,5 +76,5 @@ nginx -s quit  ：完整有序的停止nginx
 
 [1]: https://pic.winsky.wang/images/2018/05/03/Nginx.png "Nginx安装目录"
 [2]: https://pic.winsky.wang/images/2018/05/03/Nginxcfdc5.png "Nginx默认主页"
-[3]:  "将自己的程序配置成Windows服务"
-[4]:  "Nginx配置教程"
+[3]: https://blog.winsky.wang/Windows/将自己的程序配置成Windows服务 "将自己的程序配置成Windows服务"
+[4]: https://blog.winsky.wang/Nginx/Nginx服务配置 "Nginx配置教程"
