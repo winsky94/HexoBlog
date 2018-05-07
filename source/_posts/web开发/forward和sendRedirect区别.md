@@ -1,7 +1,7 @@
 ---
 title: forward和sendRedirect区别
-date: 2018-05-07 17:33:14
-updated: 2018-05-07 17:33:14
+date: 2018-02-25 17:33:14
+updated: 2018-02-25 17:33:14
 tags:
   - web开发
   - 页面跳转
