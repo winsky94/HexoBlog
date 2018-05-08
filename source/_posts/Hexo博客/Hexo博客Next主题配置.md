@@ -330,6 +330,30 @@ busuanzi_count:
 ```
 > [不蒜子][]
 
+## 本地搜索
+2018-05-08更新，添加本地搜索功能
+在hexo的根目录下执行命令：`npm install hexo-generator-searchdb --save`
+
+在根目录下的`_config.yml`文件中添加配置：
+```
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+```
+
+在根目录下的`/theme/next/_config.yml`文件中搜索`local_search`，将`enable`改为`true`：
+```
+local_search:
+  enable: true
+```
+
+运行效果
+
+![image](https://pic.winsky.wang/images/2018/05/08/0fe6617e36964c14.png)
+
+
 # 参考文章
 > [next中文手册](http://theme-next.iissnan.com/)
 
