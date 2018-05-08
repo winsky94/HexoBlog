@@ -661,12 +661,6 @@ local_search:
   # unescape html strings to the readable one
   unescape: false
 
-search:
-  path: search.xml
-  field: post
-  format: html
-  limit: 1000
-
 # Bookmark Support
 # Dependencies: https://github.com/theme-next/theme-next-bookmark
 bookmark:

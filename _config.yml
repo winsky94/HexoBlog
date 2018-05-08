@@ -94,5 +94,12 @@ sitemap:
 baidusitemap:
   path: baidusitemap.xml
 
+# local search
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
 # 字数统计
 word_count: true
