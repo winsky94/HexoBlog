@@ -14,7 +14,7 @@ categories:
 
 在[Dubbo入门教程(2):Dubbo环境搭建][2]中我们搭建好了dubbo的服务器环境。
 
-接下来就是编写实际的应用代码了。本文给出了一个Spring-Dubbo-Zookeeper的小demo，以供学习。
+接下来就是编写实际的应用代码了。本文给出了一个Spring-Dubbo-Zookeeper的小demo，以供学习。详细的项目可以参见[github源代码][3]。
 
 <!-- more -->
 
@@ -22,8 +22,6 @@ categories:
 首先构建MAVEN项目，导入所需要的jar包依赖
 
 需要导入的有spring, dubbo, zookeeper等jar包。 
-
-见[github源代码][3]
 
 # 创建dubbo-api
 dubbo-api是一个MAVEN项目(有独立的pom.xml，用来打包供提供者消费者使用)
