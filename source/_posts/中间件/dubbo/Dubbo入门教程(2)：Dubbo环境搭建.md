@@ -10,7 +10,7 @@ categories:
   - dubbo
 ---
 
-上一篇文章我们从电子商务系统的演变历史，引出了什么是Dubbo，介绍了Dubbo的架构个各部分组件的作用。
+上一篇文章[Dubbo入门教程(1)：Dubbo介绍][1]我们从电子商务系统的演变历史，引出了什么是Dubbo，介绍了Dubbo的架构个各部分组件的作用。
 
 本文以CentOS为例，介绍如何搭建一个Dubbo环境，采用Zookeeper作为注册中心。
 
@@ -77,3 +77,5 @@ export PATH=$PATH:$M2_HOME/bin
     1. 如果是多个zookeeper服务器，那服务器的值可设置为：zookeeper://127.0.0.1:2181?backup=127.0.0.2:2181
 5. 重新启动tomcat服务器
 6. 此时dubbo的管理后台就配置完了,可通过访问：`http://test.ufeng.top/dubbo-admin/`访问了
+
+[1]: https://blog.winsky.wang/中间件/dubbo/Dubbo入门教程(1)：Dubbo介绍/ "Dubbo入门教程(1)：Dubbo介绍"
