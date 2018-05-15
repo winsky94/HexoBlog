@@ -39,13 +39,13 @@ server
     ssl on;
     ssl_certificate /etc/letsencrypt/live/blog.winsky.wang/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/blog.winsky.wang/privkey.pem;
-		
-	location / {
-		proxy_set_header HOST $host;
-		proxy_set_header X-Forwarded-Proto $scheme;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_pass http://localhost:4000/;
+
+    location / {
+    	proxy_set_header HOST $host;
+    	proxy_set_header X-Forwarded-Proto $scheme;
+    	proxy_set_header X-Real-IP $remote_addr;
+    	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    	proxy_pass http://localhost:4000/;
     }
 }
 
@@ -53,13 +53,13 @@ server
 {
     listen 80;
     server_name blog.winsky.wang ;
-		
-	location / {
-		proxy_set_header HOST $host;
-		proxy_set_header X-Forwarded-Proto $scheme;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_pass http://localhost:4000/;
+
+    location / {
+    	proxy_set_header HOST $host;
+    	proxy_set_header X-Forwarded-Proto $scheme;
+    	proxy_set_header X-Real-IP $remote_addr;
+    	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    	proxy_pass http://localhost:4000/;
     }
     # rewrite ^/(.*) https://$server_name$1 permanent;#强制跳转到Https
 }
