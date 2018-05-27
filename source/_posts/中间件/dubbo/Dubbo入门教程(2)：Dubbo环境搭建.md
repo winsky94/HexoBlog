@@ -10,7 +10,7 @@ categories:
   - dubbo
 ---
 
-上一篇文章[Dubbo入门教程(1)：Dubbo介绍][1]我们从电子商务系统的演变历史，引出了什么是Dubbo，介绍了Dubbo的架构个各部分组件的作用。
+上一篇文章[Dubbo入门教程(1)：Dubbo介绍][1]我们从电子商务系统的演变历史，引出了什么是Dubbo，介绍了Dubbo的架构各个部分组件的作用。
 
 本文以CentOS为例，介绍如何搭建一个Dubbo环境，采用Zookeeper作为注册中心。
 
