@@ -10,7 +10,7 @@ categories:
   - dubbo
 ---
 
-在[Dubbo入门教程(1)：Dubbo介绍][1]我们从电子商务系统的演变历史，引出了什么是Dubbo，介绍了Dubbo的架构个各部分组件的作用。
+在[Dubbo入门教程(1)：Dubbo介绍][1]我们从电子商务系统的演变历史，引出了什么是Dubbo，介绍了Dubbo的架构各个部分组件的作用。
 
 在[Dubbo入门教程(2):Dubbo环境搭建][2]中我们搭建好了dubbo的服务器环境。
 
