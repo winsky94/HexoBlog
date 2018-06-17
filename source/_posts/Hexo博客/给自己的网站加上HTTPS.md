@@ -77,14 +77,19 @@ All renewal attempts failed. The following certs could not be renewed:
 ```
 这是因为生成证书的时候使用的是`--standalone`模式，验证域名的时候，需要启用443端口，这个错误的意思就是要启用的端口已经被占用了。这时候必须把`nginx`先关掉，才可以成功。果然，先运行`service nginx stop`运行这个命令，就没有报错了，所有的证书都刷新成功
 
-证书是90天才过期，我们只需要在过期之前执行更新操作就可以了。 这件事情就可以直接交给定时任务来完成。新建了一个文件`certbot-auto-renew-cron`，这个是一个`cron`计划，这段内容的意思就是每隔两个月的凌晨`4:00`执行更新操作
+证书是90天才过期，我们只需要在过期之前执行更新操作就可以了。 这件事情就可以直接交给定时任务来完成。
+
+新建了一个文件`/home/certbot/certbot_auto_renew.sh`，并`chmod u+x /home/certbot/certbot_auto_renew.sh`赋予权限
 ```
-00 4 * */2 * certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
+certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
 ```
 - `--pre-hook`这个参数表示执行更新操作之前要做的事情
 - `--post-hook`这个参数表示执行更新操作完成后要做的事情
 
-最后我们启动这个定时任务`crontab certbot-auto-renew-cron`
+最后我们启动这个定时任务`crontab -e`然后添加下面这行，每天凌晨`4:00`执行更新操作
+```shell
+0 4 * * * /home/certbot/certbot_auto_renew.sh
+```
 
 # 填坑
 虽然上面的过程看上去一帆风顺，但是实际操作过程中还是碰到了很多问题
