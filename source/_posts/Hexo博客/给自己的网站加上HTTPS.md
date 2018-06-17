@@ -79,14 +79,16 @@ All renewal attempts failed. The following certs could not be renewed:
 
 证书是90天才过期，我们只需要在过期之前执行更新操作就可以了。 这件事情就可以直接交给定时任务来完成。
 
-新建了一个文件`/home/certbot/certbot_auto_renew.sh`，并`chmod u+x /home/certbot/certbot_auto_renew.sh`赋予权限
+新建了一个文件`/home/certbot/certbot_auto_renew.sh`
 ```
 certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
 ```
 - `--pre-hook`这个参数表示执行更新操作之前要做的事情
 - `--post-hook`这个参数表示执行更新操作完成后要做的事情
 
-最后我们启动这个定时任务`crontab -e`然后添加下面这行，每天凌晨`4:00`执行更新操作
+使用`chmod u+x /home/certbot/certbot_auto_renew.sh`赋予权限
+
+最后我们添加一个定时任务`crontab -e`然后添加下面这行，每天凌晨`4:00`执行更新操作
 ```shell
 0 4 * * * /home/certbot/certbot_auto_renew.sh
 ```
