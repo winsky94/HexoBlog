@@ -100,6 +100,6 @@ luit [ options ] [ -- ] [ program [ args ] ]
 -g0 charset | 设置在 G0 中最初选择的 charset 的值。缺省值取决于语言环境，但通常为 ASCII。
 -g1 charset | 设置在 G1 中最初选择的 charset 的值。缺省值取决于语言环境。
 -g2 charset | 设置在 G2 中最初选择的 charset 的值。缺省值取决于语言环境。
--g3 charset	设置在 G3 中最初选择的 charset 的值。缺省值取决于语言环境。
+-g3 charset | 设置在 G3 中最初选择的 charset 的值。缺省值取决于语言环境。
 -ilog filename | 将从子代接收的所有字节记录到 filename 文件中。
 -olog filename | 将发送到终端仿真器的所有字节记录到 filename 文件中。
