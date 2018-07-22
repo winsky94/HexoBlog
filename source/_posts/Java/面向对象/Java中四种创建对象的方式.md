@@ -3,10 +3,11 @@ title: Java中四种创建对象的方式
 date: 2018-02-25 17:40:14
 updated: 2018-02-25 17:40:14
 tags:
-  - web开发
-  - 页面跳转
+  - Java
+  - 对象创建
 categories: 
-  - web开发
+  - Java
+  - 面向对象
 ---
 
 - 调用new语句创建对象
