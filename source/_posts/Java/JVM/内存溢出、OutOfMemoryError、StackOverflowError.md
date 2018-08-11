@@ -19,11 +19,11 @@ categories:
 
 <!-- more --> 
 
-![image](http://img.blog.csdn.net/20140227110650421)
+![image](https://pic.winsky.wang/images/2018/08/11/Java.png)
 
 # 运行时的数据区域
 Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域，如下图所示
-![image](http://img.blog.csdn.net/20140227111132671)
+![image](https://pic.winsky.wang/images/2018/08/11/09f6ad3731253667.png)
 
 其中虚拟机栈、本地方法栈和程序计数器是线程私有的，方法区和堆是线程共享的.
 
