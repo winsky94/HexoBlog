@@ -30,7 +30,7 @@ categories:
 - 程序计数器
 
 其中，方法区和堆是所有线程共享的。
-![image](https://img-blog.csdn.net/20150908154704495)
+![image](https://pic.winsky.wang/images/2018/08/11/94f1708da1aed719.png)
 
 ## 方法区
 方法区存放了要加载的类的信息(如类名，修饰符)、类中的静态变量、`final`定义的常量、类中的`field`、方法信息，当开发人员调用类对象中的`getName`、`isInterface`等方法来获取信息时，这些数据都来源于方法区。
@@ -58,7 +58,7 @@ categories:
 
 为了让内存回收更加高效（后面会具体讲为何要分代划分），从`Sun JDK 1.2`开始对堆采用了分代管理方式，如下图所示： 
 
-![image](https://img-blog.csdn.net/20150908155026054)
+![image](https://pic.winsky.wang/images/2018/08/11/53f8b703d871fa20.png)
 
 ### 年轻代
 对象在被创建时，内存首先是在年轻代进行分配（注意，大对象可以直接在老年代分配）。当年轻代需要回收时会触发`Minor GC`(也称作`Young GC`)。
@@ -113,11 +113,11 @@ categories:
 
 ## 通过句柄访问
 通过句柄访问的实现方式中，`JVM`堆中会划分单独一块内存区域作为句柄池，句柄池中存储了对象实例数据（在堆中）和对象类型数据（在方法区中）的指针。这种实现方法由于用句柄表示地址，因此十分稳定。 
-![image](https://img-blog.csdn.net/20150908160115245)
+![image](https://pic.winsky.wang/images/2018/08/11/749895ae693bcae6.png)
 
 ## 通过直接指针访问
 通过直接指针访问的方式中，`reference`中存储的就是对象在堆中的实际地址，在堆中存储的对象信息中包含了在方法区中的相应类型数据。这种方法最大的优势是速度快，在`HotSpot`虚拟机中用的就是这种方式。 
-![image](https://img-blog.csdn.net/20150908160200567)
+![image](https://pic.winsky.wang/images/2018/08/11/d48877daa07b8837.png)
 
 # JVM内存分配
 `Java`对象所占用的内存主要在堆上实现，因为堆是线程共享的，因此在堆上分配内存时需要进行加锁，这就导致了创建对象的开销比较大。当堆上空间不足时，会出发`GC`，如果`GC`后空间仍然不足，则会抛出`OutOfMemory`异常。
@@ -128,7 +128,7 @@ categories:
 
 而对于`TLAB`技术是对于多线程而言的， 它会为每个新创建的线程在新生代的`Eden Space`上分配一块独立的空间，这块空间称为`TLAB（Thread Local Allocation Buffer）`，其大小由`JVM`根据运行情况计算而得。可通过`-XX:TLABWasteTargetPercent`来设置其可占用的`Eden Space`的百分比，默认是`1%`。在`TLAB`上分配内存不需要加锁，一般`JVM`会优先在`TLAB`上分配内存，如果对象过大或者`TLAB`空间已经用完，则仍然在堆上进行分配。因此，在编写程序时，多个小对象比大的对象分配起来效率更高。可在启动参数上增加`-XX:+PrintTLAB`来查看`TLAB`空间的使用情况。
 
-![image](https://img-blog.csdn.net/20150908160309168)
+![image](https://pic.winsky.wang/images/2018/08/11/tlab.png)
 
 对象如果在年轻代存活了足够长的时间而没有被清理掉（即在几次`Minor GC`后存活了下来），则会被复制到年老代，年老代的空间一般比年轻代大，能存放更多的对象，在年老代上发生的`GC`次数也比年轻代少。当年老代内存不足时，将执行`Major GC`，也叫 `Full GC`。
 
@@ -148,7 +148,7 @@ categories:
 
 ## 引用收集器
 引用计数器采用分散式管理方式，通过计数器记录对象是否被引用。当计数器为`0`时，说明此对象已经不再被使用，可进行回收，如图所示：
-![image](https://img-blog.csdn.net/20150908160453165)
+![image](https://pic.winsky.wang/images/2018/08/11/8f24a1a07ab5a37a.png)
 在上图中，`ObjectA`释放了对`ObjectB`的引用后，`ObjectB`的引用计数器变为`0`，此时可回收`ObjectB`所占有的内存。
 
 引用计数器需要在每次对象赋值时进行引用计数器的增减，他有一定消耗。
@@ -170,14 +170,14 @@ categories:
 
 ### 复制
 复制采用的方式为从根集合扫描出存活的对象，并将找到的存活的对象复制到一块新的完全未被使用的空间中，如图所示：
-![image](https://img-blog.csdn.net/20150908160839436)
+![image](https://pic.winsky.wang/images/2018/08/11/fc2602511c05d9f2.png)
 
 复制收集器方式仅需要从根集合扫描所有存活对象，当要回收的空间中存活对象较少时，复制算法会比较高效（年轻代的`Eden`区就是采用这个算法），其带来的成本是要增加一块空的内存空间及进行对象的移动。
 
 ### 标记 - 清除
 标记-清除采用的方式为从根集合开始扫描，对存活的对象进行标记，标记完毕后，再扫描整个空间中未标记的对象，并进行清除，标记和清除过程如下图所示：
 
-![image](https://img-blog.csdn.net/20150908160932973)
+![image](https://pic.winsky.wang/images/2018/08/11/-.png)
 
 上图中蓝色的部分是有被引用的存活的对象，褐色部分没被引用的可回收的对象。在`marking`阶段为了`mark`对象，所有的对象都会被扫描一遍，扫描这个过程是比较耗时的。
 
@@ -187,7 +187,7 @@ categories:
 
 ### 标记 - 压缩
 标记-压缩和标记-清除一样，是对活的对象进行标记，但是在清除后的处理不一样，标记-压缩在清除对象占用的内存后，会把所有活的对象向左端空闲空间移动，然后再更新引用其对象的指针，如下图所示：
-![image](https://img-blog.csdn.net/20150908161030839)
+![image](https://pic.winsky.wang/images/2018/08/11/971caab36192f592.png)
 
 很明显，标记-压缩在标记-清除的基础上对存活的对象进行了移动规整动作，解决了内存碎片问题，得到更多连续的内存空间以提高分配效率，但由于需要对对象进行移动，因此成本也比较高。
 
@@ -202,28 +202,29 @@ categories:
 
 ### 年轻代的GC过程
 1. 在初始阶段，新创建的对象被分配到Eden区，survivor的两块空间都为空。 
-![image](https://img-blog.csdn.net/20150908161234962)
+![image](https://pic.winsky.wang/images/2018/08/11/survivor.png)
 
 2. 当`Eden`区满了的时候，`minor garbage`被触发 
-![image](https://img-blog.csdn.net/20150908161305686)
+![image](https://pic.winsky.wang/images/2018/08/11/minor.png)
 
 3. 经过扫描与标记，存活的对象被复制到`S0`，不存活的对象被回收 
-![image](https://img-blog.csdn.net/20150908161339708)
+![image](https://pic.winsky.wang/images/2018/08/11/s0.png)
 
-4. 在下一次的`Minor GC`中，`Eden`区的情况和上面一致，没有引用的对象被回收，存活的对象被复制到`survivor`区。然而在`survivor`区，`S0`的所有的数据都被复制到`S1`，需要注意的是，在上次`minor GC`过程中移动到`S0`中的两个对象在复制到`S1`后其年龄要加`1`。此时E`den`区`S0`区被清空，所有存活的数据都复制到了`S1`区，并且`S1`区存在着年龄不一样的对象，过程如下图所示： ![image](https://img-blog.csdn.net/20150908161353425)
+4. 在下一次的`Minor GC`中，`Eden`区的情况和上面一致，没有引用的对象被回收，存活的对象被复制到`survivor`区。然而在`survivor`区，`S0`的所有的数据都被复制到`S1`，需要注意的是，在上次`minor GC`过程中移动到`S0`中的两个对象在复制到`S1`后其年龄要加`1`。此时E`den`区`S0`区被清空，所有存活的数据都复制到了`S1`区，并且`S1`区存在着年龄不一样的对象，过程如下图所示： 
+![image](https://pic.winsky.wang/images/2018/08/11/s1.png)
 
 5. 再下一次`MinorGC`则重复这个过程，这一次`survivor`的两个区对换，存活的对象被复制到`S0`，存活的对象年龄加`1`，`Eden`区和另一个`survivor`区被清空。
-![image](https://img-blog.csdn.net/20150908161406353)
+![image](https://pic.winsky.wang/images/2018/08/11/repeat.png)
 
 6. 下面演示一下`Promotion`过程，在经过几次`Minor GC`之后，当存活对象的年龄达到一个阈值之后（可通过参数配置，默认是`8`），就会被从年轻代`Promotion`到老年代。 
-![image](https://img-blog.csdn.net/20150908161419362)
+![image](https://pic.winsky.wang/images/2018/08/11/promotion.png)
 
 7. 随着`MinorGC`一次又一次的进行，不断会有新的对象被`promote`到老年代
-![image](https://img-blog.csdn.net/20150908161435368)
+![image](https://pic.winsky.wang/images/2018/08/11/promote.png)
 
 8. 上面基本上覆盖了整个年轻代所有的回收过程。最终，`MajorGC`将会在老年代发生，老年代的空间将会被清除和压缩
 
-![image](https://img-blog.csdn.net/20150908161446256)
+![image](https://pic.winsky.wang/images/2018/08/11/majorgc.png)
 
 从上面的过程可以看出，`Eden`区是连续的空间，且`Survivor`总有一个为空。经过一次`GC`和复制，一个`Survivor`中保存着当前还活着的对象，而`Eden`区和另一个`Survivor`区的内容都不再需要了，可以直接清空，到下一次`GC`时，两个`Survivor`的角色再互换。
 
