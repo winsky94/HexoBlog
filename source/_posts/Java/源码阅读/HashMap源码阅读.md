@@ -260,7 +260,7 @@ static final int hash(Object key) {
     - 因为table的长度都是2的幂，因此index仅与hash值的低n位有关，hash的高n位都被与操作置0了
     - 假设table.length=2^4=16
     
-    ![image](http://img.blog.csdn.net/20160408155102734)
+    ![image](https://pic.winsky.wang/images/2018/08/12/147da3.png)
     - 由上图可以看到，只有hash值的低4位参与了运算
     - 这样做很容易产生碰撞，这样就算散列值分布再松散，要是只取最后几位的话，碰撞也会很严重。更要命的是如果散列本身做得不好，分布上成等差数列的漏洞，恰好使最后几个低位呈现规律性重复，碰撞问题会更明显。
     - 为了解决上述问题，设计者权衡了speed、utility, and quality，将高16位与低16位异或来减少这种影响
@@ -333,7 +333,7 @@ public HashMap(int initialCapacity, float loadFactor) {
             - 所以取值到`MAXIMUM_CAPACITY `
     - 举个例子
     
-    ![image](http://img.blog.csdn.net/20160408183651111)
+    ![image](https://pic.winsky.wang/images/2018/08/12/example.png)
 - 注意，得到的这个`capacity`却被赋值给了`threshold`
     - `this.threshold = tableSizeFor(initialCapacity);`
     - 这不是一个bug，因为在构造方法中，并没有对table这个成员变量进行初始化
@@ -650,12 +650,12 @@ threshold = newThr;
 ### 下标的变化
 - 例如我们从16扩展为32时，具体的变化如下所示
 
-![image](http://img.blog.csdn.net/20160424144259226)
+![image](https://pic.winsky.wang/images/2018/08/12/2.png)
 - 其中n即表示容量capacity。resize之后，因为n变为2倍，那么n-1的mask范围在高位多1bit(红色)，因此新的index就会发生这样的变化
 
-![image](http://img.blog.csdn.net/20160424144316071)
+![image](https://pic.winsky.wang/images/2018/08/12/3.png)
 - 因此，我们在扩充HashMap的时候，不需要重新计算hash，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap”。可以看看下图为16扩充为32的resize示意图：
 
-![image](http://img.blog.csdn.net/20160424144334493)
+![image](https://pic.winsky.wang/images/2018/08/12/4.png)
 - 这个设计确实非常的巧妙，既省去了重新计算hash值的时间，而且同时，由于新增的1bit是0还是1可以认为是随机的，因此resize的过程，均匀的把之前的冲突的节点分散到新的bucket了。 
 - 在链表中进行操作时，使用的是尾插法
