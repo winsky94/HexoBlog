@@ -37,7 +37,7 @@ private static class Node<E> {
 注意这个节点的初始化方法，给定三个参数，分别前驱节点，本节点的值，后继结点。这个方法将在LinkedList的实现中多次调用。
 
 下图是LinkedList内部结构的可视化，能够帮我们更好的理解LinkedList内部的结构
-![image](http://upload-images.jianshu.io/upload_images/1234352-017c08bac47cff38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image](https://pic.winsky.wang/images/2018/08/12/1240.png)
 
 双端链表由node组成，每个节点有两个reference指向前驱节点和后继结点，第一个节点的前驱节点为null，最后一个节点的后继节点为null。
 
