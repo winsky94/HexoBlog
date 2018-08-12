@@ -21,12 +21,12 @@ categories:
 在一个方法只被一个`aspect`类拦截时，`aspect`类内部的`advice`将按照以下的顺序进行执行：
 
 ## 正常流程
-![image](http://img.blog.csdn.net/20160811192425854)
+![image](https://pic.winsky.wang/image/NnrM)
 
 ## 异常流程
 注意，这里的图有误，执行完`method`触发异常之后，是转到`After`去执行
 
-![image](http://img.blog.csdn.net/20160811192446479)
+![image](https://pic.winsky.wang/image/NVEX)
 
 # 同一个方法被多个Aspect类拦截
 这种情况下，`aspect1`和`aspect2`的执行顺序是未知的。
@@ -37,7 +37,7 @@ categories:
 
 不管采用上面的哪种方法，都是值越小的`aspect`越先执行。 
 
-![image](http://img.blog.csdn.net/20160811193349342)
+![image](https://pic.winsky.wang/image/NdFy)
 
 **【注意】**
 
