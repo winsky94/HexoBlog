@@ -7,7 +7,7 @@ cd /home/blog
 /sbin/runuser -l root -c "pm2 start /home/blog/blog_webhooks.js"
 
 # 生成静态内容
-hexo generate
+hexo generate && gulp
 
 # 启动博客
 hexo s &
