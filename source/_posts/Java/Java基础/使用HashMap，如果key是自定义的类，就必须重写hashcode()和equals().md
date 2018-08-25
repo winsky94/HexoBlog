@@ -26,7 +26,7 @@ public native int hashCode();
 ```
 默认的根类Object提供了两个方法的实现，为什么我们还需要重写它们呢？解答这个问题，需要从两个方面展开。
 
-1. hashcode()和equals()是在哪里被用到的？什么用的？
+**1. hashcode()和equals()是在哪里被用到的？什么用的？**
 
 HashMap是基于散列函数，以数组和链表的方式实现的。
 
@@ -34,7 +34,7 @@ HashMap是基于散列函数，以数组和链表的方式实现的。
 
 equals()方法则是在HashMap中插入值或查询时会使用到。当HashMap中插入值或查询值对应的散列码与数组中的散列码相等时，则会通过equals方法比较key值是否相等，所以想以自建对象作为HashMap的key，必须重写该对象继承object的equals方法。
 
-2. 本来不就有hashcode()和equals()了么？干嘛要重写，直接用原来的不行么？
+**2. 本来不就有hashcode()和equals()了么？干嘛要重写，直接用原来的不行么？**
      
 HashMap中，如果要比较key是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的，例如，
 ```Java
@@ -49,7 +49,7 @@ HashMap中的比较key是这样的，先求出key的hashcode(),比较其值是�
 
 
 [1]: https://blog.winsky.wang/Java/源码阅读/Java根类Object的方法说明/ "Java根类Object的方法说明"
-[1]: https://blog.winsky.wang/Java/源码阅读/HashMap源码阅读/ "HashMap源码阅读"
-[2]: https://blog.winsky.wang/Java/源码阅读/HashMap为什么线程不安全/ "HashMap为什么线程不安全"
+[2]: https://blog.winsky.wang/Java/源码阅读/HashMap源码阅读/ "HashMap源码阅读"
+[3]: https://blog.winsky.wang/Java/源码阅读/HashMap为什么线程不安全/ "HashMap为什么线程不安全"
 
 
