@@ -72,7 +72,7 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 锁等待的对应关系
 
 | Field				| Type			| Null 	| Key 	| Default	| Extra				|
-|--|--|--|--|--|--|
+|:--:				|:--:			|:--:	|:--:	|:--:		|:--:				|
 | requesting_trx_id	| varchar(18) 	| NO 	|		|			| 请求锁的事务ID 		|
 | requested_lock_id	| varchar(81) 	| NO 	|		|			| 请求锁的锁ID 		|
 | blocking_trx_id 	| varchar(18) 	| NO 	|		|			| 当前拥有锁的事务ID 	|
