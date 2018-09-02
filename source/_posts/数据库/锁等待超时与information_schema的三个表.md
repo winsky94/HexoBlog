@@ -24,7 +24,8 @@ try restarting transaction
 # information_schema的三个表
 information_schema中的三个表记录了事务和锁的相关的记录，三张表的具体字段描述如下：
 
-## innodb_trx–当前运行的所有事务
+## innodb_trx
+当前运行的所有事务
 | Field	| Type | Null | Key | Default | Extra |
 | :--------: | :--------: | :--: | :-: | :--------: | :--------: |
 | trx_id | varchar(18) | NO | | | 事务ID |
@@ -50,7 +51,8 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 | trx_adaptive_hash_latched | int(1) | NO |  | 0 |  |
 | trx_adaptive_hash_timeout | bigint(21) unsigned | NO |  | 0 |  |
 
-## innodb_locks–当前出现的锁
+## innodb_locks
+当前出现的锁
 | Field	| Type | Null | Key | Default | Extra |
 | :----: | :----: | :--: | :--: | :----: | :----: |
 | lock_id | varchar(81) | NO | | | 锁id
@@ -64,7 +66,8 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 | lock_rec | bigint(21) unsigned | YES | | NULL | 被锁的记录号
 | lock_data | varchar(8192) | YES | | NULL | 被锁的数据
 
-## innodb_lock_waits–锁等待的对应关系
+## innodb_lock_waits
+锁等待的对应关系
 | Field	| Type | Null | Key | Default | Extra |
 | :----: | :----: | :--: | :--: | :----: | :----: |
 | requesting_trx_id | varchar(18) | NO |  |  | 请求锁的事务ID |
