@@ -11,7 +11,8 @@ categories:
 
 在高并发的环境下，我们经常会遇到并发处理的问题。在数据库的处理过程中，曾经碰到这样一个错误：
 ```
-ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
+ERROR 1205 (HY000): Lock wait timeout exceeded; 
+try restarting transaction
 ```
 
 翻译过来就是`锁等待超时，尝试重启事务`。
@@ -25,7 +26,7 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 
 ## innodb_trx–当前运行的所有事务
 | Field	| Type | Null | Key | Default | Extra |
-| :----: | :----: | :----: | :----: | :----: | :----: |
+| :----: | :----: | :----: | :--: | :----: | :----: |
 | trx_id | varchar(18) | NO | | | 事务ID |
 | trx_state | varchar(13) | NO | | | 事务状态 |
 | trx_started | datetime | NO | | 0000-00-00 00:00:00 | 事务开始时间 |
@@ -33,7 +34,7 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 | trx_wait_started | datetime | YES |  | NULL | 事务开始等待的时间 |
 | trx_weight | bigint(21) unsigned | NO |  | 0 | 事务权重 |
 | trx_mysql_thread_id | bigint(21) unsigned | NO |  | 0 | 事务线程ID |
-| trx_query | varchar(1024) | YES |  | NULL |  | 具体SQL语句 |
+| trx_query | varchar(1024) | YES |  | NULL | 具体SQL语句 |
 | trx_operation_state | varchar(64) | YES |  | NULL | 事务当前操作状态 |
 | trx_tables_in_use | bigint(21) unsigned | NO |  | 0 | 事务中有多少个表被使用 |
 | trx_tables_locked | (21) unsigned | NO |  | 0 | 事务拥有多少个锁 |
@@ -46,8 +47,8 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 | trx_unique_checks | int(1) | NO |  | 0 | 是否唯一性检查 |
 | trx_foreign_key_checks | int(1) | NO |  | 0 | 是否外键检查 |
 | trx_last_foreign_key_error | varchar(256) | YES |  | NULL | 	最后的外键错误 |
-| trx_adaptive_hash_latched | int(1) | NO |  | 0 |  |
-| trx_adaptive_hash_timeout | bigint(21) unsigned | NO |  | 0 |
+| trx_adaptive_hash_latched | int(1) | NO |  | 0 |  | |
+| trx_adaptive_hash_timeout | bigint(21) unsigned | NO |  | 0 | |
 
 ## innodb_locks–当前出现的锁
 | Field	| Type | Null | Key | Default | Extra |
