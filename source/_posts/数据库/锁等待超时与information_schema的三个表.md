@@ -46,9 +46,9 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 | trx_isolation_level | varchar(16) | NO |  |  | 事务隔离级别 |
 | trx_unique_checks | int(1) | NO |  | 0 | 是否唯一性检查 |
 | trx_foreign_key_checks | int(1) | NO |  | 0 | 是否外键检查 |
-| trx_last_foreign_key_error | varchar(256) | YES |  | NULL | 	最后的外键错误 |
-| trx_adaptive_hash_latched | int(1) | NO |  | 0 |  | |
-| trx_adaptive_hash_timeout | bigint(21) unsigned | NO |  | 0 | |
+| trx_last_foreign_key_error | varchar(256) | YES |  | NULL | 最后的外键错误 |
+| trx_adaptive_hash_latched | int(1) | NO |  | 0 |  |
+| trx_adaptive_hash_timeout | bigint(21) unsigned | NO |  | 0 |  |
 
 ## innodb_locks–当前出现的锁
 | Field	| Type | Null | Key | Default | Extra |
