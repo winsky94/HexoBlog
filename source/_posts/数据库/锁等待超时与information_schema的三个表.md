@@ -26,6 +26,7 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 
 ## innodb_trx
 当前运行的所有事务
+
 | Field | Type | Null | Key | Default | Extra |
 | :--------:| :--------: | :--: | :--: | :--------: | :--------: |
 | trx_id | varchar(18) | NO | | | 事务ID |
@@ -53,6 +54,7 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 
 ## innodb_locks
 当前出现的锁
+
 | Field	| Type | Null | Key | Default | Extra |
 | :----: | :----: | :--: | :--: | :----: | :----: |
 | lock_id | varchar(81) | NO | | | 锁id
@@ -68,6 +70,7 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 
 ## innodb_lock_waits
 锁等待的对应关系
+
 | Field				| Type			| Null 	| Key 	| Default	| Extra				|
 | -- | --	| -- | -- | -- | -- |
 | requesting_trx_id	| varchar(18) 	| NO 	|		|			| 请求锁的事务ID 		|
