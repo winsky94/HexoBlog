@@ -29,7 +29,7 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 
 <style>
 table th:first-of-type {  #first表示表格第一列
-    width: 10%; # 可使用%比例
+    width: 30%;
 }
 </style>
 
