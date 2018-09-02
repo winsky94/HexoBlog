@@ -26,8 +26,8 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 
 ## innodb_trx
 当前运行的所有事务
-| Field	| Type | Null | Key | Default | Extra |
-| :--------: | :--------: | :--: | :-: | :--------: | :--------: |
+| Field | Type | Null | Key | Default | Extra |
+| :--------:| :--------: | :--: | :--: | :--------: | :--------: |
 | trx_id | varchar(18) | NO | | | 事务ID |
 | trx_state | varchar(13) | NO | | | 事务状态 |
 | trx_started | datetime | NO | | 0000-00-00 00:00:00 | 事务开始时间 |
@@ -68,12 +68,12 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 
 ## innodb_lock_waits
 锁等待的对应关系
-| Field	| Type | Null | Key | Default | Extra |
-| :----: | :----: | :--: | :--: | :----: | :----: |
-| requesting_trx_id | varchar(18) | NO |  |  | 请求锁的事务ID |
-| requested_lock_id | varchar(81) | NO |  |  | 请求锁的锁ID |
-| blocking_trx_id | varchar(18) | NO |  |  | 当前拥有锁的事务ID |
-| blocking_lock_id | varchar(81) | NO |  |  | 当前拥有锁的锁ID |
+| Field				| Type			| Null 	| Key 	| Default	| Extra				|
+| :----: 			| :----: 		| :--:	| :--:	| :----:	| :----:			|
+| requesting_trx_id	| varchar(18) 	| NO 	|		|			| 请求锁的事务ID 		|
+| requested_lock_id	| varchar(81) 	| NO 	|		|			| 请求锁的锁ID 		|
+| blocking_trx_id 	| varchar(18) 	| NO 	|		|			| 当前拥有锁的事务ID 	|
+| blocking_lock_id	| varchar(81) 	| NO 	|		|			| 当前拥有锁的锁ID 	|
 
 # 案例演示
 ** 第一步，创建测试表，并插入测试数据 **
