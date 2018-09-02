@@ -26,63 +26,19 @@ information_schema中的三个表记录了事务和锁的相关的记录，三�
 
 ## innodb_trx
 当前运行的所有事务
-
-<style>
-table th:first-of-type {  #first表示表格第一列
-    width: 30%;
-}
-</style>
-
-| Field | Type | Null | Key | Default | Extra |
-|--------|--------|--|--|--------|--------|
-| trx_id | varchar(18) | NO | | | 事务ID |
-| trx_state | varchar(13) | NO | | | 事务状态 |
-| trx_started | datetime | NO | | 0000-00-00 00:00:00 | 事务开始时间 |
-| trx_requested_lock_id | varchar(81) | YES |  | NULL | innodb_locks.lock_id |
-| trx_wait_started | datetime | YES |  | NULL | 事务开始等待的时间 |
-| trx_weight | bigint(21) unsigned | NO |  | 0 | 事务权重 |
-| trx_mysql_thread_id | bigint(21) unsigned | NO |  | 0 | 事务线程ID |
-| trx_query | varchar(1024) | YES |  | NULL | 具体SQL语句 |
-| trx_operation_state | varchar(64) | YES |  | NULL | 事务当前操作状态 |
-| trx_tables_in_use | bigint(21) unsigned | NO |  | 0 | 事务中有多少个表被使用 |
-| trx_tables_locked | (21) unsigned | NO |  | 0 | 事务拥有多少个锁 |
-| trx_lock_structs | bigint(21) unsigned | NO |  | 0 |  |
-| trx_lock_memory_bytes | bigint(21) unsigned | NO |  | 0 | 事务锁住的内存大小（B） |
-| trx_rows_locked | bigint(21) unsigned | NO |  | 0 | 事务锁住的行数 |
-| trx_rows_modified | bigint(21) unsigned | NO |  | 0 | 事务更改的行数 |
-| trx_concurrency_tickets | bigint(21) unsigned | NO |  | 0 | 事务并发票数 |
-| trx_isolation_level | varchar(16) | NO |  |  | 事务隔离级别 |
-| trx_unique_checks | int(1) | NO |  | 0 | 是否唯一性检查 |
-| trx_foreign_key_checks | int(1) | NO |  | 0 | 是否外键检查 |
-| trx_last_foreign_key_error | varchar(256) | YES |  | NULL | 最后的外键错误 |
-| trx_adaptive_hash_latched | int(1) | NO |  | 0 |  |
-| trx_adaptive_hash_timeout | bigint(21) unsigned | NO |  | 0 |  |
+![innodb_trx](https://pic.winsky.wang/images/2018/09/02/innodb_trx.png)
 
 ## innodb_locks
 当前出现的锁
-
-| Field	| Type | Null | Key | Default | Extra |
-| :----: | :----: | :--: | :--: | :----: | :----: |
-| lock_id | varchar(81) | NO | | | 锁id
-| lock_trx_id | varchar(18) | NO | | | 拥有锁的事务id
-| lock_mode | varchar(32) | NO | | | 锁模式
-| lock_type | varchar(32) | NO | | | 锁类型
-| lock_table | varchar(1024) | NO | | | 被锁的表
-| lock_index | varchar(1024) | YES | | NULL | 被锁的索引
-| lock_space | bigint(21) unsigned | YES | | NULL | 被锁的表空间号
-| lock_page | bigint(21) unsigned | YES | | NULL | 被锁的页号
-| lock_rec | bigint(21) unsigned | YES | | NULL | 被锁的记录号
-| lock_data | varchar(8192) | YES | | NULL | 被锁的数据
+![innodb_locks](https://pic.winsky.wang/images/2018/09/02/innodb_locks.png)
 
 ## innodb_lock_waits
 锁等待的对应关系
 
-| Field				| Type			| Null 	| Key 	| Default	| Extra				|
-|:-----------------:|:-----------:	|:--:	|:--:	|:--:		|:-----------------:|
-| requesting_trx_id	| varchar(18) 	| NO 	|		|			| 请求锁的事务ID 		|
-| requested_lock_id	| varchar(81) 	| NO 	|		|			| 请求锁的锁ID 		|
-| blocking_trx_id 	| varchar(18) 	| NO 	|		|			| 当前拥有锁的事务ID 	|
-| blocking_lock_id	| varchar(81) 	| NO 	|		|			| 当前拥有锁的锁ID 	|
+![innodb_lock_waits](https://pic.winsky.wang/images/2018/09/02/innodb_lock_waits.png)
+
+
+
 
 # 案例演示
 ** 第一步，创建测试表，并插入测试数据 **
