@@ -9,14 +9,12 @@ categories:
   - 爬虫
 ---
 
-
-
 之前在公司实习的时候，做过一个QQ音乐歌词爬虫的项目，期间网上找了不少参考资料，自己也研究过QQ音乐的js解析，这里简单做个记录，以供以后参考。
 
 <!-- more -->
 
 # 单曲搜索接口
-###访问链接
+### 访问链接
 ```
 http://c.y.qq.com/soso/fcgi-bin/search_cp?t=0&aggr=1&cr=1&catZhida=1&lossless=0&flag_qc=0&p=1&w=#{1}&n=#{2}&g_tk=938407465&loginUin=0&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0
 ```
