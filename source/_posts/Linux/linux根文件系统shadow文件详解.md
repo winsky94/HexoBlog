@@ -1,5 +1,5 @@
 ---
-title:linux根文件系统 /etc/shadow文件详解
+title:linux根文件系统shadow文件详解
 date: 2018-03-27 21:25:14
 updated: 2018-03-27 21:25:14
 tags:
