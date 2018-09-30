@@ -15,7 +15,7 @@ categories:
 
 Linux中/etc/shadow文件中的记录行与/etc/passwd中的一一对应，它由pwconv命令根据/etc/passwd中的数据自动产生。
 
-<-- more -->
+<!-- more -->
 
 /etc/shadow文件格式与/etc/passwd类似，由若干个字段组成，字段之间用“:”隔开。这些字段是：
 登录名:加密口令:最后一次修改时间:最小时间间隔:最大时间间隔:警告时间:不活动时间:失效时间:标志
