@@ -1,7 +1,7 @@
 ---
 title: 自动将更新部署到VPS
 date: 2018-02-10 11:55:23
-updated: 2018-02-10 11:55:23
+updated: 2019-01-05 2155:23
 tags:
 	- HEXO
   	- 博客
@@ -17,6 +17,14 @@ categories:
 在这个过程中，每次需要更新，我都是直接手动将文件拖到VPS上的。作为一个“懒人”，这个过程还是太烦了。今天我们就来学习一下如何自动将博客部署到VPS上。
 
 <!-- more -->
+
+> 2019-01-05 更新
+
+推荐直接在VPS上部署静态页面，访问速度更快，修改参照[Hexo自动部署优化————解决TTFB过长的问题][7]
+
+---
+
+
 这篇文章重点介绍如何通过git webhooks实现远程vps的自动部署
 
 具体流程：先在本机搭建好hexo环境，push到git仓库，再部署到服务器上
@@ -174,7 +182,7 @@ pm2 start /home/blog/webhooks.js
 ```
 
 ## 自启动
-参考[服务器重启后自动运行hexo服务][]
+参考[服务器重启后自动运行hexo服务][6]
 
 
 > [快速搭建Hexo博客+webhook自动部署+全站HTTPS](http://www.gaoshilei.com/2017/10/30/hexo-init/)
@@ -184,9 +192,10 @@ pm2 start /home/blog/webhooks.js
 > [使用Github的webhooks进行网站自动化部署](https://aotu.io/notes/2016/01/07/auto-deploy-website-by-webhooks-of-github/index.html)
 
 
-[1]: https://bwh1.net/aff.php?aff=29080 "搬瓦工VPS"
+[1]: https://bwh8.net/aff.php?aff=29080 "搬瓦工VPS"
 [2]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2Hexo%E6%90%AD%E5%BB%BA/ "快速搭建自己的个人博客"
 [3]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/Hexo%E5%8D%9A%E5%AE%A2Next%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/ "主题美化"
 [4]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E8%AE%A9%E8%B0%B7%E6%AD%8C%E5%92%8C%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/ "SEO优化"
 [5]: http://blog.csdn.net/oDeviloo/article/details/52654590 "GitHub的SSH提交配置"
-[6]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%90%AF%E5%8A%A8/ "博客自启动"
+[6]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/博客自启动/ "博客自启动"
+[7]: https://blog.winsky.wang/Hexo博客/Hexo自动部署优化——解决TTFB过长的问题/ "Hexo自动部署优化——解决TTFB过长的问题"
