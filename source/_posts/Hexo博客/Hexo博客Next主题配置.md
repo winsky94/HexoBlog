@@ -298,7 +298,7 @@ fontawesome: https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome
 - 按照表单填写信息，记住`Website Name`这条属性，配置文件中需要用到
 - 接下来按照指引填写信息（基本都是默认就行）
 - 安装过程中会出现下面页面，这里面会有disqus在不同博客系统上或者其他系统上对应的代码。因为hexo自带支持disqus，所以不需要这里面的代码，这个页面的内容会在其他除hexo之外的博客系统中用到，如果是hexo搭建博客disqus，可以跳过
-![image](http://img.blog.csdn.net/20160220003532601)
+![image](https://pic.winsky.wang/images/2019/01/05/20160220003532601.png)
 - 接下来配置主题下面的`config.yml`文件
 ```
 # Disqus
