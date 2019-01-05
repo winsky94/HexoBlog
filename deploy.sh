@@ -1,4 +1,3 @@
-cd /home/blog/
+cd /home/blog/HexoBlog
 git reset --hard
-git pull origin master  
-hexo generate && gulp
+git pull origin master
