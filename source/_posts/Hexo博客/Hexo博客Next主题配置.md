@@ -364,6 +364,6 @@ local_search:
 > [Github 搭建 hexo （四）——更换主题，disqus，RSS](http://blog.csdn.net/u010053344/article/details/50701191)
 
 
-[1]: https://bwh1.net/aff.php?aff=24742 "搬瓦工VPS"
+[1]: https://bwh8.net/aff.php?aff=24742 "搬瓦工VPS"
 [2]: https://blog.winsky.wang/Hexo%E5%8D%9A%E5%AE%A2/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2Hexo%E6%90%AD%E5%BB%BA/ "快速搭建自己的个人博客"
 [不蒜子]: http://ibruce.info/2015/04/04/busuanzi/ "不蒜子"
