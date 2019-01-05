@@ -5,7 +5,7 @@ do
     read -p "请先输入更新内容:" msg
 done
 
-echo "提交内容 $msg"
+echo "提交内容： $msg"
 
 cd /Users/winsky/Documents/project/blog/
 echo '开始部署'
