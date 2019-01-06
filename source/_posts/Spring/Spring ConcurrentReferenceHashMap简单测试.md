@@ -15,7 +15,7 @@ categories:
 
 <!-- more -->
 
-ConcurrentReferenceHashMap是自spring3.2后增加的一个同步的软(虚)引用Map。关于软引用(SoftRefrence)和虚引用(WeakRefrence可以参见[Java四种引用类型[1]。废话不多说直接上测试代码:
+ConcurrentReferenceHashMap是自spring3.2后增加的一个同步的软(虚)引用Map。关于软引用(SoftRefrence)和虚引用(WeakRefrence可以参见[Java四种引用类型][1]。废话不多说直接上测试代码:
 
 ```Java
 @Test
@@ -44,4 +44,4 @@ public void test() throws InterruptedException {
 
 
 
-[1]: "Java四种引用类型"
+[1]: https://blog.csdn.net/qq_23547831/article/details/46505287 "Java四种引用类型"
