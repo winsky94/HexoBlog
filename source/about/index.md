@@ -42,8 +42,8 @@ date: 2018-02-04 22:03:53
 [Disqus]: https://disqus.com/ "Disqus"
 [不蒜子]: http://ibruce.info/2015/04/04/busuanzi/ "不蒜子"
 [1]: http://software.nju.edu.cn/ "南京大学软件学院"
-[2]: https://bwh1.net/aff.php?aff=29080 "搬瓦工VPS"
+[2]: http://su.frees.gq/bwh "搬瓦工VPS"
 [3]: https://hexo.io/zh-cn/docs/ "Hexo 中文文档"
 [4]: http://theme-next.iissnan.com/ "Next主题中文文档"
-[5]: https://blog.winsky.wang/2018/02/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2Hexo%E6%90%AD%E5%BB%BA/ "个人博客Hexo搭建"
+[5]: https://blog.winsky.wang/Hexo博客/个人博客Hexo搭建/ "个人博客Hexo搭建"
 
