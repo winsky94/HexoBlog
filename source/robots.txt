@@ -2,11 +2,5 @@ User-agent: *
 Allow: /
 Allow: /archives/
 
-Disallow: /js/
-Disallow: /css/
-Disallow: /fonts/
-Disallow: /lib/
-Disallow: /fancybox/
-
 Sitemap: https://blog.winsky.wang/sitemap.xml
 Sitemap: https://blog.winsky.wang/baidusitemap.xml
