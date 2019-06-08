@@ -1,7 +1,7 @@
 ---
 title: 给自己的网站加上HTTPS
 date: 2018-02-11 10:24:13
-updated: 2018-02-12 11:30:34
+updated: 2019-06-08 11:30:34
 tags:
   - HTTPS
 categories: 
@@ -65,6 +65,8 @@ server
 }
 ```
 
+> 最新的Nginx配置文件可以查看[Hexo自动部署优化——解决TTFB过长的问题](https://blog.winsky.wang/Hexo博客/Hexo自动部署优化——解决TTFB过长的问题/)
+
 # 自动更新SSL证书
 `Let's Encrypt`提供的证书只有90天的有效期，我们必须在证书到期之前，重新获取这些证书，`certbot`给我们提供了一个很方便的命令，那就是`certbot renew`。
 通过这个命令，他会自动检查系统内的证书，并且自动更新这些证书。
@@ -81,10 +83,13 @@ All renewal attempts failed. The following certs could not be renewed:
 
 新建了一个文件`/home/certbot/certbot_auto_renew.sh`
 ```
-certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
+SHELL=/bin/bash
+PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+/bin/certbot renew --pre-hook "/sbin/service nginx stop" --post-hook "/sbin/service nginx start"
 ```
 - `--pre-hook`这个参数表示执行更新操作之前要做的事情
 - `--post-hook`这个参数表示执行更新操作完成后要做的事情
+- 2019-06-08更新，加上path参数避免定时任务找不到命令
 
 使用`chmod u+x /home/certbot/certbot_auto_renew.sh`赋予权限
 
