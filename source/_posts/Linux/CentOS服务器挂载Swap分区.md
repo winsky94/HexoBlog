@@ -93,5 +93,19 @@ vim /etc/sysctl.conf
 
 现在查看，Swap就可以被使用了。
 
+# 删除swap分区
+## 1.首先将Swap文件取消激活：
+```
+swapoff /var/swap
+```
+
+## 2.然后删除设置的Swap文件
+```
+rm -rf /var/swap
+```
+
+## 3.最后取消自动挂载
+编辑`/etc/fstab`中新增的一行自动挂载配置
+
 
 
