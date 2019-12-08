@@ -19,6 +19,8 @@ install:
 before_script:
 - git config --global user.name "winsky"
 - git config --global user.email "winsky94@163.com"
+- sed -i'' "s~git@github.com:winsky94/HexoBlog.git~https://${acces_token}:x-oauth-basic@github.com/winsky94/HexoBlog.git~" _config.yml
+
 script:
 - hexo clean
 - hexo generate
