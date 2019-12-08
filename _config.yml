@@ -105,3 +105,10 @@ search:
 
 # 字数统计
 word_count: true
+
+# hexo-admin authentification
+admin:
+  username: admin
+  password_hash: $2a$10$IHrVR4qfvrtC2qatnSPSau2vzNwkfotxES.koMSFspRwnvXmN3WLq
+  secret: blog_secret
+  deployCommand: './hexo-admin-deploy.sh'
