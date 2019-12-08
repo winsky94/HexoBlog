@@ -23,7 +23,7 @@ script:
 - hexo clean
 - hexo generate
 after_success:
-- git push -f "https://${acces_token}@${GH_REF}" master:master
+- git push -f "https://${acces_token}@${GH_REF}" origin:master
 env:
  global:
    - GH_REF: github.com/winsky94/HexoBlog
