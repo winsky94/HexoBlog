@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+- 9.3.0
+git:
+  submodules: false
+cache:
+  directories:
+  - blog/node_modules
+  - node_modules
+branches:
+  only:
+  - dev
+before_install:
+- export TZ='Asia/Shanghai'
+- npm install
+- npm install -g hexo-cli
+before_script:
+- git config --global user.name "winsky"
+- git config --global user.email "winsky94@163.com"
+script:
+- hexo clean
+- hexo generate
+after_success:
+- hexo deploy
