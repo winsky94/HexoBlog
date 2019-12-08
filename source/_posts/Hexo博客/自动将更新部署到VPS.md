@@ -1,15 +1,13 @@
----
 title: 自动将更新部署到VPS
-date: 2018-02-10 11:55:23
-updated: 2019-01-05 2155:23
+updated: '2019-01-05 2155:23'
 tags:
-	- HEXO
-  	- 博客
-  	- 部署
-categories: 
-	- Hexo博客
+  - HEXO
+  - 博客
+  - 部署
+categories:
+  - Hexo博客
+date: 2018-02-10 11:55:23
 ---
-
 博客雏形搭建好了之后，又浪了几天没有折腾。昨天晚上自己买了个域名，想着是时候好好把博客完善起来了。下面继续开始折腾...
 
 前面我们介绍了如何在[搬瓦工VPS][1]上[快速搭建自己的个人博客][2]，做了相关的[主题美化][3]，同时也进行了简单的[SEO优化][4]。
@@ -86,11 +84,11 @@ server
     server_name blog.winsky.wang ;
 
 	location / {
-    proxy_set_header HOST $host;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_pass http://localhost:4000/;
+    	proxy_set_header HOST $host;
+    	proxy_set_header X-Forwarded-Proto $scheme;
+    	proxy_set_header X-Real-IP $remote_addr;
+    	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    	proxy_pass http://localhost:4000/;
   }
 }
 ```
