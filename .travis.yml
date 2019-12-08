@@ -26,7 +26,4 @@ script:
 - hexo generate
 after_success:
 # - git push -f "https://${acces_token}@${GH_REF}" origin:master
-- hexo deploy 
-env:
- global:
-   - GH_REF: github.com/winsky94/HexoBlog
+- hexo deploy

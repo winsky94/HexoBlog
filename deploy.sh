@@ -1,3 +1,3 @@
-cd /home/blog/HexoBlog
-git reset --hard
-git pull origin master
+cd /home/blog/
+rm -rf HexoBlog/
+git clone -b master git@github.com:winsky94/HexoBlog.git
