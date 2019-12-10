@@ -599,11 +599,11 @@ busuanzi_count:
   enable: true
   # custom uv span for the whole site
   site_uv: true
-  site_uv_header: <i class="fa fa-user"> 网站总访客数 </i>
+  site_uv_header: <i class="fa fa-user"></i> 网站总访客数 
   site_uv_footer: 人
   # custom pv span for the whole site
   site_pv: true
-  site_pv_header: <i class="fa fa-eye"> 总访问量 </i>
+  site_pv_header: <i class="fa fa-eye"></i> 总访问量 
   site_pv_footer: 次
   # custom pv span for one page only
   page_pv: true
