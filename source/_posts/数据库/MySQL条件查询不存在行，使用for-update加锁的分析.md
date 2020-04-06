@@ -1,4 +1,4 @@
-title: 数据库/MySQL条件查询不存在行，使用for update加锁的分析
+title: MySQL条件查询不存在行，使用for update加锁的分析
 author: winsky
 tags:
   - MySQL
