@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="读书笔记,">
+
+
+<meta name="description" content="《人月神话》在软件领域具有深远影响力，畅销不衰，很少有其他书籍等比得上它。 Brooks博士为人们管理复杂项目提供了最具洞察力的见解，其中既有许多发人深省的观点，又有大量软件工程的实践，适合任何软件开发行业的从业人员阅读，对软件开发工程师、软件项目经理和系统分析师更是必读之作。">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人月神话读书笔记">
+<meta property="og:url" content="https://blog.winsky.wang/读书笔记/人月神话读书笔记/index.html">
+<meta property="og:site_name" content="winsky小站">
+<meta property="og:description" content="《人月神话》在软件领域具有深远影响力，畅销不衰，很少有其他书籍等比得上它。 Brooks博士为人们管理复杂项目提供了最具洞察力的见解，其中既有许多发人深省的观点，又有大量软件工程的实践，适合任何软件开发行业的从业人员阅读，对软件开发工程师、软件项目经理和系统分析师更是必读之作。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-14T06:24:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="人月神话读书笔记">
+<meta name="twitter:description" content="《人月神话》在软件领域具有深远影响力，畅销不衰，很少有其他书籍等比得上它。 Brooks博士为人们管理复杂项目提供了最具洞察力的见解，其中既有许多发人深省的观点，又有大量软件工程的实践，适合任何软件开发行业的从业人员阅读，对软件开发工程师、软件项目经理和系统分析师更是必读之作。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.winsky.wang/读书笔记/人月神话读书笔记/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>人月神话读书笔记 | winsky小站</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113502967-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113502967-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7eac22d54f7284a1b355880cd286181d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">winsky小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Good Good Study,  Day Day Up</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.winsky.wang/读书笔记/人月神话读书笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="winsky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="winsky小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">人月神话读书笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-14T14:24:14+08:00">2018-02-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/读书笔记/人月神话读书笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="读书笔记/人月神话读书笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《人月神话》在软件领域具有深远影响力，畅销不衰，很少有其他书籍等比得上它。</p>
+<p>Brooks博士为人们管理复杂项目提供了最具洞察力的见解，其中既有许多发人深省的观点，又有大量软件工程的实践，适合任何软件开发行业的从业人员阅读，对软件开发工程师、软件项目经理和系统分析师更是必读之作。</p>
+<a id="more"></a>
+<p>虽然0S/360失败了，但是它在开发的过程中解决了很多技术难题。它的开发过程成就了这本《人月神话》。这也让我想明白为什么大家都会觉得在项目实践中我们才可以学到更多。没有项目，你不会去想有什么问题。但是在项目中遇到问题的话，你最好的求助方式是网络和书籍，而且如果在遇到问题的时候能深入研究书籍的话你才会进步的比较快。</p>
+<p>书中一再强调文档的重要性。想起我们曾自称“九乡河文档学院”，现在终于明白了为什么本科期间的项目要求写那么多完备的文档出来。</p>
+<ul>
+<li>要保证一个项目的进度不被大幅度推迟，制定进度表很重要。</li>
+</ul>
+<p>回想起我们本科期间的最大的一次延期，就是参加EL比赛的时候，由于小组内大家都没有提出一个时间节点，导致项目无限延期，最终比赛也就直接退出了。</p>
+<p>吃过这个教训后，后来我们再组队完成各项大作业的时候，总是制定了严格的进度表，正常这个进度表会比老师给出的作业的DDL提前一两天，以留出机动时间。有了合格的进度表并遵照执行后，最终我们的各个大作业都取得很好的结果，没有出现临近DDL匆匆忙忙赶工的情形。</p>
+<p>现在结合前一年实习的经验，我觉得制定进度表非常重要，而且要求制定者有很强的技术背景，这样才能对碰到的问题和可能花掉的时间做出更准确的估计。</p>
+<h1 id="本书要点"><a href="#本书要点" class="headerlink" title="本书要点"></a>本书要点</h1><p>这本书的内容来自作者在IBM公司担任System/360计算机系列以及其庞大的软件系统OS/360项目经理时的实践经验。这个项目堪称软件开发项目管理的典范。</p>
+<p>大型编程项目深受由于人力划分产生的管理问题的困扰，保持产品本身的概念完整性是一个至关重要的需求。本书探索了达成一致性的困难和解决的方法，并探讨了软件工程管理的其他方面。</p>
+<p>全书着重回答了对 Tom Watson关于为什么编程难以管理的探索性问题。</p>
+<p>大部分内容都是涉及到团队，人和沟通。对于大型软件工程项目，强调人的重要性。在开篇讲开发人员的职业乐趣，后面又通过巴比塔的沟通重要性，在外科手术队伍中的组件和分工。这些都是涉及到团队中人和交互，只有一个有了积极心态和热情的沟通团队，才可能成就一个伟大的团队。从最后的没有银弹，再次肯定开发工作是一种高智力的脑力工作。</p>
+<h1 id="精编书摘"><a href="#精编书摘" class="headerlink" title="精编书摘"></a>精编书摘</h1><h2 id="第一章-焦油坑"><a href="#第一章-焦油坑" class="headerlink" title="第一章 焦油坑"></a>第一章 焦油坑</h2><p>编程为什么会有趣？作为回报，它的从业者期望得到什么样的快乐？</p>
+<ul>
+<li>首先，这种快乐是一种创建事物的纯粹快乐。</li>
+<li>其次，这种快乐来自于开发对他人有用的东西。</li>
+<li>第三，快乐来自于整个过程中体现出的一股强大的魅力。</li>
+<li>第四，这种快乐是持续学习的快乐，它来自这项工作的非重复特性。</li>
+<li>最后，这种快乐还来自于在易于驾驭的介质上工作。</li>
+</ul>
+<p>职业的苦恼</p>
+<ul>
+<li>首先，苦恼来自追求完美。</li>
+<li>其次，苦恼来自由他人来设定目标、供给资源和提供信息。</li>
+<li>下一个苦恼——概念性设计是有趣的，但寻找琐碎的bug却只是一项重复性的活动。</li>
+<li>最后一个苦恼，有时也是一种无奈——当投入了大量辛苦的劳动，产品在即将完成或者终于完成的时候，却显得陈旧过时。</li>
+</ul>
+<p>编程，是一个许多人痛苦挣扎的焦油坑以及一种乐趣和苦恼共存的创造性活动。</p>
+<h2 id="第二章-人月神话"><a href="#第二章-人月神话" class="headerlink" title="第二章 人月神话"></a>第二章 人月神话</h2><p>在众多软件项目中，缺乏合理的进度安排是造成项目滞后的最主要原因，它比其他所有因素加起来的影响还要大。</p>
+<p>没有计划，是不行的，任务会一拖再拖，导致最后的延期。这不单单指软件开发，还是有个人日常生活中的事。</p>
+<p>所有的编程人员都是乐观主义者，第一错误假设便是“一切都将运行良好”、“这次它肯定会运行”、“我刚刚找到出了最后一个bug”。</p>
+<p>编程人员通过非常纯粹的思维活动——概念以及灵活的表现形式来开发程序，期待在实现过程中不会碰到困难。这也就造成了乐观主义的弥漫。</p>
+<p>单个任务中的“一切都将运转正常”的假设在进度上具有可实现性。</p>
+<p>然而大型的编程工作，或多或少包含了许多任务，某些任务时间还具有前后的次序，一切正常的概率变得非常小，甚至接近于零。</p>
+<p>在估计和进度安排中，混淆了工作量和项目进展。人月是危险和带有欺骗性的神话，因为它暗示了人员数量和时间是可以相互替换的。</p>
+<p>一方面，部分任务由于次序上的限制不能分解，人手的添加对进度没有帮助。</p>
+<p>另一方面，即使是可分解的任务，子任务间需要相互沟通和交流，增加了培训和相互交流的成本。</p>
+<p>关于进度安排，我的经验是为1/3计划、1/6编码、1/4构件测试以及1/4系统测试。</p>
+<p>Brook法则：向进度落后的项目中增加人手，只会使进度更加落后。</p>
+<h2 id="第三章-外科手术队伍"><a href="#第三章-外科手术队伍" class="headerlink" title="第三章 外科手术队伍"></a>第三章 外科手术队伍</h2><p>需要协作沟通的人员数量影响着开发成本，因为成本的主要组成部分是相互的沟通和交流，以及更正沟通不当所引起的不良结果（系统调试）。</p>
+<p>小型、精干队伍是最好的——尽可能的少</p>
+<p>小型、精干队伍概念上存在着一定的问题：对于真正意义上的大型系统，它太慢了。</p>
+<p>整个系统必须具备概念上的完整性，要有一个系统架构师从上至下地进行所有的设计。要使工作易于管理，必须清晰地划分体系结设计和实现之间的界线，系统架构师必须一丝不苟地专注于体系结构。</p>
+<h2 id="第四章-贵族专制、民主政治和系统设计"><a href="#第四章-贵族专制、民主政治和系统设计" class="headerlink" title="第四章 贵族专制、民主政治和系统设计"></a>第四章 贵族专制、民主政治和系统设计</h2><p>在系统设计中，概念完整性应该是最重要的考虑因素。也就是说，为了反映一系列连贯的设计思路，宁可省略一些不规则的特性和改进，也不提倡独立和无法整合的系统，哪怕它们其实包含着许多很好的设计。</p>
+<p>以易用性作为目标，功能与理解上复杂程度的比值才是系统设计的最终测试标准。单是功能本身或者简洁都无法成为一个好的设计评判标准。</p>
+<p>外部的体系结构规定实际上是增强，而不是限制实现小组的创造性。</p>
+<p>整个创造性的活动包括了三个独立的阶段：体系结构（architecture）、设计实现（implementation）和物理实现（realization）。是在实际情况中，它们往往可以同时开始和并发地进行。</p>
+<h2 id="第五章-画蛇添足"><a href="#第五章-画蛇添足" class="headerlink" title="第五章 画蛇添足"></a>第五章 画蛇添足</h2><p>尽早交流和持续沟通能使结构师有较好的成本意识，以及使开发人员获得对设计的信心，并且不会混淆各自的责任分工。</p>
+<p>结构师如何成功地影响实现：</p>
+<ul>
+<li>牢记是开发人员承担创造性和发明性的实现责任，所以结构师只能建议，而不能支配</li>
+<li>时刻准备着为所指定的说明建议一种实现的方法，同样准备接受其他任何能达到目标的方法</li>
+<li>对上述的建议保持低调和不公开</li>
+<li>准备放弃坚持所作的修改意见</li>
+</ul>
+<h2 id="第六章-贯彻执行"><a href="#第六章-贯彻执行" class="headerlink" title="第六章 贯彻执行"></a>第六章 贯彻执行</h2><p>规格说明作者应该追求的精确程度：在仔细定义规定什么的同时，定义未规定什么。</p>
+<p>项目经理最好的朋友就是他每天要面对的对手——独立的产品测试机构/小组</p>
+<h2 id="第七章-为什么巴比伦塔会失败"><a href="#第七章-为什么巴比伦塔会失败" class="headerlink" title="第七章 为什么巴比伦塔会失败"></a>第七章 为什么巴比伦塔会失败</h2><p>巴比伦塔失败是因为缺乏交流以及交流的结果——组织。</p>
+<p>因为左手不知道右手在做什么，所以进度灾难、功能的不合理和系统缺陷纷纷出现。</p>
+<p>尤其是当多个团队负责一个项目的时候，这种情况最容易出现。但是太多的交流（比如开会），也是在浪费时间，更加不能不得到正确的策略。</p>
+<p>在文件中，记录修订日期记录和标记变更标识条。每日维护的变更小结以“后进先出（LIFO）”的方式保存，在一个固定的地方提供访问。</p>
+<p>值得注意的是，工作手册本身没有发生变化。它还是所有项目文档的集合，根据某种经过细致设计的规则组织在一。唯一发生改变的地方是分发机制和查询方法。</p>
+<p>巴比伦塔可能是第一个工程上的彻底失败，但它不是最后一个。交流和交流的结果——组织，是成功的关键。交流和组织的技能需要管理者仔细考虑，相关经验的积累和能力的提高同软件技术本身一样重要。</p>
+<h2 id="第八章-胸有成竹"><a href="#第八章-胸有成竹" class="headerlink" title="第八章 胸有成竹"></a>第八章 胸有成竹</h2><p>仅仅通过对编码部分的估计，然后应用任务其他部分的相应系数，是无法得到对整个任务的估计的。</p>
+<p>构建独立小型程序的数据不适用于编程系统产品。</p>
+<p>工作量是规模的幂函数</p>
+<p>对常用的编程语句而言，生产率似乎是固定的。这个固定的生产率包括了编程中需要的注释，并可能存在错误的情况。</p>
+<p>使用适当的高级语言，编程的生产效率可以提高5倍。</p>
+<p>高级语言确实更容易实现和表达人的思维。</p>
+<h2 id="第九章-削足适履"><a href="#第九章-削足适履" class="headerlink" title="第九章 削足适履"></a>第九章 削足适履</h2><p>没有人可以在自始至终提倡更紧密的软硬件设计集成的同时，又仅仅就规模本身对软件系统提出批评。</p>
+<p>仅对核心程序设定规模目标是不够的，必须把所有方面的规模都编入预算。</p>
+<p>在指明模块有多大的同时，确切定义模块的功能。</p>
+<p>在大型团队中，每个团队成员都倾向于局部优化自己的程序，而不考虑对用户的整体影响。</p>
+<p>在整个实现的过程期间，系统结构师必须保持持续的警觉，确保连贯的系统完整性。</p>
+<p>在这种监督机制之外，是实现人员自身的态度问题。培养开发人员从系统整体出发、面向用户的态度是软件编程管理人员最重要的职能。</p>
+<p>项目经理可以做两件事来帮助他的团队去的良好的空间-时间折衷。</p>
+<p>一是确保他们在编程技能上得到培训，而不仅仅是依赖他们自己的才能和先前的经验。</p>
+<p>另一种方法是认识到编程需要技术积累，需要开发很多公共单元构件。</p>
+<p>精湛的技艺出自创造，精炼、充分和快速的程序也是如此。技艺改进的结果往往是战略上的突破，而不仅仅是技巧上的提高。更普遍的是，战略上突破常来自数字局或表的重新表达——这是程序核心所在。</p>
+<h2 id="第十章-提纲挈领"><a href="#第十章-提纲挈领" class="headerlink" title="第十章 提纲挈领"></a>第十章 提纲挈领</h2><p>每份文档的准备工作是集中考虑，并使各种讨论意见明朗化的主要时刻。不过不这样，项目往往会处于无休止的混乱状态中。文档的跟踪维护是项目监督和预警的机制。文档本身可以作为检查列表、状态控制，也可以作为汇报的数据基础。</p>
+<p>为什么要有正式的文档？</p>
+<ul>
+<li>首先，书面记录决策是必要的。只有记录下来，分歧才会明朗，矛盾才会突出。</li>
+<li>第二，文档能够作为同其他人的沟通渠道。</li>
+<li>最后，项目经理的文档可以作为数据基础和检查列表。</li>
+</ul>
+<p>项目经理的基本职责是使每个人都向着相同的方向前进。他的主要工作是沟通，而不是做出决定。</p>
+<h2 id="第十一章-未雨绸缪"><a href="#第十一章-未雨绸缪" class="headerlink" title="第十一章 未雨绸缪"></a>第十一章 未雨绸缪</h2><p>在软件开发的过程中，往往第一个系统存在的问题挺多，它可能太慢、太大，而且难以使用，或者三者兼而有之。要将诶绝所有的问题，除了重新开始意外，没有其他的办法。系统的丢弃和重新设计可以一步完成，也可以一块块地实现。这是所有大型系统开发必须完成的步骤。</p>
+<p>为舍弃而计划，无论如何，你一定要这样做。</p>
+<p>变化是与生俱来的，不是不合时宜和令人生厌的异常情况。</p>
+<p>用户的实际需要和用户感觉会随着程序的构建、测试和使用而变化。</p>
+<p>软件产品易于掌握的特性和不可见性，导致它的构建人员面临永恒的需求变更。</p>
+<p>抛弃原型概念本身就是对事实的接受——随着学习的过程更改设计。</p>
+<p>对于一个广泛使用的程序，其维护总成本通常是开发成本的40%或更多。</p>
+<p>程序维护中的一个基本问题是——缺陷修复总会以固定（20%~50%）的几率引入新的bug。整个过程是前进两步，后退一步。</p>
+<p>系统软件开发是减少混乱度（减少熵）的过程，所以他本身是处于亚稳态的。</p>
+<p>软件维护是提高混乱度（增加熵）的过程，即使是最熟练的软件维护工作们也只是放缓了系统退化到非稳态的进程。</p>
+<h2 id="第十二章-干将莫邪"><a href="#第十二章-干将莫邪" class="headerlink" title="第十二章 干将莫邪"></a>第十二章 干将莫邪</h2><p>项目经理应该制定一套策略，并为通用工具的开发分配资源。与此同时，他还必须意识到对专业工具的需求，对这类工具的开发不能吝啬人力和物力。</p>
+<p>使用高级语言的主要原因是生产率和调试速度：存在更少的bug，而且更容易查找。</p>
+<p>在某些应用上，批处理系统绝不会被交互式系统所取代。</p>
+<p>调试是系统编程中很慢和较困难的部分，而漫长的调试周转时间是调试的祸根。</p>
+<h2 id="第十三章-整体部分"><a href="#第十三章-整体部分" class="headerlink" title="第十三章 整体部分"></a>第十三章 整体部分</h2><p>产品的概念完整性在使它易于使用的同时，也使开发更容易进行，而且bug更不容易产生。</p>
+<p>关键的工作是产品定义。</p>
+<p>许许多都的失败完全是因为那些产品未精确定义的地方而导致的。</p>
+<p>细致的功能定义、仔细的规格说明、规范化的功能描述说明以及这些方法的实施，大大减少了系统中必须查找的bug数量。</p>
+<p>在编写任何代码之前，规格说明必须提交给外部测试小组，以详细地检查说明的完整性和明确性。</p>
+<p>好的自上而下设计从几个方面避免了bug.</p>
+<ul>
+<li>首先，清晰的结构和表达方式更容易对需求和模块功能进行精确地描述。</li>
+<li>其次，模块切割和模块独立性避免了系统级的bug。</li>
+<li>第三，细节的抑制使结构上的缺陷更加容易识别。</li>
+<li>第四，设计在每个精化步骤上都是可以测试的，所以测试可以今早开始，并且每个步骤的重点可以放在合适的级别上。</li>
+</ul>
+<p>当遇到一些意想不到的问题时，按部就班的流程并不意味着步骤不能逆转，直到推翻顶层设计，重新开始整个过程。</p>
+<p>关键的地方和构建无bug程序的核心，是把系统的结构作为控制结构来考虑，而不是独立的分支语句。</p>
+<p>在每次调试会话中，第一次交互取得的工作进展是后续交互的3倍。</p>
+<p>软件系统开发过程中出乎意料的困难部分是系统集成测试。系统调试花费的时间会比预料的更长。</p>
+<p>直到下一次系统构件的定期发布之前都一直使用快速补丁；而在当前的发布中，把已经通过测试并进行了文档化的修补措施整合到系统平台中。</p>
+<h2 id="第十四章-祸起萧墙"><a href="#第十四章-祸起萧墙" class="headerlink" title="第十四章 祸起萧墙"></a>第十四章 祸起萧墙</h2><p>一天一天的进度落后是难以识别、不容易防范和难以弥补的。</p>
+<p>进度落后往往像温水煮青蛙一样让我们难以应付，最重要的就是要防微杜渐。</p>
+<p>重大灾害是比较容易处理的，它往往和重大的压力、彻底的重组、新技术的出现有关，整个项目组通常可以应付自如。 但是一天一天的进度落后是难以识别、不容易防范和难以弥补的。</p>
+<p>进度表上的每一件事被称为“里程碑”，它们都有一个一个日期。里程碑的选择只有一个原则，那就是里程碑必须是具体的、特定的、可度量的事件，能够进行清洗定义。</p>
+<p>里程碑边界明显和没有歧义，比它容易被老板核实更为重要。如果里程碑定义非常明确，程序员不会就里程碑的进展弄虚作假。</p>
+<p>慢性进度偏离同样也是士气杀手。一方面，时间拖久了，人心疲倦。另一方面，还要考虑当前系统是否已经过时了。</p>
+<p>进取对优秀的软件开发软对而言是非常重要的。进取提供了缓冲和储备，使开发队伍能够处理常规的灾祸，可以预计和防止小的灾祸。</p>
+<p>必须关心每一天的之后，它们是大灾祸的基本组成元素。</p>
+<p>状态的获取是困难的，一线经理有充分的理由不提供信息共享。</p>
+<p>不论协作与否，拥有能了解状态真相的评审机制是必要的，频繁、明确的里程碑是这种评审的基础，完成文档是关键。</p>
+<h2 id="第十五章-另外一面"><a href="#第十五章-另外一面" class="headerlink" title="第十五章 另外一面"></a>第十五章 另外一面</h2><p>对软件编程产品来说，程序向用户所呈现的和提供给机器识别的内容同样重要。</p>
+<p>即使是完全开发给自己使用的程序，描述性文字也是必要的。因为记忆衰退的规律会使用户-作者逐渐失去对程序的了解，于是他们不得不重拾自己劳动的各个字节。在编码过程中，恰当的注释是非常重要的。</p>
+<p>什么样的文档才是好文档：</p>
+<ol>
+<li>目的：主要的功能是什么？开发程序的原因是什么？</li>
+<li>环境：程序运行在什么样的机器、硬件配置和操作系统上</li>
+<li>范围：输入的有效范围是什么？允许显示的合法输出范围是什么？</li>
+<li>实现功能和使用的算法：精确地阐述它做了什么。</li>
+<li>输入-输出格式：必须是确切和完整的。</li>
+<li>操作指令：包括控制台及输出内容中正常和异常的结束行为。</li>
+<li>选项：用户的功能选项有哪些？如何在选项之间进行挑选？</li>
+<li>运行时间：在指定的配置下，解决特定规模问题所需要的时间？</li>
+<li>精度和校验：期望结果的精确程度？如何进行校验？</li>
+</ol>
+<p>自文档化的程序：将文档整合到源程序，这对正确维护是直接有力的推动，保证编程用户能方便、及时地得到文档资料。</p>
+<p>将文档的负担降到最小的三个方法</p>
+<ul>
+<li>第一是借助那些出于语言的要求而必须存在的语句，来附加尽可能多的文档信息。</li>
+<li>第二是尽可能地使用空格和一致的格式提高程序的可读性，表现从属和嵌套关系。</li>
+<li>第三，以段落注释的形式，向程序中插入必要的记叙性文字。</li>
+</ul>
+<h2 id="第十六章-没有银弹"><a href="#第十六章-没有银弹" class="headerlink" title="第十六章 没有银弹"></a>第十六章 没有银弹</h2><p>所有的软件活动包括根本任务——打造构成抽象软件实体的复杂概念结构，次要任务——使用编程语言表达这些抽象实体，在空间和实践限制内将它们映射成机器语言。</p>
+<p>除非次要任务占了所有工作的9/10，否则即使全部次要任务的时间缩减到零，也不会带来生产率数量级上的提高。</p>
+<p>没有任何技术或管理上的进展，能独立地许诺在生产率、可靠性或简洁性上取得数量级的提升。</p>
+<p>软件开发中困难的部分是规格说明、设计和测试这些概念上的结构，而不是对概念进行表达和对实现逼真程度进行验证。</p>
+<p>现在软件系统中无法规避的内在特性：复杂度、一致性、可变性和不可见性。</p>
+<p>软件的复杂度是根本属性，不是次要因素。因此，抽掉复杂度的软件实体描述常常也去掉了一些本质属性。</p>
+<p>复杂度不仅仅导致技术上的困难，还引发了很多管理上的问题。它使全面理解问题变 得困难，从而妨碍了概念上的完整性；它使所有离散出口难以寻找和控制；它引起了大量学习和理解上的负担，使开发慢慢演变成了一场灾难。</p>
+<p>构建软件最可能的彻底解决方案是不开发任何软件</p>
+<p>现在有很多快速开发平台，但是真正能够不写代码就完成业务功能的开发平台基本上没有成功的。特别是在业务场景比较复杂情况下，编程自动化基本是不可能的事情。唯一看到有所突破的是关于统一框架和技术平台等方面的建设，在原有的框架基础上我们来构建一个产品开发平台，将跟业务关系不大的权限模型，工作流引擎等集成进去，将常用的可复用组件集成进去，加快开发速度。</p>
+<p>不要在追求自动编程平台上下功夫，可以在加强组件复用和技术平台建设上下功夫。</p>
+<p>要多从开发模式的改进上来解决没有银弹所提出的各种实际问题，虽然不能够彻底解决，但是可以通过努力来改进。比如增量迭代的开发模型，快速原型法，测试驱动，高级语言和图形化编程等。</p>
+<p>开发软件系统的过程中，最困难的部分是确切地决定搭建什么样的系统。概念性工作中，没有其他任何一个部分比确定详细的技术需求更加困难。</p>
+<p>软件开发人员为客户所承担的最重要的职能是不断重复地抽取和细化产品的需求。事实上，客户不知道他们自己需要什么。</p>
+<p>关键的问题是如何提高软件行业的核心，一如既往的是——人员。</p>
+<p>软件开发是一个创造性的过程。</p>
+<h2 id="第十七章-再论《没有银弹》"><a href="#第十七章-再论《没有银弹》" class="headerlink" title="第十七章 再论《没有银弹》"></a>第十七章 再论《没有银弹》</h2><p>《没有银弹》无可争辩地指出，如果开发的次要部分少于整个工作的9/10，即使不占用任何时间（需要出现奇迹），也不会给生产效率带来数量级的提高。因此，必须着手解决开发的根本问题。</p>
+<p>重用和交互的构件开发是解决软件根本困难的一种方法。</p>
+<p>复杂性是层次化的。例如，复杂性是最严重的内在困难，单并不是所有的复杂性都是不可避免的。</p>
+<p>系统复杂性是无数细节的函数，这些细节必须精确而且详细地说明——或者是借助某种通用规则，或是逐一阐述，但绝不仅仅是统计说明。</p>
+<p>系统化软件开发方法的发展是为了解决质量问题（特别是避免大型的灾难），而不是出于生产率方面的考虑。</p>
+<p>定制软件包的开发，基本上今天的开源社区已经这么做了。大量的软件包被开发出来，确实提高了通用需求的开发效率。Brooks也承认，他低估了软件包客户化的程度和它的重要性。</p>
+<p>面向对象技术不会加快首次或第二次的开发，产品族中第五个项目的开发见鬼异乎寻常的迅速。</p>
+<p>极度的前期投入和收益的推后是使OO技术应用迟缓的最大原因。</p>
+<p>解决软件构建根本困的最佳方法是不进行任何开发。软件包只是实现上述目标的方法之一，另外的方法是程序重用。</p>
+<p>重用是一件说起来容易，做起来难的事情。它同时需要良好的设计和文档。即使我们看来非常罕见的优秀设计，但如果没有好的文档，我们也不会看到能重用的构件。</p>
+<p>软件重用的另一个问题是学习成本。越复杂的功能，学习成本越高。高级语言比机器语言强大，但是也更加复杂。而需要重用一个模块，则需要学习相应模块的成本。这种成本今天已经在各类专门开发职业体现出来，如后台程序员、web前端或手机客户端，不同类别的程序员差别就在于其对某一重用模块的专门知识的掌握。</p>
+<h2 id="第十九章-20年后的《人月神话》"><a href="#第十九章-20年后的《人月神话》" class="headerlink" title="第十九章 20年后的《人月神话》"></a>第十九章 20年后的《人月神话》</h2><p>一个整洁、优雅的编程产品必须向它的每位用户提供一个条理分明的模型概念，这个模型描述了应用、实现应用的方法以及用来指明操作和各种参数的用户界面使用策略。用户所感受到的产品概念完整性是易用性中最重要的因素。</p>
+<p>将体系结构和设计实现、物理实现相分离。</p>
+<p>概念完整性是产品质量的核心。拥有一位结构师是迈向概念完整性最重要的一步。</p>
+<p>为了得到完整、明确和共享的用户描述，结构师应该猜测，或者假设一系列完整的属性和频率值。</p>
+<p>为用户群的属性明确地记载各种猜测。清晰和错误都比模糊不清好得多。</p>
+<p>瀑布模型的基本谬误是它假设项目只经历一次过程，而且体系结构出色并易于使用，设计是合理可靠的，随着测试的进行，编码实现时可以修改和调整的。换句话说，瀑布模型假设所有错误发生在编码实现阶段，因此它们的修复可以很顺畅地穿插在单元和系统测试中。</p>
+<p>瀑布模型的第二个谬误是它假设整个系统一次性地被构建，在所有的设计、大部分编码、部分单元测试完成之后，才为闭环的系统测试合并各个部分。</p>
+<p>在把任何东西编程代码前，可能要往复迭代两个或更多的体系结构-设计-实现循环。</p>
+<p>原型，仅仅反映了概念模型准备过程中所做的设计决策的一个程序版本，它并未反映受显示考虑所驱使的设计决策。</p>
+<p>信息隐藏——现在常常内建于面向对象的编程中——是唯一提高软件设计水平的途径。</p>
+<p>人力（人）和时间（月）之间的平衡远不是线性关系，使用人月作为生产率的衡量标准实际是一个神话。</p>
+<p>对人月神话实际研究发现，向进度落后的项目中添加人手会增加项目的成本，但是不一定会使项目更加落后。如果在项目早期添加额外的人比在后期添加额外的人更安全些。</p>
+<p>人就是一切。</p>
+<p>公司通过将权利下放到具体的团队，事实上使得组织机构变得更加融洽和繁荣。</p>
+<p>彻底提高软件健壮性和生产率的唯一途径，是提升一个级别，使用模块或者对象组合来进行程序的开发。</p>
+<p>软件系统可能是人类创造中最错综复杂的事物，只能期待人们在力所能及的或者刚刚超越力所能及的范围内进行探索和尝试。这个复杂的行业需要：进行持续的发展；学习使用更大的要素来开发；新工具的最佳使用；经论证的工程管理方法的最佳应用；良好判断的自由发挥以及能够使我们认识到自己不足和容易犯错的谦卑。</p>
+<h1 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h1><p>Frederick P.Brooks,Jr.曾获美国计算机领域最具声望的图灵奖桂冠。美国计算机协会（ACM）称赞他“对计算机体系结构、操作系统和软件工程作出了里程碑式的贡献”。</p>
+<p>Brooks博士是北卡罗莱纳大学KENAN-FLAGLER商学院的计算机科学教授。他被认为是“IBM 360系统之父”，曾担任360系统的项目经理，以及360系统项目设计阶段的经理。凭借在此项目中的接触贡献，他与Bob Evans和Erich Bloch在1985年荣获了美国国家技术奖。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/奇技淫巧/搭建临时邮箱/" rel="next" title="搭建临时邮箱">
+                <i class="fa fa-chevron-left"></i> 搭建临时邮箱
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/读书笔记/人件读书笔记/" rel="prev" title="人件读书笔记">
+                人件读书笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="winsky">
+            
+              <p class="site-author-name" itemprop="name">winsky</p>
+              <p class="site-description motion-element" itemprop="description">生命不息，折腾不止</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/winsky94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:shunkuan.ysk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          <!-- 原版
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">
+                      winsky wiki
+                    </a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">
+                      Jestom
+                    </a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+          -->
+
+          
+          
+            <div class="links-of-blogroll motion-element">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-link fa-fw"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">winsky wiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">Jestom</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#本书要点"><span class="nav-number">1.</span> <span class="nav-text">本书要点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#精编书摘"><span class="nav-number">2.</span> <span class="nav-text">精编书摘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一章-焦油坑"><span class="nav-number">2.1.</span> <span class="nav-text">第一章 焦油坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章-人月神话"><span class="nav-number">2.2.</span> <span class="nav-text">第二章 人月神话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章-外科手术队伍"><span class="nav-number">2.3.</span> <span class="nav-text">第三章 外科手术队伍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四章-贵族专制、民主政治和系统设计"><span class="nav-number">2.4.</span> <span class="nav-text">第四章 贵族专制、民主政治和系统设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五章-画蛇添足"><span class="nav-number">2.5.</span> <span class="nav-text">第五章 画蛇添足</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六章-贯彻执行"><span class="nav-number">2.6.</span> <span class="nav-text">第六章 贯彻执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第七章-为什么巴比伦塔会失败"><span class="nav-number">2.7.</span> <span class="nav-text">第七章 为什么巴比伦塔会失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第八章-胸有成竹"><span class="nav-number">2.8.</span> <span class="nav-text">第八章 胸有成竹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第九章-削足适履"><span class="nav-number">2.9.</span> <span class="nav-text">第九章 削足适履</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十章-提纲挈领"><span class="nav-number">2.10.</span> <span class="nav-text">第十章 提纲挈领</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十一章-未雨绸缪"><span class="nav-number">2.11.</span> <span class="nav-text">第十一章 未雨绸缪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十二章-干将莫邪"><span class="nav-number">2.12.</span> <span class="nav-text">第十二章 干将莫邪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十三章-整体部分"><span class="nav-number">2.13.</span> <span class="nav-text">第十三章 整体部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十四章-祸起萧墙"><span class="nav-number">2.14.</span> <span class="nav-text">第十四章 祸起萧墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十五章-另外一面"><span class="nav-number">2.15.</span> <span class="nav-text">第十五章 另外一面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十六章-没有银弹"><span class="nav-number">2.16.</span> <span class="nav-text">第十六章 没有银弹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十七章-再论《没有银弹》"><span class="nav-number">2.17.</span> <span class="nav-text">第十七章 再论《没有银弹》</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十九章-20年后的《人月神话》"><span class="nav-number">2.18.</span> <span class="nav-text">第十九章 20年后的《人月神话》</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作者简介"><span class="nav-number">3.</span> <span class="nav-text">作者简介</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">winsky</span>
+
+  <div>
+    <span id="sitetime"></span>
+    <script language="javascript">
+      function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        var t1 = Date.UTC(2018,02,03,14,00,00); 
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML="本站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+      }
+      siteTime();
+    </script>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+<span class="post-meta-divider">|</span>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共235.3k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://winsky.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://blog.winsky.wang/读书笔记/人月神话读书笔记/';
+        this.page.identifier = '读书笔记/人月神话读书笔记/';
+        this.page.title = '人月神话读书笔记';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://winsky.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

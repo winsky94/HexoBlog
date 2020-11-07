@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="操作系统,">
+
+
+<meta name="description" content="本文对面试/笔试过程中经常会被问到的一些关于操作系统的问题进行了梳理和总结，一方面方便自己温故知新，另一方面也希望为找工作的同学们提供一个复习参考。">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统面试问题集锦">
+<meta property="og:url" content="https://blog.winsky.wang/操作系统/操作系统面试问题集锦/index.html">
+<meta property="og:site_name" content="winsky小站">
+<meta property="og:description" content="本文对面试/笔试过程中经常会被问到的一些关于操作系统的问题进行了梳理和总结，一方面方便自己温故知新，另一方面也希望为找工作的同学们提供一个复习参考。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://pic.winsky.wang/images/2018/04/03/SouthEast.jpg">
+<meta property="og:updated_time" content="2018-03-20T08:44:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作系统面试问题集锦">
+<meta name="twitter:description" content="本文对面试/笔试过程中经常会被问到的一些关于操作系统的问题进行了梳理和总结，一方面方便自己温故知新，另一方面也希望为找工作的同学们提供一个复习参考。">
+<meta name="twitter:image" content="https://pic.winsky.wang/images/2018/04/03/SouthEast.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.winsky.wang/操作系统/操作系统面试问题集锦/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>操作系统面试问题集锦 | winsky小站</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113502967-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113502967-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7eac22d54f7284a1b355880cd286181d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">winsky小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Good Good Study,  Day Day Up</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.winsky.wang/操作系统/操作系统面试问题集锦/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="winsky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="winsky小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">操作系统面试问题集锦</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T16:44:16+08:00">2018-03-20</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/操作系统/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/操作系统/操作系统面试问题集锦/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="操作系统/操作系统面试问题集锦/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文对面试/笔试过程中经常会被问到的一些关于操作系统的问题进行了梳理和总结，一方面方便自己温故知新，另一方面也希望为找工作的同学们提供一个复习参考。</p>
+<a id="more"></a>
+<h1 id="进程与线程及他们的区别"><a href="#进程与线程及他们的区别" class="headerlink" title="进程与线程及他们的区别"></a>进程与线程及他们的区别</h1><ul>
+<li>进程是对运行时程序的封装，是系统进行资源调度和分配的的基本单位，实现了操作系统的并发；</li>
+<li>线程是进程的子任务，是CPU调度和分派的基本单位，用于保证程序的实时性，实现进程内部的并发；</li>
+<li>一个程序至少有一个进程，一个进程至少有一个线程，线程依赖于进程而存在；</li>
+<li>进程在执行过程中拥有独立的内存单元，而多个线程共享进程的内存</li>
+</ul>
+<h1 id="进程间通信的几种方式"><a href="#进程间通信的几种方式" class="headerlink" title="进程间通信的几种方式"></a>进程间通信的几种方式</h1><ul>
+<li><strong>管道（pipe）及命名管道（named pipe）</strong>：管道可用于具有亲缘关系的父子进程间的通信，有名管道除了具有管道所具有的功能外，它还允许无亲缘关系进程间的通信；</li>
+<li><strong>信号（signal）</strong>：信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生；</li>
+<li><strong>消息队列</strong>：消息队列是消息的链接表，它克服了上两种通信方式中信号量有限的缺点，具有写权限得进程可以按照一定得规则向消息队列中添加新信息；对消息队列有读权限得进程则可以从消息队列中读取信息；</li>
+<li><strong>共享内存</strong>：可以说这是最有用的进程间通信方式。它使得多个进程可以访问同一块内存空间，不同进程可以及时看到对方进程中对共享内存中数据得更新。这种方式需要依靠某种同步操作，如互斥锁和信号量等；</li>
+<li><strong>信号量</strong>：主要作为进程之间及同一种进程的不同线程之间得同步和互斥手段；</li>
+<li><strong>套接字</strong>：这是一种更为一般得进程间通信机制，它可用于网络中不同机器之间的进程间通信，应用非常广泛。</li>
+</ul>
+<h1 id="线程同步的方式"><a href="#线程同步的方式" class="headerlink" title="线程同步的方式"></a>线程同步的方式</h1><ul>
+<li><strong>互斥量 Synchronized/Lock</strong>：采用互斥对象机制，只有拥有互斥对象的线程才有访问公共资源的权限。因为互斥对象只有一个，所以可以保证公共资源不会被多个线程同时访问</li>
+<li><strong>信号量 Semphare</strong>：它允许同一时刻多个线程访问同一资源，但是需要控制同一时刻访问此资源的最大线程数量</li>
+<li><strong>事件(信号)，Wait/Notify</strong>：通过通知操作的方式来保持多线程同步，还可以方便的实现多线程优先级的比较操作</li>
+</ul>
+<h1 id="进程同步有哪几种机制"><a href="#进程同步有哪几种机制" class="headerlink" title="进程同步有哪几种机制"></a>进程同步有哪几种机制</h1><ul>
+<li>原子操作</li>
+<li>信号量机制</li>
+<li>自旋锁管程</li>
+<li>会合</li>
+<li>分布式系统</li>
+</ul>
+<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><h2 id="死锁的概念"><a href="#死锁的概念" class="headerlink" title="死锁的概念"></a>死锁的概念</h2><p>在两个或者多个并发进程中，如果每个进程持有某种资源而又等待其它进程释放它或它们现在保持着的资源，在未改变这种状态之前都不能向前推进，称这一组进程产生了死锁。通俗的讲，就是两个或多个进程无限期的阻塞、相互等待的一种状态。</p>
+<h2 id="死锁产生的四个必要条件"><a href="#死锁产生的四个必要条件" class="headerlink" title="死锁产生的四个必要条件"></a>死锁产生的四个必要条件</h2><ul>
+<li><strong>互斥</strong>：至少有一个资源必须属于非共享模式，即一次只能被一个进程使用；若其他申请使用该资源，那么申请进程必须等到该资源被释放为止；</li>
+<li><strong>占有并等待</strong>：一个进程必须占有至少一个资源，并等待另一个资源，而该资源为其他进程所占有；</li>
+<li><strong>非抢占</strong>：进程不能被抢占，即资源只能被进程在完成任务后自愿释放</li>
+<li><strong>循环等待</strong>：若干进程之间形成一种头尾相接的环形等待资源关系</li>
+</ul>
+<h2 id="死锁的处理基本策略和常用方法"><a href="#死锁的处理基本策略和常用方法" class="headerlink" title="死锁的处理基本策略和常用方法"></a>死锁的处理基本策略和常用方法</h2><p>解决死锁的基本方法主要有 预防死锁、避免死锁、检测死锁、解除死锁 、鸵鸟策略 等</p>
+<h3 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h3><p>死锁预防的基本思想是<strong>只要确保死锁发生的四个必要条件中至少有一个不成立，就能预防死锁的发生</strong>，具体方法包括：</p>
+<ul>
+<li><strong>打破互斥条件</strong>：允许进程同时访问某些资源。但是，有些资源是不能被多个进程所共享的，这是由资源本身属性所决定的，因此，这种办法通常并无实用价值。</li>
+<li><strong>打破占有并等待条件</strong>：可以实行资源预先分配策略(进程在运行前一次性向系统申请它所需要的全部资源，若所需全部资源得不到满足，则不分配任何资源，此进程暂不运行；只有当系统能满足当前进程所需的全部资源时，才一次性将所申请资源全部分配给该线程)或者只允许进程在没有占用资源时才可以申请资源（一个进程可申请一些资源并使用它们，但是在当前进程申请更多资源之前，它必须全部释放当前所占有的资源）。但是这种策略也存在一些缺点：在很多情况下，无法预知一个进程执行前所需的全部资源，因为进程是动态执行的，不可预知的；同时，会降低资源利用率，导致降低了进程的并发性。</li>
+<li><strong>打破非抢占条件</strong>：允许进程强行从占有者那里夺取某些资源。也就是说，当一个进程占有了一部分资源，在其申请新的资源且得不到满足时，它必须释放所有占有的资源以便让其它线程使用。这种预防死锁的方式实现起来困难，会降低系统性能。</li>
+<li><strong>打破循环等待条件</strong>：实行资源有序分配策略。对所有资源排序编号，所有进程对资源的请求必须严格按资源序号递增的顺序提出，即只有占用了小号资源才能申请大号资源，这样就不回产生环路，预防死锁的发生</li>
+</ul>
+<h2 id="死锁避免的基本思想"><a href="#死锁避免的基本思想" class="headerlink" title="死锁避免的基本思想"></a>死锁避免的基本思想</h2><p>死锁避免的基本思想是<strong>动态地检测资源分配状态，以确保循环等待条件不成立，从而确保系统处于安全状态</strong>。</p>
+<p>所谓安全状态是指：如果系统能按某个顺序为每个进程分配资源（不超过其最大值），那么系统状态是安全的，换句话说就是，如果存在一个安全序列，那么系统处于安全状态。资源分配图算法和银行家算法是两种经典的死锁避免的算法，其可以确保系统始终处于安全状态。其中，资源分配图算法应用场景为每种资源类型只有一个实例(申请边，分配边，需求边，不形成环才允许分配)，而银行家算法应用于每种资源类型可以有多个实例的场景。</p>
+<h2 id="死锁解除"><a href="#死锁解除" class="headerlink" title="死锁解除"></a>死锁解除</h2><p>死锁解除的常用两种方法为<strong>进程终止和资源抢占</strong>。所谓进程终止是指简单地终止一个或多个进程以打破循环等待，包括两种方式：终止所有死锁进程和一次只终止一个进程直到取消死锁循环为止；所谓资源抢占是指从一个或多个死锁进程那里抢占一个或多个资源，此时必须考虑三个问题：</p>
+<ul>
+<li>选择一个牺牲品 </li>
+<li>回滚：回滚到安全状态 </li>
+<li>饥饿（在代价因素中加上回滚次数，回滚的越多则越不可能继续被作为牺牲品，避免一个进程总是被回滚）</li>
+</ul>
+<h1 id="操作系统内存管理，分页和分段有什么区别"><a href="#操作系统内存管理，分页和分段有什么区别" class="headerlink" title="操作系统内存管理，分页和分段有什么区别"></a>操作系统内存管理，分页和分段有什么区别</h1><h2 id="段式存储管理"><a href="#段式存储管理" class="headerlink" title="段式存储管理"></a>段式存储管理</h2><p><strong>段式存储管理</strong>是一种符合用户视角的内存分配管理方案。在段式存储管理中，将程序的地址空间划分为若干段（segment），如代码段，数据段，堆栈段；这样每个进程有一个二维地址空间，相互独立，互不干扰。段式管理的优点是：没有内碎片（因为段大小可变，改变段大小来消除内碎片）。但段换入换出时，会产生外碎片（比如4k的段换5k的段，会产生1k的外碎片）</p>
+<h2 id="页式存储管理"><a href="#页式存储管理" class="headerlink" title="页式存储管理"></a>页式存储管理</h2><p><strong>页式存储管理</strong>是一种用户视角内存与物理内存相分离的内存分配管理方案。在页式存储管理中，将程序的逻辑地址划分为固定大小的页（page），而物理内存划分为同样大小的帧，程序加载时，可以将任意一页放入内存中任意一个帧，这些帧不必连续，从而实现了离散分离。页式存储管理的优点是：没有外碎片（因为页的大小固定），但会产生内碎片（一个页可能填充不满）。</p>
+<h2 id="两者的不同点："><a href="#两者的不同点：" class="headerlink" title="两者的不同点："></a>两者的不同点：</h2><ul>
+<li><p><strong>目的不同</strong>：分页是由于系统管理的需要而不是用户的需要，它是信息的物理单位；分段的目的是为了能更好地满足用户的需要，它是信息的逻辑单位，它含有一组其意义相对完整的信息；</p>
+</li>
+<li><p><strong>大小不同</strong>：页的大小固定且由系统决定，而段的长度却不固定，由其所完成的功能决定；</p>
+</li>
+<li><p><strong>地址空间不同</strong>： 段向用户提供二维地址空间；页向用户提供的是一维地址空间；</p>
+</li>
+<li><p><strong>信息共享</strong>：段是信息的逻辑单位，便于存储保护和信息的共享，页的保护和共享受到限制；</p>
+</li>
+<li><p><strong>内存碎片</strong>：页式存储管理的优点是没有外碎片（因为页的大小固定），但会产生内碎片（一个页可能填充不满）；而段式管理的优点是没有内碎片（因为段大小可变，改变段大小来消除内碎片）。但段换入换出时，会产生外碎片（比如4k的段换5k的段，会产生1k的外碎片）。</p>
+</li>
+</ul>
+<h1 id="操作系统中进程调度策略"><a href="#操作系统中进程调度策略" class="headerlink" title="操作系统中进程调度策略"></a>操作系统中进程调度策略</h1><ul>
+<li><p><strong>FCFS(先来先服务，队列实现，非抢占的)</strong>：先请求CPU的进程先分配到CPU</p>
+</li>
+<li><p><strong>SJF(最短作业优先调度算法)</strong>：平均等待时间最短，但难以知道下一个CPU区间长度</p>
+</li>
+<li><p><strong>优先级调度算法(可以是抢占的，也可以是非抢占的)</strong>：优先级越高越先分配到CPU，相同优先级先到先服务，存在的主要问题是：低优先级进程无穷等待CPU，会导致无穷阻塞或饥饿；解决方案：老化</p>
+</li>
+<li><p><strong>时间片轮转调度算法(可抢占的)</strong>：队列中没有进程被分配超过一个时间片的CPU时间，除非它是唯一可运行的进程。如果进程的CPU区间超过了一个时间片，那么该进程就被抢占并放回就绪队列。</p>
+</li>
+<li><p><strong>多级队列调度算法</strong>：将就绪队列分成多个独立的队列，每个队列都有自己的调度算法，队列之间采用固定优先级抢占调度。其中，一个进程根据自身属性被永久地分配到一个队列中。</p>
+</li>
+<li><p><strong>多级反馈队列调度算法</strong>：与多级队列调度算法相比，其允许进程在队列之间移动：若进程使用过多CPU时间，那么它会被转移到更低的优先级队列；在较低优先级队列等待时间过长的进程会被转移到更高优先级队列，以防止饥饿发生。</p>
+</li>
+</ul>
+<h1 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h1><p>虚拟内存允许执行进程不必完全在内存中。</p>
+<p><strong>虚拟内存的基本思想</strong>是：每个进程拥有独立的地址空间，这个空间被分为大小相等的多个块，称为页(Page)，每个页都是一段连续的地址。这些页被映射到物理内存，但并不是所有的页都必须在内存中才能运行程序。当程序引用到一部分在物理内存中的地址空间时，由硬件立刻进行必要的映射；当程序引用到一部分不在物理内存中的地址空间时，由操作系统负责将缺失的部分装入物理内存并重新执行失败的命令。这样，对于进程而言，逻辑上似乎有很大的内存空间，实际上其中一部分对应物理内存上的一块(称为帧，通常页和帧大小相等)，还有一些没加载在内存中的对应在硬盘上，如下图所示。 </p>
+<p><img src="https://pic.winsky.wang/images/2018/04/03/SouthEast.jpg" alt="image"></p>
+<p>由上图可以看出，虚拟内存实际上可以比物理内存大。当访问虚拟内存时，会访问MMU（内存管理单元）去匹配对应的物理地址（比如图5的0，1，2）。如果虚拟内存的页并不存在于物理内存中（如图5的3,4），会产生缺页中断，从磁盘中取得缺的页放入内存，如果内存已满，还会根据某种算法将磁盘中的页换出。</p>
+<p>注意，请求分页系统、请求分段系统和请求段页式系统都是针对虚拟内存的，通过请求实现内存与外存的信息置换。</p>
+<h1 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h1><ul>
+<li><p><strong>FIFO先进先出算法</strong>：在操作系统中经常被用到，比如作业调度（主要实现简单，很容易想到）；</p>
+</li>
+<li><p><strong>LRU（Least recently use）最近最少使用算法</strong>：根据使用时间到现在的长短来判断；</p>
+</li>
+<li><p><strong>LFU（Least frequently use）最少使用次数算法</strong>：根据使用次数来判断；</p>
+</li>
+<li><p><strong>OPT（Optimal replacement）最优置换算法</strong>：理论的最优，理论；就是要保证置换出去的是不再被使用的页，或者是在实际内存中最晚使用的算法。</p>
+</li>
+</ul>
+<h1 id="虚拟内存的应用与优点"><a href="#虚拟内存的应用与优点" class="headerlink" title="虚拟内存的应用与优点"></a>虚拟内存的应用与优点</h1><p>虚拟内存很适合在多道程序设计系统中使用，许多程序的片段同时保存在内存中。当一个程序等待它的一部分读入内存时，可以把CPU交给另一个进程使用。虚拟内存的使用可以带来以下好处：</p>
+<ul>
+<li>在内存中可以保留多个进程，系统并发度提高</li>
+<li>解除了用户与内存之间的紧密约束，进程可以比内存的全部空间还大</li>
+</ul>
+<h1 id="颠簸"><a href="#颠簸" class="headerlink" title="颠簸"></a>颠簸</h1><p>颠簸本质上是指频繁的页调度行为，具体来讲，进程发生缺页中断，这时，必须置换某一页。然而，其他所有的页都在使用，它置换一个页，但又立刻再次需要这个页。因此，会不断产生缺页中断，导致整个系统的效率急剧下降，这种现象称为颠簸（抖动）。</p>
+<p>内存颠簸的解决策略包括：</p>
+<ul>
+<li>如果是因为页面替换策略失误，可以修改替换算法来解决这个问题；</li>
+<li>如果是因为运行的程序太多，造成程序无法同时将所有频繁访问的页面调入内存，则要降低多道程序的数量；</li>
+<li>否则，还剩下两个办法：终止该进程或增加物理内存容量。</li>
+</ul>
+<h1 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h1><p>时间上的局部性：最近被访问的页在不久的将来还会被访问；</p>
+<p>空间上的局部性：内存中被访问的页周围的页也很可能被访问。</p>
+<h1 id="系统中断"><a href="#系统中断" class="headerlink" title="系统中断"></a>系统中断</h1><p>中断是指CPU对系统发生的某个事件做出的一种反应，CPU暂停正在执行的程序，保留现场后自动地转去执行相应的处理程序，处理完该事件后再返回断点继续执行被“打断”的程序。</p>
+<p>中断可分为三类</p>
+<ul>
+<li>第一类是由CPU外部引起的，称作中断，如I/O中断、时钟中断、控制台中断等。</li>
+<li>第二类是来自CPU的内部事件或程序执行中的事件引起的过程，称作异常，如由于CPU本身故障（电源电压低于105V或频率在47～63Hz之外）、程序故障（非法操作码、地址越界、浮点溢出等）等引起的过程。</li>
+<li>第三类由于在程序中使用了请求系统服务的系统调用而引发的过程，称作“陷入”(trap,或者陷阱)。</li>
+</ul>
+<p>前两类通常都称作中断，它们的产生往往是无意、被动的，而陷入是有意和主动的。</p>
+<h2 id="中断处理"><a href="#中断处理" class="headerlink" title="中断处理"></a>中断处理</h2><p>中断处理一般分为中断响应和中断处理两个步骤。中断响应由硬件实施，中断处理主要由软件实施。</p>
+<h3 id="中断响应"><a href="#中断响应" class="headerlink" title="中断响应"></a>中断响应</h3><p>对中断请求的整个处理过程是由硬件和软件结合起来而形成的一套中断机构实施的。发生中断时，CPU暂停执行当前的程序，而转去处理中断。这个由硬件对中断请求作出反应的过程，称为中断响应。一般说来，中断响应顺序执行下述三步动作：</p>
+<ul>
+<li>中止当前程序的执行；</li>
+<li>保存原程序的断点信息（主要是程序计数器PC和程序状态寄存器PS的内容）；</li>
+<li>从中断控制器取出中断向量，转到相应的处理程序。</li>
+</ul>
+<p>通常CPU在执行完一条指令后，立即检查有无中断请求，如果有，则立即做出响应。</p>
+<p>当发生中断时，系统作出响应，不管它们是来自硬件（如来自时钟或者外部设备）、程序性中断（执行指令导致“软件中断”—Software Interrupts），或者来自意外事件（如访问页面不在内存）。</p>
+<p>如果当前CPU的执行优先级低于中断的优先级，那么它就中止对当前程序下条指令的执行，接受该中断，并提升处理机的执行级别（一般与中断优先级相同），以便在CPU处理当前中断时，能屏蔽其它同级的或低级的中断，然后保存断点现场信息，通过取得的中断向量转到相应的中断处理程序的入口。</p>
+<h3 id="中断处理-1"><a href="#中断处理-1" class="headerlink" title="中断处理"></a>中断处理</h3><p>CPU从中断控制器取得中断向量，然后根据具体的中断向量从中断向量表IDT中找到相应的表项，该表项应是一个中断门。于是，CPU就根据中断门的设置而到达了该通道的总服务程序的入口。</p>
+<p>核心对中断处理的顺序主要由以下动作完成：</p>
+<ul>
+<li>保存正在运行进程的各寄存器的内容，把它们放入核心栈的新帧面中</li>
+<li>确定“中断源”或核查中断发生，识别中断的类型（如时钟中断或盘中断）和中断的设备号（如哪个磁盘引起的中断）。系统接到中断后，就从机器那里得到一个中断号，它是检索中断向量表的位移。中断向量因机器而异，但通常都包括相应中断处理程序入口地址和中断处理时处理机的状态字</li>
+<li>核心调用中断处理程序，对中断进行处理</li>
+<li>中断处理完成并返回。中断处理程序执行完以后，核心便执行与机器相关的特定指令序列，恢复中断时寄存器内容和执行核心栈退栈，进程回到用户态。如果设置了重调度标志，则在本进程返回到用户态时做进程调度。</li>
+</ul>
+<h1 id="管程机制"><a href="#管程机制" class="headerlink" title="管程机制"></a>管程机制</h1><h2 id="管程的概念"><a href="#管程的概念" class="headerlink" title="管程的概念"></a>管程的概念</h2><p>管程可以看做一个软件模块，它是将共享的变量和对于这些共享变量的操作封装起来，形成一个具有一定接口的功能模块，进程可以调用管程来实现进程级别的并发控制。</p>
+<p>进程只能互斥地使用管程，即当一个进程使用管程时，另一个进程必须等待。当一个进程使用完管程后，它必须释放管程并唤醒等待管程的某一个进程。</p>
+<p>在管程入口处的等待队列称为入口等待队列，由于进程会执行唤醒操作，因此可能有多个等待使用管程的队列，这样的队列称为紧急队列，它的优先级高于等待队列。</p>
+<h2 id="管程的特征"><a href="#管程的特征" class="headerlink" title="管程的特征"></a>管程的特征</h2><ul>
+<li><p>模块化</p>
+<p>  管程是一个基本的软件模块，可以被单独编译。</p>
+</li>
+<li><p>抽象数据类型</p>
+<p>  管程中封装了数据及对于数据的操作，这点有点像面向对象编程语言中的类。</p>
+</li>
+<li><p>信息隐藏</p>
+<p>  管程外的进程或其他软件模块只能通过管程对外的接口来访问管程提供的操作，管程内部的实现细节对外界是透明的。</p>
+</li>
+<li><p>使用的互斥</p>
+<p>  任何一个时刻，管程只能由一个进程使用。进入管程时的互斥由编译器负责完成。</p>
+</li>
+</ul>
+<h1 id="目态与管态"><a href="#目态与管态" class="headerlink" title="目态与管态"></a>目态与管态</h1><p>大多数计算机系统将CPU执行状态分为目态与管态。CPU的状态属于程序状态字PSW的一位。CPU交替执行操作系统程序和用户程序。</p>
+<p>管态又叫特权态，系统态或核心态。CPU在管态下可以执行指令系统的全集。通常，操作系统在管态下运行。</p>
+<p>目态又叫常态或用户态。机器处于目态时，程序只能执行非特权指令。用户程序只能在目态下运行，如果用户程序在目态下执行特权指令，硬件将发生中断，由操作系统获得控制，特权指令执行被禁止，这样可以防止用户程序有意或无意的破坏系统。</p>
+<p>从目态转换为管态的唯一途径是中断。</p>
+<p>从管态到目态可以通过修改程序状态字来实现，这将伴随这由操作系统程序到用户程序的转换。</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/justloveyou_/article/details/78304294" target="_blank" rel="noopener">面试/笔试第二弹——操作系统面试问题集锦</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Java/Java基础/Java反射机制/" rel="next" title="Java反射机制">
+                <i class="fa fa-chevron-left"></i> Java反射机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/算法/八大排序算法复杂度/" rel="prev" title="八大排序算法复杂度">
+                八大排序算法复杂度 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="winsky">
+            
+              <p class="site-author-name" itemprop="name">winsky</p>
+              <p class="site-description motion-element" itemprop="description">生命不息，折腾不止</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/winsky94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:shunkuan.ysk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          <!-- 原版
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">
+                      winsky wiki
+                    </a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">
+                      Jestom
+                    </a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+          -->
+
+          
+          
+            <div class="links-of-blogroll motion-element">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-link fa-fw"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">winsky wiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">Jestom</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程与线程及他们的区别"><span class="nav-number">1.</span> <span class="nav-text">进程与线程及他们的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程间通信的几种方式"><span class="nav-number">2.</span> <span class="nav-text">进程间通信的几种方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程同步的方式"><span class="nav-number">3.</span> <span class="nav-text">线程同步的方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程同步有哪几种机制"><span class="nav-number">4.</span> <span class="nav-text">进程同步有哪几种机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#死锁"><span class="nav-number">5.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁的概念"><span class="nav-number">5.1.</span> <span class="nav-text">死锁的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁产生的四个必要条件"><span class="nav-number">5.2.</span> <span class="nav-text">死锁产生的四个必要条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁的处理基本策略和常用方法"><span class="nav-number">5.3.</span> <span class="nav-text">死锁的处理基本策略和常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁预防"><span class="nav-number">5.3.1.</span> <span class="nav-text">死锁预防</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁避免的基本思想"><span class="nav-number">5.4.</span> <span class="nav-text">死锁避免的基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁解除"><span class="nav-number">5.5.</span> <span class="nav-text">死锁解除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统内存管理，分页和分段有什么区别"><span class="nav-number">6.</span> <span class="nav-text">操作系统内存管理，分页和分段有什么区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#段式存储管理"><span class="nav-number">6.1.</span> <span class="nav-text">段式存储管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页式存储管理"><span class="nav-number">6.2.</span> <span class="nav-text">页式存储管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两者的不同点："><span class="nav-number">6.3.</span> <span class="nav-text">两者的不同点：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统中进程调度策略"><span class="nav-number">7.</span> <span class="nav-text">操作系统中进程调度策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存"><span class="nav-number">8.</span> <span class="nav-text">虚拟内存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#页面置换算法"><span class="nav-number">9.</span> <span class="nav-text">页面置换算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟内存的应用与优点"><span class="nav-number">10.</span> <span class="nav-text">虚拟内存的应用与优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#颠簸"><span class="nav-number">11.</span> <span class="nav-text">颠簸</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#局部性原理"><span class="nav-number">12.</span> <span class="nav-text">局部性原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统中断"><span class="nav-number">13.</span> <span class="nav-text">系统中断</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#中断处理"><span class="nav-number">13.1.</span> <span class="nav-text">中断处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中断响应"><span class="nav-number">13.1.1.</span> <span class="nav-text">中断响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断处理-1"><span class="nav-number">13.1.2.</span> <span class="nav-text">中断处理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管程机制"><span class="nav-number">14.</span> <span class="nav-text">管程机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#管程的概念"><span class="nav-number">14.1.</span> <span class="nav-text">管程的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管程的特征"><span class="nav-number">14.2.</span> <span class="nav-text">管程的特征</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目态与管态"><span class="nav-number">15.</span> <span class="nav-text">目态与管态</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">winsky</span>
+
+  <div>
+    <span id="sitetime"></span>
+    <script language="javascript">
+      function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        var t1 = Date.UTC(2018,02,03,14,00,00); 
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML="本站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+      }
+      siteTime();
+    </script>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+<span class="post-meta-divider">|</span>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共235.3k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://winsky.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://blog.winsky.wang/操作系统/操作系统面试问题集锦/';
+        this.page.identifier = '操作系统/操作系统面试问题集锦/';
+        this.page.title = '操作系统面试问题集锦';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://winsky.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

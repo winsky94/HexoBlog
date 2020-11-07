@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+
+Sitemap: https://blog.winsky.wang/sitemap.xml
+Sitemap: https://blog.winsky.wang/baidusitemap.xml

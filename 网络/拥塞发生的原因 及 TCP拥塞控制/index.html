@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="网络,">
+
+
+<meta name="description" content="网络数据传输是我们日常开发中不可避免的问题，同时也是出现不确定性问题最多的地方。 本文介绍了网络数据传输的拥塞发生原因，以及在TCP中是如何控制拥塞、控制流量的。">
+<meta name="keywords" content="网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拥塞发生的原因 及 TCP拥塞控制">
+<meta property="og:url" content="https://blog.winsky.wang/网络/拥塞发生的原因 及 TCP拥塞控制/index.html">
+<meta property="og:site_name" content="winsky小站">
+<meta property="og:description" content="网络数据传输是我们日常开发中不可避免的问题，同时也是出现不确定性问题最多的地方。 本文介绍了网络数据传输的拥塞发生原因，以及在TCP中是如何控制拥塞、控制流量的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://pic.winsky.wang/images/2018/04/21/855959-20171001172033106-1562439275.png">
+<meta property="og:updated_time" content="2018-04-21T08:29:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="拥塞发生的原因 及 TCP拥塞控制">
+<meta name="twitter:description" content="网络数据传输是我们日常开发中不可避免的问题，同时也是出现不确定性问题最多的地方。 本文介绍了网络数据传输的拥塞发生原因，以及在TCP中是如何控制拥塞、控制流量的。">
+<meta name="twitter:image" content="https://pic.winsky.wang/images/2018/04/21/855959-20171001172033106-1562439275.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.winsky.wang/网络/拥塞发生的原因 及 TCP拥塞控制/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>拥塞发生的原因 及 TCP拥塞控制 | winsky小站</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113502967-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113502967-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7eac22d54f7284a1b355880cd286181d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">winsky小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Good Good Study,  Day Day Up</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.winsky.wang/网络/拥塞发生的原因 及 TCP拥塞控制/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="winsky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="winsky小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">拥塞发生的原因 及 TCP拥塞控制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-21T16:29:21+08:00">2018-04-21</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/网络/" itemprop="url" rel="index"><span itemprop="name">网络</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/网络/拥塞发生的原因 及 TCP拥塞控制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="网络/拥塞发生的原因 及 TCP拥塞控制/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>网络数据传输是我们日常开发中不可避免的问题，同时也是出现不确定性问题最多的地方。</p>
+<p>本文介绍了网络数据传输的拥塞发生原因，以及在TCP中是如何控制拥塞、控制流量的。</p>
+<a id="more"></a>
+<h1 id="什么是拥塞"><a href="#什么是拥塞" class="headerlink" title="什么是拥塞"></a>什么是拥塞</h1><p>当大量的分组进入通信子网，超出了网络的处理能力时，就会引起网络局部或整体性能下降，这种现象称为拥塞。拥塞常常使问题趋于恶化。</p>
+<p>另一种对拥塞的解释，即对资源的需求超过了可用的资源。若网络中许多资源同时供应不足，网络的性能就要明显变坏，整个网络的吞吐量随之负荷的增大而下降。</p>
+<h1 id="拥塞的发生与不可避免"><a href="#拥塞的发生与不可避免" class="headerlink" title="拥塞的发生与不可避免"></a>拥塞的发生与不可避免</h1><h2 id="拥塞发生的主要原因"><a href="#拥塞发生的主要原因" class="headerlink" title="拥塞发生的主要原因"></a>拥塞发生的主要原因</h2><p>网络能够提供的资源不足以满足用户的需求，这些资源包括缓存空间、链路带宽容量和中间节点的处理能力。由于互联网的设计机制导致其缺乏“接纳控制”能力，因此在网络资源不足时不能限制用户数量，而只能靠降低服务质量来继续为用户服务，也就是“尽力而为”的服务。</p>
+<h2 id="不可避免"><a href="#不可避免" class="headerlink" title="不可避免"></a>不可避免</h2><p>拥塞其实是一个动态问题，我们没有办法用一个静态方案去解决，从这个意义上来说，拥塞是不可避免的。</p>
+<h1 id="拥塞控制和流量控制的差别"><a href="#拥塞控制和流量控制的差别" class="headerlink" title="拥塞控制和流量控制的差别"></a>拥塞控制和流量控制的差别</h1><p>所谓拥塞控制就是防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提，就是网络能承受现有的网络负荷。</p>
+<p>流量控制往往指的是点对点通信量的控制，是个端到端的问题。流量控制所要做的就是控制发送端发送数据的速率，以便使接收端来得及接受。</p>
+<h1 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h1><p>为什么需要TCP拥塞控制</p>
+<p>由于TCP采用了超时重传机制，如果拥塞不加以控制，将导致大量的报文重传，并再度引起大量的数据报丢弃，直到整个网络瘫痪。这种现象称为<strong>拥塞崩溃</strong>。</p>
+<p>在网络实际的传输过程中，会出现拥塞的现象，网络上充斥着非常多的数据包，但是却不能按时被传送，形成网络拥塞，其实就是和平时的堵车一个性质了。TCP设计中也考虑到这一点，使用了一些算法来检测网络拥塞现象，如果拥塞产生，便会调整发送策略，减少数据包的发送来缓解网络的压力。</p>
+<p>拥塞控制：防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提：网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机、路由器，以及与降低网络传输性能有关的所有因素。</p>
+<h1 id="TCP的流量控制"><a href="#TCP的流量控制" class="headerlink" title="TCP的流量控制"></a>TCP的流量控制</h1><p>早期的TCP协议只有基于窗口的流控制（flow control）机制，我们简单介绍一下，并分析其不足。   </p>
+<p>在TCP中，为了实现可靠性，发送方发出一个数据段之后要等待接收方相应的确认信息，而不是直接发送下一个分组。</p>
+<p>具体的技术是采用滑动窗口，以便通信双方能够充分利用带宽。滑动窗口允许发送方在收到接收方的确认之前发送多个数据段。窗口大小决定了在收到目的地确认之前，一次可以传送的数据段的最大数目。窗口大小越大，主机一次可以传输的数据段就越多。当主机传输窗口大小数目的数据段后，就必须等收到确认，才可以再传下面的数据段。</p>
+<p>例如，若视窗的大小为1，则传完数据段后，都必须经过确认，才可以再传下一个数据段；当窗口大小等于3时，发送方可以一次传输3个数据段，等待对方确认后，再传输下面三个数据段。</p>
+<p>窗口的大小在通信双方连接期间是可变的，通信双方可以通过协商动态地修改窗口大小。</p>
+<p>在TCP的每个确认中，除了指出希望收到的下一个数据段的序列号之外，还包括一个窗口通告，通告中指出了接收方还能再收多少数据段（我们可以把通告看成接收缓冲区大小）。如果通告值增大，窗口大小也相应增大；通告值减小，窗口大小也相应减小。</p>
+<p>但是我们可以发现，接收端并没有特别合适的方法来判断当前网络是否拥塞，因为它只是被动得接收，不像发送端，当发出一个数据段后，会等待对方得确认信息，如果超时，就可以认为网络已经拥塞了。</p>
+<p>所以，改变窗口大小的唯一根据，就是接收端缓冲区的大小了。   </p>
+<p>流量控制作为接收方管理发送方发送数据的方式，用来防止接收方可用的数据缓存空间的溢出。</p>
+<p>流控制是一种局部控制机制，其参与者仅仅是发送方和接收方，它只考虑了接收端的接收能力，而没有考虑到网络的传输能力；</p>
+<p>而拥塞控制则注重于整体，其考虑的是整个网络的传输能力，是一种全局控制机制。正因为流控制的这种局限性，从而导致了拥塞崩溃现象的发生。  </p>
+<h1 id="TCP拥塞控制的四大过程"><a href="#TCP拥塞控制的四大过程" class="headerlink" title="TCP拥塞控制的四大过程"></a>TCP拥塞控制的四大过程</h1><p>TCP的拥塞控制由4个核心算法组成：“慢启动”（Slow Start）、“拥塞避免”（Congestion voidance）、“快速重传 ”（Fast Retransmit）、“快速恢复”（Fast Recovery）。</p>
+<p> 为了方便起见，把发送端叫做client，接收端为server，每个segment长度为512字节，阻塞窗口长度为cwnd（简化起见，下面以segment为单位），sequence number为seq_num，acknowledges number为ack_num。通常情况下，TCP每接收到两个segment，发送一个ack。</p>
+<p><img src="https://pic.winsky.wang/images/2018/04/21/855959-20171001172033106-1562439275.png" alt="image"></p>
+<h2 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h2><p>早期开发的TCP应用在启动一个连接时会向网络中发送大量的数据包，这样很容易导致路由器缓存空间耗尽，网络发生拥塞，使得TCP连接的吞吐量急剧下降。</p>
+<p>由于TCP源端一开始并不知道网络资源当前的利用状况，因此新建立的TCP连接不能一开始就发送大量数据，而只能逐步增加每次发送的数据量，以避免上述现象的发生，这里有一个“学习”的过程。</p>
+<p>假设client要发送5120字节到server，慢启动过程如下：</p>
+<ol>
+<li>初始状态，cwnd=1,seq_num=1；client发送第一个segment。  </li>
+<li>server接收到512字节（一个segment），回应ack_num=513。</li>
+<li>client接收ack(513)，cwnd＝1+1=2;现在可以一次发送2个数据段而不必等待ack。   </li>
+<li>server接收到2个segment，回应ack_num=513+512*2=1537。</li>
+<li>client接收ack(1537)，cwnd=2+1;一次发送3个数据段。</li>
+<li>server接收到3个segment，回应2个ack，分别为ack_num=1537+1024=2561和ack_num=2561+512=3073。</li>
+<li>client接收ack(2561)和ack(3073),cwnd=3+2=5；一次可以发送5个数据段，但是只用4个就满足要求了。</li>
+<li>server接收到4个segment，回应2个ack，分别为4097,5121</li>
+<li>已经发送5120字节，任务完成！</li>
+</ol>
+<p>总结一下：<br>当建立新的TCP连接时，拥塞窗口（congestion window，cwnd）初始化为一个数据包大小。源端按cwnd大小发送数据，每收到一个ACK确认，cwnd就增加一个数据包发送量。 </p>
+<ul>
+<li>慢启动算法是一个在连接上发起数据流的方法</li>
+<li>慢启动过程：<ul>
+<li>初始时将拥塞窗口的大小初始为一个MSS</li>
+<li>每次收到一个报文段的确认时，发送方将拥塞窗口增大一个MSS，并发送两个最大长度的报文段</li>
+<li>两个报文段被确认后，则发送方对每个报文段的确认增加一个MSS，使得拥塞窗口大小变为4个MSS</li>
+<li>这样每经过一个RTT，发送速率就翻倍。</li>
+<li>因此，慢启动阶段以指数增长</li>
+</ul>
+</li>
+<li>慢启动的结束<ul>
+<li>当出现一个由超时指示的丢包时间，发送方将cwnd设置为1，并重新开始慢启动</li>
+</ul>
+</li>
+</ul>
+<h2 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h2><p>可以想象，如果按上述慢启动的逻辑继续下去而不加任何控制的话，必然会发生拥塞，引入一个慢启动阈值ssthresh的概念，当cwnd &lt; ssthresh的时候，tcp处于慢启动状态，否则，进入拥塞避免阶段。</p>
+<p>拥塞避免的主要思想是加法增大，也就是cwnd的值不再指数级往上升，开始加法增加。此时当窗口中所有的报文段都被确认时，cwnd的大小加1，cwnd的值就随着RTT开始线性增加，这样就可以避免增长过快导致网络拥塞，慢慢的增加调整到网络的最佳值。</p>
+<p>通常，ssthresh初始化为 64 Kbytes。</p>
+<p>当cwnd = 65024 + 512 = 65536，进入拥塞避免阶段，假设此时seq_num = 101024</p>
+<ol>
+<li>client一次发送cwnd，但是先考虑头两个segment。</li>
+<li>server回应ack_num = 102048</li>
+<li>client接收到ack(102048),cwnd = 65536 + [(512 * 512) /65536] = 65536 + 4 = 65540，也就是说，每接到一个ack，cwnd只增加4个字节</li>
+<li>client发送一个segment，并开启ack timer,等待server对这个segment的ack，如果超时，则认为网络已经处于拥塞状态，则重设慢启动阀值ssthresh=当前cwnd/2＝65536/2=32768，并且，立刻把cwnd设为1，很极端的处理！</li>
+<li>此时，cwnd &lt; ssthresh，所以，恢复到慢启动状态。</li>
+</ol>
+<p>总结一下：<br>如果当前cwnd达到慢启动阀值，则试探性的发送一个segment，如果server超时未响应，TCP认为网络能力下降，必须降低慢启动阀值，同时，为了避免形势恶化，干脆采取极端措施，把发送窗口降为1。</p>
+<ul>
+<li>拥塞避免算法是一种处理丢失分组的方法（当到达中间路由器的极限时，分组将被丢弃）</li>
+<li>拥塞避免过程：<ul>
+<li>进入拥塞避免时，拥塞窗口的值大约是上次遇到拥塞时值的一半</li>
+<li>每个RTT只将拥塞窗口的值增加1个MSS</li>
+</ul>
+</li>
+<li>拥塞避免结束条件：<ul>
+<li>超时或丢包</li>
+</ul>
+</li>
+</ul>
+<h2 id="快重传和快恢复"><a href="#快重传和快恢复" class="headerlink" title="快重传和快恢复"></a>快重传和快恢复</h2><p>标准的重传，client会等待RTO时间再重传，但有时候，不必等这么久也可以判断需要重传，</p>
+<h3 id="快重传"><a href="#快重传" class="headerlink" title="快重传"></a>快重传</h3><p>例如：client一次发送8个segment，seq_num起始值为100000，但是由于网络原因，100512丢失，其他的正常，则server会响应4个ack(100512)(为什么呢，tcp会把接收到的其他segment缓存起来，ack_num必须是连续的)，这时候，client接收到四个重复的ack，它完全有理由判断100512丢失，进而重传，而不必傻等RTO时间了。 </p>
+<h3 id="快恢复"><a href="#快恢复" class="headerlink" title="快恢复"></a>快恢复</h3><p>我们通常认为client接收到3个重复的ack后，就会开始快速重传，但是，如果还有更多的重复ack呢，如何处理？这就是快速恢复要做的，事实上，我们可以把快速恢复看作是快速重传的后续处理，它不是一种单独存在的形态。   </p>
+<p>以下是具体的流程：</p>
+<p>假设此时cwnd = 70000，client发送4096字节到server，也就是8个segment，起始seq_num = 100000：</p>
+<ol>
+<li>client发送seq_num = 100000。</li>
+<li>seq_num =100512的segment丢失。 </li>
+<li>client发送seq_num = 101024。</li>
+<li>server接收到两个segment，它意识到100512丢失，先把收到的这两个segment缓存起来。 </li>
+<li>server回应一个ack(100512),表示它还期待这个segment  。</li>
+<li>client发送seq_num = 101536   。</li>
+<li>server接收到一个segment，它判断不是100512，依旧把收到的这个segment缓存起来，并回应ack(100512)  。</li>
+<li>以下同6、7,直到client收到3个ack(100512)，进入快速重发阶段。   </li>
+<li>重设慢启动阀值ssthresh=当前cwnd/2＝70000/2=35000   。</li>
+<li>client发送seq_num = 100512，以下，进入快速恢复阶段。   </li>
+<li>重设cwnd = ssthresh + 3 segments =35000 + 3 * 512 = 36536，之所以要加3，是因为我们已经接收到3个ack(100512)了，根据前面说的，每接收到一个ack，cwnd加1。</li>
+<li>client接收到第四个、第五个ack(100512)，cwnd=36536+2 * 512=37560。</li>
+<li>server接收到100512,响应ack_num = 104096  </li>
+<li>此时，cwnd&gt;ssthresh，进入拥塞避免阶段。</li>
+</ol>
+<h3 id="执行的条件及过程"><a href="#执行的条件及过程" class="headerlink" title="执行的条件及过程"></a>执行的条件及过程</h3><p>当收到3个或3个以上的重复ACK时，就非常有可能是一个报文段丢失了。于是我们就重传丢失的数据报文段，而不等待超时定时器溢出。这就是快速重传。接下来执行的不是慢启动，而是拥塞避免，这就是快速恢复。</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>没有执行慢启动的原因是由于收到的重复的ACK不仅仅告诉我们一个分组丢失了。由于接收方只有在收到另一个报文段时才会产生重复的ACK，而该报文段已经离开网络并进入了接收方的缓存。也就是说在收发两端之间仍然有流动的数据，而我们不想执行慢启动来突然减少数据流。</p>
+<blockquote>
+<p><a href="http://www.cnblogs.com/zlslch/p/7617819.html" target="_blank" rel="noopener">牛客网Java刷题知识点之拥塞发生的主要原因、TCP拥塞控制、TCP流量控制、TCP拥塞控制的四大过程（慢启动、拥塞避免、快速重传、快速恢复）</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/web开发/浅谈Model、ORM、DAO之间的区别/" rel="next" title="浅谈Model、ORM、DAO之间的区别">
+                <i class="fa fa-chevron-left"></i> 浅谈Model、ORM、DAO之间的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Git/彻底清除Github上某个文件的历史/" rel="prev" title="彻底清除Github上某个文件的历史">
+                彻底清除Github上某个文件的历史 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="winsky">
+            
+              <p class="site-author-name" itemprop="name">winsky</p>
+              <p class="site-description motion-element" itemprop="description">生命不息，折腾不止</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/winsky94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:shunkuan.ysk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          <!-- 原版
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">
+                      winsky wiki
+                    </a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">
+                      Jestom
+                    </a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+          -->
+
+          
+          
+            <div class="links-of-blogroll motion-element">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-link fa-fw"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">winsky wiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">Jestom</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是拥塞"><span class="nav-number">1.</span> <span class="nav-text">什么是拥塞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拥塞的发生与不可避免"><span class="nav-number">2.</span> <span class="nav-text">拥塞的发生与不可避免</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞发生的主要原因"><span class="nav-number">2.1.</span> <span class="nav-text">拥塞发生的主要原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可避免"><span class="nav-number">2.2.</span> <span class="nav-text">不可避免</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拥塞控制和流量控制的差别"><span class="nav-number">3.</span> <span class="nav-text">拥塞控制和流量控制的差别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP拥塞控制"><span class="nav-number">4.</span> <span class="nav-text">TCP拥塞控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的流量控制"><span class="nav-number">5.</span> <span class="nav-text">TCP的流量控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP拥塞控制的四大过程"><span class="nav-number">6.</span> <span class="nav-text">TCP拥塞控制的四大过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#慢启动"><span class="nav-number">6.1.</span> <span class="nav-text">慢启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞避免"><span class="nav-number">6.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快重传和快恢复"><span class="nav-number">6.3.</span> <span class="nav-text">快重传和快恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#快重传"><span class="nav-number">6.3.1.</span> <span class="nav-text">快重传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快恢复"><span class="nav-number">6.3.2.</span> <span class="nav-text">快恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行的条件及过程"><span class="nav-number">6.3.3.</span> <span class="nav-text">执行的条件及过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原因"><span class="nav-number">6.3.4.</span> <span class="nav-text">原因</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">winsky</span>
+
+  <div>
+    <span id="sitetime"></span>
+    <script language="javascript">
+      function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        var t1 = Date.UTC(2018,02,03,14,00,00); 
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML="本站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+      }
+      siteTime();
+    </script>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+<span class="post-meta-divider">|</span>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共235.3k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://winsky.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://blog.winsky.wang/网络/拥塞发生的原因 及 TCP拥塞控制/';
+        this.page.identifier = '网络/拥塞发生的原因 及 TCP拥塞控制/';
+        this.page.title = '拥塞发生的原因 及 TCP拥塞控制';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://winsky.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

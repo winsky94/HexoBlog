@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="MySQL,锁,">
+
+
+<meta name="description" content="在高并发的环境下，我们经常会遇到并发处理的问题。在数据库的处理过程中，曾经碰到这样一个错误：12ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction 翻译过来就是锁等待超时，尝试重启事务。 那，这种是如何出现的呢？以及我们在开发中应该如何排查呢？">
+<meta name="keywords" content="MySQL,锁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="锁等待超时与information_schema的三个表">
+<meta property="og:url" content="https://blog.winsky.wang/数据库/锁等待超时与information_schema的三个表/index.html">
+<meta property="og:site_name" content="winsky小站">
+<meta property="og:description" content="在高并发的环境下，我们经常会遇到并发处理的问题。在数据库的处理过程中，曾经碰到这样一个错误：12ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction 翻译过来就是锁等待超时，尝试重启事务。 那，这种是如何出现的呢？以及我们在开发中应该如何排查呢？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://pic.winsky.wang/images/2018/09/02/innodb_trx.png">
+<meta property="og:image" content="https://pic.winsky.wang/images/2018/09/02/innodb_locks.png">
+<meta property="og:image" content="https://pic.winsky.wang/images/2018/09/02/innodb_lock_waits.png">
+<meta property="og:updated_time" content="2018-09-02T06:35:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="锁等待超时与information_schema的三个表">
+<meta name="twitter:description" content="在高并发的环境下，我们经常会遇到并发处理的问题。在数据库的处理过程中，曾经碰到这样一个错误：12ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction 翻译过来就是锁等待超时，尝试重启事务。 那，这种是如何出现的呢？以及我们在开发中应该如何排查呢？">
+<meta name="twitter:image" content="https://pic.winsky.wang/images/2018/09/02/innodb_trx.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.winsky.wang/数据库/锁等待超时与information_schema的三个表/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>锁等待超时与information_schema的三个表 | winsky小站</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113502967-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113502967-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7eac22d54f7284a1b355880cd286181d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">winsky小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Good Good Study,  Day Day Up</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.winsky.wang/数据库/锁等待超时与information_schema的三个表/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="winsky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="winsky小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">锁等待超时与information_schema的三个表</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-02T14:35:16+08:00">2018-09-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/数据库/锁等待超时与information_schema的三个表/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="数据库/锁等待超时与information_schema的三个表/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在高并发的环境下，我们经常会遇到并发处理的问题。在数据库的处理过程中，曾经碰到这样一个错误：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1205 (HY000): Lock wait timeout exceeded; </span><br><span class="line">try restarting transaction</span><br></pre></td></tr></table></figure></p>
+<p>翻译过来就是<code>锁等待超时，尝试重启事务</code>。</p>
+<p>那，这种是如何出现的呢？以及我们在开发中应该如何排查呢？</p>
+<a id="more"></a>
+<h1 id="information-schema的三个表"><a href="#information-schema的三个表" class="headerlink" title="information_schema的三个表"></a>information_schema的三个表</h1><p>information_schema中的三个表记录了事务和锁的相关的记录，三张表的具体字段描述如下：</p>
+<h2 id="innodb-trx"><a href="#innodb-trx" class="headerlink" title="innodb_trx"></a>innodb_trx</h2><p>当前运行的所有事务<br><img src="https://pic.winsky.wang/images/2018/09/02/innodb_trx.png" alt="innodb_trx"></p>
+<h2 id="innodb-locks"><a href="#innodb-locks" class="headerlink" title="innodb_locks"></a>innodb_locks</h2><p>当前出现的锁<br><img src="https://pic.winsky.wang/images/2018/09/02/innodb_locks.png" alt="innodb_locks"></p>
+<h2 id="innodb-lock-waits"><a href="#innodb-lock-waits" class="headerlink" title="innodb_lock_waits"></a>innodb_lock_waits</h2><p>锁等待的对应关系</p>
+<p><img src="https://pic.winsky.wang/images/2018/09/02/innodb_lock_waits.png" alt="innodb_lock_waits"></p>
+<h1 id="案例演示"><a href="#案例演示" class="headerlink" title="案例演示"></a>案例演示</h1><p><strong> 第一步，创建测试表，并插入测试数据 </strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tx1(<span class="keyword">id</span> <span class="built_in">int</span> primary <span class="keyword">key</span> ,c1 <span class="built_in">varchar</span>(<span class="number">20</span>),c2 <span class="built_in">varchar</span>(<span class="number">30</span>),c3 datetime) <span class="keyword">engine</span>=<span class="keyword">innodb</span> <span class="keyword">default</span> <span class="keyword">charset</span> = utf8 ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tx1 <span class="keyword">values</span></span><br><span class="line">(<span class="number">1</span>,<span class="string">'aaaa'</span>,<span class="string">'aaaaa2'</span>,<span class="keyword">NOW</span>()),</span><br><span class="line">(<span class="number">2</span>,<span class="string">'bbbb'</span>,<span class="string">'bbbbb2'</span>,<span class="keyword">NOW</span>()),</span><br><span class="line">(<span class="number">3</span>,<span class="string">'cccc'</span>,<span class="string">'ccccc2'</span>,<span class="keyword">NOW</span>());</span><br></pre></td></tr></table></figure></p>
+<p><strong> 第二步，手动开启事务，并查询三个表数据 </strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> tx1 <span class="keyword">set</span> c1=<span class="string">'heyf'</span>,c2=<span class="string">'heyf'</span>,c3=<span class="keyword">NOW</span>() <span class="keyword">where</span> <span class="keyword">id</span> =<span class="number">3</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.innodb_trx\G;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.INNODB_LOCKS\G;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> information_schema.INNODB_LOCK_WAITS\G;</span><br></pre></td></tr></table></figure></p>
+<p>此时没有锁，锁等待关系，只有<code>innodb_trx</code>表中有数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from information_schema.innodb_trx\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">                    trx_id: 805646</span><br><span class="line">                 trx_state: RUNNING</span><br><span class="line">               trx_started: 2018-09-02 14:29:58</span><br><span class="line">     trx_requested_lock_id: NULL</span><br><span class="line">          trx_wait_started: NULL</span><br><span class="line">                trx_weight: 3</span><br><span class="line">       trx_mysql_thread_id: 3</span><br><span class="line">                 trx_query: select * from information_schema.innodb_trx</span><br><span class="line">       trx_operation_state: NULL</span><br><span class="line">         trx_tables_in_use: 0</span><br><span class="line">         trx_tables_locked: 1</span><br><span class="line">          trx_lock_structs: 2</span><br><span class="line">     trx_lock_memory_bytes: 1136</span><br><span class="line">           trx_rows_locked: 1</span><br><span class="line">         trx_rows_modified: 1</span><br><span class="line">   trx_concurrency_tickets: 0</span><br><span class="line">       trx_isolation_level: REPEATABLE READ</span><br><span class="line">         trx_unique_checks: 1</span><br><span class="line">    trx_foreign_key_checks: 1</span><br><span class="line">trx_last_foreign_key_error: NULL</span><br><span class="line"> trx_adaptive_hash_latched: 0</span><br><span class="line"> trx_adaptive_hash_timeout: 0</span><br><span class="line">          trx_is_read_only: 0</span><br><span class="line">trx_autocommit_non_locking: 0</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p><strong> 第三步，在另一个会话中更新该记录，产生锁等待 </strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> tx1 <span class="keyword">set</span> c1=<span class="string">'heyfffff'</span>,c2=<span class="string">'heyffffff'</span>,c3=<span class="keyword">NOW</span>() <span class="keyword">where</span> <span class="keyword">id</span> =<span class="number">3</span> ;</span><br></pre></td></tr></table></figure></p>
+<p>查看<code>innodb_trx</code>表数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from information_schema.innodb_trx\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">                    trx_id: 805649</span><br><span class="line">                 trx_state: LOCK WAIT</span><br><span class="line">               trx_started: 2018-09-02 15:08:55</span><br><span class="line">     trx_requested_lock_id: 805649:153:3:4</span><br><span class="line">          trx_wait_started: 2018-09-02 15:08:55</span><br><span class="line">                trx_weight: 2</span><br><span class="line">       trx_mysql_thread_id: 4</span><br><span class="line">                 trx_query: update tx1 set c1=&apos;heyfffff&apos;,c2=&apos;heyffffff&apos;,c3=NOW() where id =3</span><br><span class="line">       trx_operation_state: starting index read</span><br><span class="line">         trx_tables_in_use: 1</span><br><span class="line">         trx_tables_locked: 1</span><br><span class="line">          trx_lock_structs: 2</span><br><span class="line">     trx_lock_memory_bytes: 1136</span><br><span class="line">           trx_rows_locked: 1</span><br><span class="line">         trx_rows_modified: 0</span><br><span class="line">   trx_concurrency_tickets: 0</span><br><span class="line">       trx_isolation_level: REPEATABLE READ</span><br><span class="line">         trx_unique_checks: 1</span><br><span class="line">    trx_foreign_key_checks: 1</span><br><span class="line">trx_last_foreign_key_error: NULL</span><br><span class="line"> trx_adaptive_hash_latched: 0</span><br><span class="line"> trx_adaptive_hash_timeout: 0</span><br><span class="line">          trx_is_read_only: 0</span><br><span class="line">trx_autocommit_non_locking: 0</span><br><span class="line">*************************** 2. row ***************************</span><br><span class="line">                    trx_id: 805646</span><br><span class="line">                 trx_state: RUNNING</span><br><span class="line">               trx_started: 2018-09-02 14:29:58</span><br><span class="line">     trx_requested_lock_id: NULL</span><br><span class="line">          trx_wait_started: NULL</span><br><span class="line">                trx_weight: 3</span><br><span class="line">       trx_mysql_thread_id: 3</span><br><span class="line">                 trx_query: select * from information_schema.innodb_trx</span><br><span class="line">       trx_operation_state: NULL</span><br><span class="line">         trx_tables_in_use: 0</span><br><span class="line">         trx_tables_locked: 1</span><br><span class="line">          trx_lock_structs: 2</span><br><span class="line">     trx_lock_memory_bytes: 1136</span><br><span class="line">           trx_rows_locked: 1</span><br><span class="line">         trx_rows_modified: 1</span><br><span class="line">   trx_concurrency_tickets: 0</span><br><span class="line">       trx_isolation_level: REPEATABLE READ</span><br><span class="line">         trx_unique_checks: 1</span><br><span class="line">    trx_foreign_key_checks: 1</span><br><span class="line">trx_last_foreign_key_error: NULL</span><br><span class="line"> trx_adaptive_hash_latched: 0</span><br><span class="line"> trx_adaptive_hash_timeout: 0</span><br><span class="line">          trx_is_read_only: 0</span><br><span class="line">trx_autocommit_non_locking: 0</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>查看<code>innodb_locks</code>表数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  select * from information_schema.INNODB_LOCKS\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">    lock_id: 805649:153:3:4</span><br><span class="line">lock_trx_id: 805649</span><br><span class="line">  lock_mode: X</span><br><span class="line">  lock_type: RECORD</span><br><span class="line"> lock_table: `test`.`tx1`</span><br><span class="line"> lock_index: PRIMARY</span><br><span class="line"> lock_space: 153</span><br><span class="line">  lock_page: 3</span><br><span class="line">   lock_rec: 4</span><br><span class="line">  lock_data: 3</span><br><span class="line">*************************** 2. row ***************************</span><br><span class="line">    lock_id: 805646:153:3:4</span><br><span class="line">lock_trx_id: 805646</span><br><span class="line">  lock_mode: X</span><br><span class="line">  lock_type: RECORD</span><br><span class="line"> lock_table: `test`.`tx1`</span><br><span class="line"> lock_index: PRIMARY</span><br><span class="line"> lock_space: 153</span><br><span class="line">  lock_page: 3</span><br><span class="line">   lock_rec: 4</span><br><span class="line">  lock_data: 3</span><br><span class="line">2 rows in set, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>查案<code>innodb_lock_waits</code>表数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from information_schema.INNODB_LOCK_WAITS;\G</span><br><span class="line">+-------------------+-------------------+-----------------+------------------+</span><br><span class="line">| requesting_trx_id | requested_lock_id | blocking_trx_id | blocking_lock_id |</span><br><span class="line">+-------------------+-------------------+-----------------+------------------+</span><br><span class="line">| 805649            | 805649:153:3:4    | 805646          | 805646:153:3:4   |</span><br><span class="line">+-------------------+-------------------+-----------------+------------------+</span><br><span class="line">1 row in set, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>在执行第二个update的时候，由于第一个update事务还未提交，故而第二个update在等待，其事务状态为LOCK WAIT ，等待时间超过innodb_lock_wait_timeout值(默认是50)时，则会报ERROR 1205 (HY000): <code>Lock wait timeout exceeded; try restarting transaction</code>异常。</p>
+<p>在第二个update锁等待超时之后，对第一个update手动提交事务，则第一个update语句成功更新数据库中数据表。</p>
+<p><strong> 锁等待递进 </strong><br>如果是多个锁等待，比如有三个update，update同一行记录，则锁等待关系会层级递进，第二个第三个update都保留对第一个update的锁等待且第三个update保留对第二个update的锁等待，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from information_schema.INNODB_LOCK_WAITS;\G</span><br><span class="line">+-------------------+-------------------+-----------------+------------------+</span><br><span class="line">| requesting_trx_id | requested_lock_id | blocking_trx_id | blocking_lock_id |</span><br><span class="line">+-------------------+-------------------+-----------------+------------------+</span><br><span class="line">| 805653            | 805653:153:3:4    | 805652          | 805652:153:3:4   |</span><br><span class="line">| 805653            | 805653:153:3:4    | 805651          | 805651:153:3:4   |</span><br><span class="line">| 805652            | 805652:153:3:4    | 805651          | 805651:153:3:4   |</span><br><span class="line">+-------------------+-------------------+-----------------+------------------+</span><br><span class="line">3 rows in set, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><p><strong> 1、查看并修改变量值 </strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">GLOBAL</span> <span class="keyword">VARIABLES</span> <span class="keyword">like</span> <span class="string">'%innodb_lock_wait_timeout%'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">GLOBAL</span> innodb_lock_wait_timeout=<span class="number">100</span>; <span class="comment">-- 设置大小值看系统情况</span></span><br></pre></td></tr></table></figure></p>
+<p><strong> 2、找到一直未提交事务导致后来进程死锁等待的进程，并杀掉 </strong><br>根据锁等待表中的拥有锁的事务id(blocking_trx_id)，从innodb_trx表中找到trx_mysql_thread_id值，kill掉。</p>
+<p>如 这里杀掉 进程235：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> trx_mysql_thread_id <span class="keyword">from</span> information_schema.innodb_trx it </span><br><span class="line"><span class="keyword">JOIN</span> information_schema.INNODB_LOCK_WAITS ilw </span><br><span class="line"><span class="keyword">on</span> ilw.blocking_trx_id = it.trx_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- trx_mysql_thread_id: 235</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">kill</span> <span class="number">235</span></span><br></pre></td></tr></table></figure></p>
+<p><strong> 3、优化SQL，优化数据库，优化项目 </strong><br>第一个update未执行完，第二个update就来了，超过等待时间就会报锁等待超时异常。在数据并发项目遇到这种情况概率比较大，这时候就要从项目、数据库、执行SQL多方面入手了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+            <a href="/tags/锁/" rel="tag"># 锁</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/设计模式/设计模式常见面试题/" rel="next" title="设计模式常见面试题">
+                <i class="fa fa-chevron-left"></i> 设计模式常见面试题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/爬虫/QQ音乐歌词接口/" rel="prev" title="QQ音乐歌词接口">
+                QQ音乐歌词接口 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="winsky">
+            
+              <p class="site-author-name" itemprop="name">winsky</p>
+              <p class="site-description motion-element" itemprop="description">生命不息，折腾不止</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/winsky94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:shunkuan.ysk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          <!-- 原版
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">
+                      winsky wiki
+                    </a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">
+                      Jestom
+                    </a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+          -->
+
+          
+          
+            <div class="links-of-blogroll motion-element">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-link fa-fw"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">winsky wiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">Jestom</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#information-schema的三个表"><span class="nav-number">1.</span> <span class="nav-text">information_schema的三个表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#innodb-trx"><span class="nav-number">1.1.</span> <span class="nav-text">innodb_trx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#innodb-locks"><span class="nav-number">1.2.</span> <span class="nav-text">innodb_locks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#innodb-lock-waits"><span class="nav-number">1.3.</span> <span class="nav-text">innodb_lock_waits</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#案例演示"><span class="nav-number">2.</span> <span class="nav-text">案例演示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决办法"><span class="nav-number">3.</span> <span class="nav-text">解决办法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">winsky</span>
+
+  <div>
+    <span id="sitetime"></span>
+    <script language="javascript">
+      function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        var t1 = Date.UTC(2018,02,03,14,00,00); 
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML="本站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+      }
+      siteTime();
+    </script>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+<span class="post-meta-divider">|</span>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共235.3k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://winsky.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://blog.winsky.wang/数据库/锁等待超时与information_schema的三个表/';
+        this.page.identifier = '数据库/锁等待超时与information_schema的三个表/';
+        this.page.title = '锁等待超时与information_schema的三个表';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://winsky.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

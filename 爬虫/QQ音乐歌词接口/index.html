@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="QQ音乐,爬虫,">
+
+
+<meta name="description" content="之前在公司实习的时候，做过一个QQ音乐歌词爬虫的项目，期间网上找了不少参考资料，自己也研究过QQ音乐的js解析，这里简单做个记录，以供以后参考。">
+<meta name="keywords" content="QQ音乐,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QQ音乐歌词接口">
+<meta property="og:url" content="https://blog.winsky.wang/爬虫/QQ音乐歌词接口/index.html">
+<meta property="og:site_name" content="winsky小站">
+<meta property="og:description" content="之前在公司实习的时候，做过一个QQ音乐歌词爬虫的项目，期间网上找了不少参考资料，自己也研究过QQ音乐的js解析，这里简单做个记录，以供以后参考。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-02T06:40:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QQ音乐歌词接口">
+<meta name="twitter:description" content="之前在公司实习的时候，做过一个QQ音乐歌词爬虫的项目，期间网上找了不少参考资料，自己也研究过QQ音乐的js解析，这里简单做个记录，以供以后参考。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.winsky.wang/爬虫/QQ音乐歌词接口/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>QQ音乐歌词接口 | winsky小站</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113502967-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113502967-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7eac22d54f7284a1b355880cd286181d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">winsky小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Good Good Study,  Day Day Up</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.winsky.wang/爬虫/QQ音乐歌词接口/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="winsky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="winsky小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">QQ音乐歌词接口</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-02T14:40:14+08:00">2018-09-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/爬虫/" itemprop="url" rel="index"><span itemprop="name">爬虫</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/爬虫/QQ音乐歌词接口/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="爬虫/QQ音乐歌词接口/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前在公司实习的时候，做过一个QQ音乐歌词爬虫的项目，期间网上找了不少参考资料，自己也研究过QQ音乐的js解析，这里简单做个记录，以供以后参考。</p>
+<a id="more"></a>
+<h1 id="单曲搜索接口"><a href="#单曲搜索接口" class="headerlink" title="单曲搜索接口"></a>单曲搜索接口</h1><h3 id="访问链接"><a href="#访问链接" class="headerlink" title="访问链接"></a>访问链接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://c.y.qq.com/soso/fcgi-bin/search_cp?t=0&amp;aggr=1&amp;cr=1&amp;catZhida=1&amp;lossless=0&amp;flag_qc=0&amp;p=1&amp;w=#&#123;1&#125;&amp;n=#&#123;2&#125;&amp;g_tk=938407465&amp;loginUin=0&amp;hostUin=0&amp;format=json&amp;inCharset=utf8&amp;outCharset=utf-8&amp;notice=0&amp;platform=yqq&amp;needNewCode=0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>w表示的是搜索关键词</li>
+<li>n表示的是结果返回的个数</li>
+<li>format表示返回结果的格式，QQ原本的format方式是jsonp，这里改成json，使其返回的结果变成json格式的数据</li>
+</ul>
+<h3 id="返回结果示例"><a href="#返回结果示例" class="headerlink" title="返回结果示例"></a>返回结果示例</h3><p>目前使用的几个主要属性如下：</p>
+<ul>
+<li>data-song-list是搜索的结果</li>
+<li>albumid    专辑id</li>
+<li>albummid    专辑mid</li>
+<li>albumname    专辑名称</li>
+<li>grp        QQ音乐搜索结果页面上有些结果是折腾显示的，折叠的数据就在这里面，其基本结构跟list的一个元素是一样的</li>
+<li>singer        歌手列表，每个歌手是singer下的一个元素<ul>
+<li>id        歌手id</li>
+<li>mid    歌手mid</li>
+<li>name    歌手名</li>
+</ul>
+</li>
+<li>songid        歌曲id</li>
+<li>songmid    歌曲mid</li>
+<li>songname    歌曲名称</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;code&quot;: 0,</span><br><span class="line">	&quot;data&quot;: &#123;</span><br><span class="line">		&quot;keyword&quot;: &quot;明天你好&quot;,</span><br><span class="line">		&quot;priority&quot;: 0,</span><br><span class="line">		&quot;qc&quot;: [],</span><br><span class="line">		&quot;semantic&quot;: &#123;</span><br><span class="line">			&quot;curnum&quot;: 0,</span><br><span class="line">			&quot;curpage&quot;: 1,</span><br><span class="line">			&quot;list&quot;: [],</span><br><span class="line">			&quot;totalnum&quot;: 0</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;song&quot;: &#123;</span><br><span class="line">			&quot;curnum&quot;: 1,</span><br><span class="line">			&quot;curpage&quot;: 1,</span><br><span class="line">			&quot;list&quot;: [&#123;</span><br><span class="line">				&quot;albumid&quot;: 75139,</span><br><span class="line">				&quot;albummid&quot;: &quot;003K4mFV3B9UfM&quot;,</span><br><span class="line">				&quot;albumname&quot;: &quot;Lost &amp; Found去寻找&quot;,</span><br><span class="line">				&quot;albumname_hilight&quot;: &quot;Lost &amp; Found去寻找&quot;,</span><br><span class="line">				&quot;alertid&quot;: 100002,</span><br><span class="line">				&quot;chinesesinger&quot;: 0,</span><br><span class="line">				&quot;docid&quot;: &quot;5363839958007993519&quot;,</span><br><span class="line">				&quot;format&quot;: &quot;qqhq;common;mp3common;wmacommon&quot;,</span><br><span class="line">				&quot;grp&quot;: [],</span><br><span class="line">				&quot;interval&quot;: 271,</span><br><span class="line">				&quot;isonly&quot;: 1,</span><br><span class="line">				&quot;lyric&quot;: &quot;《加油吧实习生》电视剧插曲&quot;,</span><br><span class="line">				&quot;lyric_hilight&quot;: &quot;《加油吧实习生》电视剧插曲&quot;,</span><br><span class="line">				&quot;media_mid&quot;: &quot;002OrhQA0bNYFg&quot;,</span><br><span class="line">				&quot;msgid&quot;: 14,</span><br><span class="line">				&quot;nt&quot;: 10000,</span><br><span class="line">				&quot;pay&quot;: &#123;</span><br><span class="line">					&quot;payalbum&quot;: 0,</span><br><span class="line">					&quot;payalbumprice&quot;: 0,</span><br><span class="line">					&quot;paydownload&quot;: 1,</span><br><span class="line">					&quot;payinfo&quot;: 1,</span><br><span class="line">					&quot;payplay&quot;: 1,</span><br><span class="line">					&quot;paytrackmouth&quot;: 1,</span><br><span class="line">					&quot;paytrackprice&quot;: 200</span><br><span class="line">				&#125;,</span><br><span class="line">				&quot;preview&quot;: &#123;</span><br><span class="line">					&quot;trybegin&quot;: 60926,</span><br><span class="line">					&quot;tryend&quot;: 103574,</span><br><span class="line">					&quot;trysize&quot;: 683362</span><br><span class="line">				&#125;,</span><br><span class="line">				&quot;pubtime&quot;: 1310313600,</span><br><span class="line">				&quot;pure&quot;: 0,</span><br><span class="line">				&quot;singer&quot;: [&#123;</span><br><span class="line">					&quot;id&quot;: 4422,</span><br><span class="line">					&quot;mid&quot;: &quot;0012bj8d36Xkw1&quot;,</span><br><span class="line">					&quot;name&quot;: &quot;牛奶咖啡&quot;,</span><br><span class="line">					&quot;name_hilight&quot;: &quot;牛奶咖啡&quot;</span><br><span class="line">				&#125;],</span><br><span class="line">				&quot;size128&quot;: 4350319,</span><br><span class="line">				&quot;size320&quot;: 10875498,</span><br><span class="line">				&quot;sizeape&quot;: 28565524,</span><br><span class="line">				&quot;sizeflac&quot;: 29182620,</span><br><span class="line">				&quot;sizeogg&quot;: 6509450,</span><br><span class="line">				&quot;songid&quot;: 7109361,</span><br><span class="line">				&quot;songmid&quot;: &quot;002OrhQA0bNYFg&quot;,</span><br><span class="line">				&quot;songname&quot;: &quot;明天，你好&quot;,</span><br><span class="line">				&quot;songname_hilight&quot;: &quot;&lt;span class=\&quot;c_tx_highlight\&quot;&gt;明天&lt;/span&gt;，&lt;span class=\&quot;c_tx_highlight\&quot;&gt;你好&lt;/span&gt;&quot;,</span><br><span class="line">				&quot;songurl&quot;: &quot;http://y.qq.com/#type=song&amp;id=7109361&quot;,</span><br><span class="line">				&quot;stream&quot;: 9,</span><br><span class="line">				&quot;switch&quot;: 636675,</span><br><span class="line">				&quot;t&quot;: 0,</span><br><span class="line">				&quot;tag&quot;: 0,</span><br><span class="line">				&quot;type&quot;: 0,</span><br><span class="line">				&quot;ver&quot;: 0,</span><br><span class="line">				&quot;vid&quot;: &quot;I0010NL1U5Y&quot;</span><br><span class="line">			&#125;],</span><br><span class="line">			&quot;totalnum&quot;: 46</span><br><span class="line">		&#125;,</span><br><span class="line">		&quot;totaltime&quot;: 0,</span><br><span class="line">		&quot;zhida&quot;: &#123;</span><br><span class="line">			&quot;chinesesinger&quot;: 0,</span><br><span class="line">			&quot;type&quot;: 0</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;message&quot;: &quot;&quot;,</span><br><span class="line">	&quot;notice&quot;: &quot;&quot;,</span><br><span class="line">	&quot;subcode&quot;: 0,</span><br><span class="line">	&quot;time&quot;: 1471404983,</span><br><span class="line">	&quot;tips&quot;: &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="歌曲详情页"><a href="#歌曲详情页" class="headerlink" title="歌曲详情页"></a>歌曲详情页</h1><h3 id="访问链接-1"><a href="#访问链接-1" class="headerlink" title="访问链接"></a>访问链接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://y.qq.com/portal/song/#&#123;1&#125;.html</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>#{1}</code>处填写的是歌曲的mid<br>这是通用情况，绝大部分歌曲都是用的这个链接来访问</li>
+</ul>
+<p>但是，存在一小部分歌曲，songid等一系列基本数据都是0，后经部分观察发现，使用上面那个url来获得歌曲详情的歌曲，type都是0<br>对于songid为0的这部分歌曲，目前来看是type=2，应该还有其他类型，但是没有发现对应的歌曲。这部分歌曲，他的访问链接和正常歌曲是不一样的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://y.qq.com/portal/song2/#&#123;1&#125;/#&#123;2&#125;.html</span><br><span class="line">http://y.qq.com/portal/song2/46/16783190164570565401.html</span><br></pre></td></tr></table></figure></p>
+<p>其中，#{2}对应于搜索json的docid,#{1}没弄清楚是什么东西，song2后面接的都是46.至于song2，这是js中生成的，目前猜测是对应于type=2中的2。其他的因为没有找到对应的歌曲，所以也就没有深入去分析QQ那边的js。对于绝大部分歌曲来说，QQ那边的songid都不会是0【目前获得的51049条记录中，仅1468条记录的songid是0】所以这种情况应该可以不予考虑了。</p>
+<p>这里记录一下QQ中对应的js解析部分，以备后面需要深入研究时再继续处理。<br>构造规则在<code>http://imgcache.gtimg.cn/music/portal/js/common/pkg/common_61970c5.js?max_age=31536000</code>请求获得的<code>music.js</code>文件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gotoSongdetail: function(a) &#123;</span><br><span class="line">	// 默认是 根据songmid为构造歌曲详情的url</span><br><span class="line">	var b = &quot;//y.qq.com/portal/song/&quot; + a.mid + &quot;.html&quot;;</span><br><span class="line">	</span><br><span class="line">	a.songtype &amp;&amp; 1 != a.songtype &amp;&amp; 11 != a.songtype &amp;&amp; 13 != a.songtype &amp;&amp; 3 != a.songtype &amp;&amp; (b = &quot;//y.qq.com/portal/song2/&quot; + a.songtype + &quot;/&quot; + a.id + &quot;.html&quot;);</span><br><span class="line">	a.songtype &amp;&amp; (111 == a.songtype || 112 == a.songtype || 113 == a.songtype) &amp;&amp; (b = &quot;//y.qq.com/portal/song2/&quot; + a.songtype + &quot;/&quot; + a.id + &quot;.html&quot;);</span><br><span class="line">	a.disstid &amp;&amp; a.songtype &amp;&amp; (b = &quot;//y.qq.com/portal/song3/&quot; + a.songtype + &quot;/&quot; + a.disstid + &quot;/&quot; + a.id + &quot;.html&quot;);</span><br><span class="line">	window.open(b, f.util.getPageTarget())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="歌词提取"><a href="#歌词提取" class="headerlink" title="歌词提取"></a>歌词提取</h1><p>一开始是打算直接提取html页面的内容，但是查看网页源文件后发现歌曲详情页的实际数据是异步构造的。简单尝试直接请求返回歌词的url后发现，这边的url做了防范，直接请求返回的是<code>{&quot;retcode&quot;:-1310,&quot;code&quot;:-1310,&quot;subcode&quot;:-1310}</code>，心想还是看看有没有办法获得js加载完毕后的html吧。</p>
+<p>Google+各种尝试后发现，可以使用phantomjs来获取js加载完成后的网页，于是折腾了一会儿把本机配起来运行了。乍一看，似乎还可以，但是等到大量歌曲运行起来后，发现还是有一定几率存在没等js加载完就解析网页的，感觉命中率不能忍受。</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/imlsz/article/details/24325623" target="_blank" rel="noopener">http://blog.csdn.net/imlsz/article/details/24325623</a></p>
+</blockquote>
+<p>没办法，只能继续去啃原生的js请求了。chrome调试后，找到请求歌词的实际url<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg?nobase64=1&amp;musicid=7109361&amp;callback=jsonp1&amp;g_tk=938407465&amp;jsonpCallback=jsonp1&amp;loginUin=0&amp;hostUin=0&amp;format=jsonp&amp;inCharset=utf8&amp;outCharset=utf-8&amp;notice=0&amp;platform=yqq&amp;needNewCode=0</span><br></pre></td></tr></table></figure></p>
+<p>针对请求返回的是错误代码，仔细研究了一下request header，发现其中有个<code>Referer:http://y.qq.com/portal/song/002OrhQA0bNYFg.html</code>请求头，是QQ用来防盗链的（咋就这一个js请求要防盗链呢，其他都不防，醉了。难道是被人爬歌词爬怕了hhhh）。在HTTPClient的get请求中附带上Referer，指向实际歌曲详情的页面，终于发现返回的不是错误代码了。。。。</p>
+<p>可是问题的关键是，返回的结果是一堆乱码。一开始以为是编码问题，尝试了各种字符编码，还是乱码。仔细看了下Response header，发现其中有个<code>Content-Encoding:gzip</code>，Google了一下发现其实真正“乱码”原因是被压缩了，需要java这边手动解压一下。解压之后发现，就是这段了，他返回了当前歌曲的动态歌词。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//获取消息头Content-Encoding判断数据流是否gzip压缩过</span><br><span class="line">Header[] contentEncodings = httpResponse.getHeaders(&quot;Content-Encoding&quot;); </span><br><span class="line">Header contentEncoding = null;</span><br><span class="line"></span><br><span class="line">if (contentEncodings.length &gt; 0) &#123;</span><br><span class="line">	contentEncoding = httpResponse.getHeaders(&quot;Content-Encoding&quot;)[0];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">HttpEntity entity = httpResponse.getEntity();</span><br><span class="line"></span><br><span class="line">if ((contentEncoding != null) &amp;&amp;contentEncoding.getValue().equalsIgnoreCase(&quot;gzip&quot;)) &#123;</span><br><span class="line">	ByteArrayOutputStream out = new ByteArrayOutputStream();</span><br><span class="line">	GZIPInputStream gzip = new GZIPInputStream(entity.getContent());</span><br><span class="line">	byte[] buffer = new byte[bufferSize];</span><br><span class="line">	int n = 0;</span><br><span class="line"></span><br><span class="line">	while ((n = gzip.read(buffer)) &gt;= 0) &#123;</span><br><span class="line">		out.write(buffer, 0, n);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	html = out.toString(&quot;UTF-8&quot;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	html = EntityUtils.toString(entity, &quot;UTF-8&quot;); //获得html源代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还是梳理一下QQ那边的流程吧。</p>
+<p>设置好相应的请求头，通过上面的URL获得动态歌词，然后前端js根据需要，对获得的内容进行清洗获得文本歌词<br>具体的js操作在<code>http://imgcache.gtimg.cn/music/portal/js/v4/song_detail_37c8119.js?max_age=31536000</code>请求获得的<code>song_detail.js</code>中，关键的就是下面三行代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var t = s.lyric.unescapeHTML(), //html反转义</span><br><span class="line">i = t.replace(/\[[^\[\]]*\]/g, &quot;&lt;p&gt;&quot;).replace(/\\n/g, &quot;&lt;/p&gt;&quot;).trim(); //html展示的文本标签</span><br><span class="line">lyricStr = t.replace(/\[[^\[\]]*\]/g, &quot;&quot;).replace(/\\n/g, &quot;\r\n&quot;).trim(); //文本歌词</span><br></pre></td></tr></table></figure></p>
+<h1 id="动态歌词"><a href="#动态歌词" class="headerlink" title="动态歌词"></a>动态歌词</h1><p>上面我们提到了，在想方设法获得文本歌词的过程中，发现了QQ实际上是将动态歌词转成文本歌词的，所以动态歌词也就理所当然的一起得到了。</p>
+<p>但实际上在一开始的时候，不是这么获得动态歌词的。虽然那个接口数据量可能没有目前使用的接口数据量多，但是还是记录一下吧。</p>
+<h3 id="访问链接-2"><a href="#访问链接-2" class="headerlink" title="访问链接"></a>访问链接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://music.qq.com/miniportal/static/lyric/songid%100/songid.xml</span><br></pre></td></tr></table></figure>
+<ul>
+<li>songid就是QQ中音乐id</li>
+</ul>
+<p>这边返回的是一个xml文件，并且注意编码是GB2312的，但如果java中使用GB2312来解析这个xml文件，会出现繁体字不能识别的情况。这是因为GB2312只收录了6k多个汉字和符号，GBK在兼容GB2312的基础上，扩展了GB13000，收录了2万多汉字及符号。所以我们这边使用GBK来解析这个xml文件。</p>
+<p>值的注意的是，部分文件，动态歌词的接口返回的其实就是文本歌词，所以需要过滤一遍，不能跟QQ那边一样把文本歌词设置在动态歌词中。</p>
+<h1 id="QQ音乐其他接口参考"><a href="#QQ音乐其他接口参考" class="headerlink" title="QQ音乐其他接口参考"></a>QQ音乐其他接口参考</h1><blockquote>
+<p><a href="http://imguowei.blog.51cto.com/1111359/1733428" target="_blank" rel="noopener">http://imguowei.blog.51cto.com/1111359/1733428</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/QQ音乐/" rel="tag"># QQ音乐</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/数据库/锁等待超时与information_schema的三个表/" rel="next" title="锁等待超时与information_schema的三个表">
+                <i class="fa fa-chevron-left"></i> 锁等待超时与information_schema的三个表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Hexo博客/Hexo自动部署优化——解决TTFB过长的问题/" rel="prev" title="Hexo自动部署优化——解决TTFB过长的问题">
+                Hexo自动部署优化——解决TTFB过长的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="winsky">
+            
+              <p class="site-author-name" itemprop="name">winsky</p>
+              <p class="site-description motion-element" itemprop="description">生命不息，折腾不止</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/winsky94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:shunkuan.ysk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          <!-- 原版
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">
+                      winsky wiki
+                    </a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">
+                      Jestom
+                    </a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+          -->
+
+          
+          
+            <div class="links-of-blogroll motion-element">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-link fa-fw"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">winsky wiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">Jestom</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单曲搜索接口"><span class="nav-number">1.</span> <span class="nav-text">单曲搜索接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#访问链接"><span class="nav-number">1.0.1.</span> <span class="nav-text">访问链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回结果示例"><span class="nav-number">1.0.2.</span> <span class="nav-text">返回结果示例</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#歌曲详情页"><span class="nav-number">2.</span> <span class="nav-text">歌曲详情页</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#访问链接-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">访问链接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#歌词提取"><span class="nav-number">3.</span> <span class="nav-text">歌词提取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态歌词"><span class="nav-number">4.</span> <span class="nav-text">动态歌词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#访问链接-2"><span class="nav-number">4.0.1.</span> <span class="nav-text">访问链接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QQ音乐其他接口参考"><span class="nav-number">5.</span> <span class="nav-text">QQ音乐其他接口参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">winsky</span>
+
+  <div>
+    <span id="sitetime"></span>
+    <script language="javascript">
+      function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        var t1 = Date.UTC(2018,02,03,14,00,00); 
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML="本站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+      }
+      siteTime();
+    </script>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+<span class="post-meta-divider">|</span>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共235.3k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://winsky.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://blog.winsky.wang/爬虫/QQ音乐歌词接口/';
+        this.page.identifier = '爬虫/QQ音乐歌词接口/';
+        this.page.title = 'QQ音乐歌词接口';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://winsky.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

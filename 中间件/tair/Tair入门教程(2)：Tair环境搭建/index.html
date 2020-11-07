@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="中间件,tair,">
+
+
+<meta name="description" content="上一篇文章Tair入门教程(1)：Tair介绍我们介绍了Tair的主要功能和使用场景，以及其架构和各部分组件的作用。 本文以CentOS为例，介绍如何搭建一个Tair环境，采用Zookeeper作为注册中心。  基于阿里云学生机CentOS 7.3系统">
+<meta name="keywords" content="中间件,tair">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tair入门教程(2)：Tair环境搭建">
+<meta property="og:url" content="https://blog.winsky.wang/中间件/tair/Tair入门教程(2)：Tair环境搭建/index.html">
+<meta property="og:site_name" content="winsky小站">
+<meta property="og:description" content="上一篇文章Tair入门教程(1)：Tair介绍我们介绍了Tair的主要功能和使用场景，以及其架构和各部分组件的作用。 本文以CentOS为例，介绍如何搭建一个Tair环境，采用Zookeeper作为注册中心。  基于阿里云学生机CentOS 7.3系统">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-27T09:54:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tair入门教程(2)：Tair环境搭建">
+<meta name="twitter:description" content="上一篇文章Tair入门教程(1)：Tair介绍我们介绍了Tair的主要功能和使用场景，以及其架构和各部分组件的作用。 本文以CentOS为例，介绍如何搭建一个Tair环境，采用Zookeeper作为注册中心。  基于阿里云学生机CentOS 7.3系统">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.winsky.wang/中间件/tair/Tair入门教程(2)：Tair环境搭建/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>Tair入门教程(2)：Tair环境搭建 | winsky小站</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113502967-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113502967-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7eac22d54f7284a1b355880cd286181d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">winsky小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Good Good Study,  Day Day Up</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.winsky.wang/中间件/tair/Tair入门教程(2)：Tair环境搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="winsky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="winsky小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tair入门教程(2)：Tair环境搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-27T17:54:14+08:00">2018-05-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/中间件/" itemprop="url" rel="index"><span itemprop="name">中间件</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/中间件/tair/" itemprop="url" rel="index"><span itemprop="name">tair</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/中间件/tair/Tair入门教程(2)：Tair环境搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="中间件/tair/Tair入门教程(2)：Tair环境搭建/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇文章<a href="https://blog.winsky.wang/中间件/tair/Tair入门教程(1)：Tair介绍/" title="Tair入门教程(1)：Tair介绍">Tair入门教程(1)：Tair介绍</a>我们介绍了Tair的主要功能和使用场景，以及其架构和各部分组件的作用。</p>
+<p>本文以CentOS为例，介绍如何搭建一个Tair环境，采用Zookeeper作为注册中心。</p>
+<blockquote>
+<p>基于阿里云学生机CentOS 7.3系统</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>参照官方开源的<a href="https://github.com/alibaba/tair/" target="_blank" rel="noopener">GitHub</a>中的方法，我们采用编译源码的方式来安装tair。</p>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># clone 代码到本地</span><br><span class="line">git clone https://github.com/alibaba/tair.git</span><br><span class="line"></span><br><span class="line"># 安装必要依赖</span><br><span class="line">sudo yum install -y openssl-devel libcurl-devel</span><br><span class="line"></span><br><span class="line"># 编译依赖</span><br><span class="line">./bootstrap.sh</span><br><span class="line"></span><br><span class="line"># 检测和生成 Makefile (默认安装位置是 ~/tair_bin, 修改使用 --prefix=目标目录)</span><br><span class="line">./configure</span><br><span class="line"></span><br><span class="line"># 编译和安装到目标目录</span><br><span class="line">make -j &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>上面安装步骤都很简单，看上去是分分钟就能安装完，但是在安装的时候还是会有各种各样的问题。这里记录一下我遇到的一个问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g++: internal compiler error: Killed (program cc1plus)</span><br><span class="line"></span><br><span class="line">Please submit a full bug report,</span><br></pre></td></tr></table></figure></p>
+<p>经过谷歌，最终发现主要原因是内存不足，g++编译时需要大量内存，临时使用交换分区来解决吧<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo dd if=/dev/zero of=/swapfile bs=64M count=16</span><br><span class="line"></span><br><span class="line">sudo mkswap /swapfile</span><br><span class="line"></span><br><span class="line">sudo swapon /swapfile</span><br></pre></td></tr></table></figure></p>
+<p>上面三行命令临时挂载了一个64M的Swap内存。这样操作之后我就顺利编译完成了。</p>
+<p>当然，编译完成后如果想卸载Swap内存，可以使用如下的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo swapoff /swapfile</span><br><span class="line"></span><br><span class="line">sudo rm /swapfile</span><br></pre></td></tr></table></figure></p>
+<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><h2 id="部署配置"><a href="#部署配置" class="headerlink" title="部署配置"></a>部署配置</h2><p>tair的运行, 至少需要一个 config server 和一个 data server。推荐使用两个config server 多个data server的方式。两个config server有主备之分。</p>
+<p>tair有三个配置文件，分别是对config server、data server及group信息的配置，在tair_bin安装目录下的etc目录下有这三个配置文件的样例，我们将其复制一下，成为我们需要的配置文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp configserver.conf.default configserver.conf</span><br><span class="line">cp dataserver.conf.default dataserver.conf</span><br><span class="line">cp group.conf.default group.conf</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><a href="https://github.com/alibaba/tair/wiki/配置文件详解" target="_blank" rel="noopener">配置文件详解</a></p>
+</blockquote>
+<p>在配置之前，请查阅官网给出的配置文件字段详解，下面直接贴出我自己的配置并加以简单的说明。</p>
+<h3 id="配置ConfigServer"><a href="#配置ConfigServer" class="headerlink" title="配置ConfigServer"></a>配置ConfigServer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># tair 2.3 --- configserver config</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[public]</span><br><span class="line">config_server=172.17.68.153:5198</span><br><span class="line">config_server=172.17.68.153:5198</span><br><span class="line"></span><br><span class="line">[configserver]</span><br><span class="line">port=5198</span><br><span class="line">log_file=/root/tair_bin/logs/config.log</span><br><span class="line">pid_file=/root/tair_bin/logs/config.pid</span><br><span class="line">log_level=warn</span><br><span class="line">group_file=/root/tair_bin/etc/group.conf</span><br><span class="line">data_dir=/root/tair_bin/data/data</span><br><span class="line">dev_name=eth0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先需要配置config server的服务器地址和端口号，端口号可以默认，服务器地址改成自己的，有一主一备两台configserver，这里仅为测试使用就设置为一台了。</li>
+<li><code>log_file/pid_file</code>等的路径设置最好用绝对路径，默认的是相对路径，而且是不正确的相对路径（没有返回上级目录），因此这里需要修改。注意data文件和log文件非常重要，data文件不可缺少，而log文件是部署出错后能给你详细的出错原因。</li>
+<li>dev_name很重要，需要设置为你自己当前网络接口的名称，默认为eth0。</li>
+</ul>
+<h3 id="配置data-server"><a href="#配置data-server" class="headerlink" title="配置data server"></a>配置data server</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line">#  tair 2.3 --- tairserver config</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[public]</span><br><span class="line">config_server=172.17.68.153:5198</span><br><span class="line">config_server=172.17.68.153:5198</span><br><span class="line"></span><br><span class="line">[tairserver]</span><br><span class="line">#</span><br><span class="line">#storage_engine:</span><br><span class="line">#</span><br><span class="line"># mdb</span><br><span class="line"># ldb</span><br><span class="line">#</span><br><span class="line">storage_engine=mdb</span><br><span class="line">local_mode=0</span><br><span class="line">#</span><br><span class="line">#mdb_type:</span><br><span class="line"># mdb</span><br><span class="line"># mdb_shm</span><br><span class="line">#</span><br><span class="line">mdb_type=mdb_shm</span><br><span class="line"></span><br><span class="line"># shm file prefix, located in /dev/shm/, the leading &apos;/&apos; is must</span><br><span class="line">mdb_shm_path=/mdb_shm_inst</span><br><span class="line"># (1&lt;&lt;mdb_inst_shift) would be the instance count</span><br><span class="line">mdb_inst_shift=3</span><br><span class="line"># (1&lt;&lt;mdb_hash_bucket_shift) would be the overall bucket count of hashtable</span><br><span class="line"># (1&lt;&lt;mdb_hash_bucket_shift) * 8 bytes memory would be allocated as hashtable</span><br><span class="line">mdb_hash_bucket_shift=24</span><br><span class="line"># milliseconds, time of one round of the checking in mdb lasts before having a break</span><br><span class="line">mdb_check_granularity=15</span><br><span class="line"># increase this factor when the check thread of mdb incurs heavy load</span><br><span class="line"># cpu load would be around 1/(1+mdb_check_granularity_factor)</span><br><span class="line">mdb_check_granularity_factor=10</span><br><span class="line"></span><br><span class="line">#tairserver listen port</span><br><span class="line">port=5191</span><br><span class="line"></span><br><span class="line">supported_admin=0</span><br><span class="line">process_thread_num=12</span><br><span class="line">io_thread_num=12</span><br><span class="line">dup_io_thread_num=1</span><br><span class="line">#</span><br><span class="line">#mdb size in MB</span><br><span class="line">#</span><br><span class="line">slab_mem_size=4096</span><br><span class="line">log_file=/root/tair_bin/logs/server.log</span><br><span class="line">pid_file=/root/tair_bin/logs/server.pid</span><br><span class="line"></span><br><span class="line">is_namespace_load=1</span><br><span class="line">is_flowcontrol_load=1</span><br><span class="line">tair_admin_file = /root/tair_bin/etc/admin.conf</span><br><span class="line"></span><br><span class="line">put_remove_expired=0</span><br><span class="line"># set same number means to disable the memory merge, like 5-5</span><br><span class="line">mem_merge_hour_range=5-5</span><br><span class="line"># 1ms copy 300 items</span><br><span class="line">mem_merge_move_count=300</span><br><span class="line"></span><br><span class="line">log_level=warn</span><br><span class="line">dev_name=eth0</span><br><span class="line">ulog_dir=/root/tair_bin/data/ulog</span><br><span class="line">ulog_file_number=3</span><br><span class="line">ulog_file_size=64</span><br><span class="line">check_expired_hour_range=2-4</span><br><span class="line">check_slab_hour_range=5-7</span><br><span class="line">dup_sync=1</span><br><span class="line">dup_timeout=500</span><br><span class="line"></span><br><span class="line">do_rsync=0</span><br><span class="line"></span><br><span class="line">rsync_io_thread_num=1</span><br><span class="line">rsync_task_thread_num=4</span><br><span class="line"></span><br><span class="line">rsync_listen=1</span><br><span class="line"># 0 mean old version</span><br><span class="line"># 1 mean new version</span><br><span class="line">rsync_version=0</span><br><span class="line">rsync_config_service=http://localhost:8080/hangzhou/group_1</span><br><span class="line">rsync_config_update_interval=60</span><br><span class="line"></span><br><span class="line"># much resemble json format</span><br><span class="line"># one local cluster config and one or multi remote cluster config.</span><br><span class="line"># &#123;local:[master_cs_addr,slave_cs_addr,group_name,timeout_ms,queue_limit],remote:[...],remote:[...]&#125;</span><br><span class="line"># rsync_conf=&#123;local:[10.0.0.1:5198,10.0.0.2:5198,group_local,2000,1000],remote:[10.0.1.1:5198,10.0.1.2:5198,group_remote,2000,800]&#125;</span><br><span class="line"># if same data can be updated in local and remote cluster, then we need care modify time to</span><br><span class="line"># reserve latest update when do rsync to each other.</span><br><span class="line">rsync_mtime_care=0</span><br><span class="line"># rsync data directory(retry_log/fail_log..)</span><br><span class="line">rsync_data_dir=./data/remote</span><br><span class="line"># max log file size to record failed rsync data, rotate to a new file when over the limit</span><br><span class="line">rsync_fail_log_size=30000000</span><br><span class="line"># when doing retry,  size limit of retry log&apos;s memory use</span><br><span class="line">rsync_retry_log_mem_size=100000000</span><br><span class="line"></span><br><span class="line"># depot duplicate update when one server down</span><br><span class="line">do_dup_depot=0</span><br><span class="line">dup_depot_dir=./data/dupdepot</span><br><span class="line"></span><br><span class="line">[flow_control]</span><br><span class="line"># default flow control setting</span><br><span class="line">default_net_upper = 30000000</span><br><span class="line">default_net_lower = 15000000</span><br><span class="line">default_ops_upper = 30000</span><br><span class="line">default_ops_lower = 20000</span><br><span class="line">default_total_net_upper = 75000000</span><br><span class="line">default_total_net_lower = 65000000</span><br><span class="line">default_total_ops_upper = 50000</span><br><span class="line">default_total_ops_lower = 40000</span><br><span class="line"></span><br><span class="line">[ldb]</span><br><span class="line">#### ldb manager config</span><br><span class="line">## data dir prefix, db path will be data/ldbxx, &quot;xx&quot; means db instance index.</span><br><span class="line">## so if ldb_db_instance_count = 2, then leveldb will init in</span><br><span class="line">## /data/ldb1/ldb/, /data/ldb2/ldb/. We can mount each disk to</span><br><span class="line">## data/ldb1, data/ldb2, so we can init each instance on each disk.</span><br><span class="line">data_dir=data/ldb</span><br><span class="line">## leveldb instance count, buckets will be well-distributed to instances</span><br><span class="line">ldb_db_instance_count=1</span><br><span class="line">## whether load backup version when startup.</span><br><span class="line">## backup version may be created to maintain some db data of specifid version.</span><br><span class="line">ldb_load_backup_version=0</span><br><span class="line">## whether support version strategy.</span><br><span class="line">## if yes, put will do get operation to update existed items&apos;s meta info(version .etc),</span><br><span class="line">## get unexist item is expensive for leveldb. set 0 to disable if nobody even care version stuff.</span><br><span class="line">ldb_db_version_care=1</span><br><span class="line">## time range to compact for gc, 1-1 means do no compaction at all</span><br><span class="line">ldb_compact_gc_range = 3-6</span><br><span class="line">## backgroud task check compact interval (s)</span><br><span class="line">ldb_check_compact_interval = 120</span><br><span class="line">## use cache count, 0 means NOT use cache,`ldb_use_cache_count should NOT be larger</span><br><span class="line">## than `ldb_db_instance_count, and better to be a factor of `ldb_db_instance_count.</span><br><span class="line">## each cache mdb&apos;s config depends on mdb&apos;s config item(mdb_type, slab_mem_size, etc)</span><br><span class="line">ldb_use_cache_count=1</span><br><span class="line">## cache stat can&apos;t report configserver, record stat locally, stat file size.</span><br><span class="line">## file will be rotate when file size is over this.</span><br><span class="line">ldb_cache_stat_file_size=20971520</span><br><span class="line">## migrate item batch size one time (1M)</span><br><span class="line">ldb_migrate_batch_size = 3145728</span><br><span class="line">## migrate item batch count.</span><br><span class="line">## real batch migrate items depends on the smaller size/count</span><br><span class="line">ldb_migrate_batch_count = 5000</span><br><span class="line">## comparator_type bitcmp by default</span><br><span class="line"># ldb_comparator_type=numeric</span><br><span class="line">## numeric comparator: special compare method for user_key sorting in order to reducing compact</span><br><span class="line">## parameters for numeric compare. format: [meta][prefix][delimiter][number][suffix]</span><br><span class="line">## skip meta size in compare</span><br><span class="line"># ldb_userkey_skip_meta_size=2</span><br><span class="line">## delimiter between prefix and number</span><br><span class="line"># ldb_userkey_num_delimiter=:</span><br><span class="line">####</span><br><span class="line">## use blommfilter</span><br><span class="line">ldb_use_bloomfilter=1</span><br><span class="line">## use mmap to speed up random acess file(sstable),may cost much memory</span><br><span class="line">ldb_use_mmap_random_access=0</span><br><span class="line">## how many highest levels to limit compaction</span><br><span class="line">ldb_limit_compact_level_count=0</span><br><span class="line">## limit compaction ratio: allow doing one compaction every ldb_limit_compact_interval</span><br><span class="line">## 0 means limit all compaction</span><br><span class="line">ldb_limit_compact_count_interval=0</span><br><span class="line">## limit compaction time interval</span><br><span class="line">## 0 means limit all compaction</span><br><span class="line">ldb_limit_compact_time_interval=0</span><br><span class="line">## limit compaction time range, start == end means doing limit the whole day.</span><br><span class="line">ldb_limit_compact_time_range=6-1</span><br><span class="line">## limit delete obsolete files when finishing one compaction</span><br><span class="line">ldb_limit_delete_obsolete_file_interval=5</span><br><span class="line">## whether trigger compaction by seek</span><br><span class="line">ldb_do_seek_compaction=0</span><br><span class="line">## whether split mmt when compaction with user-define logic(bucket range, eg)</span><br><span class="line">ldb_do_split_mmt_compaction=0</span><br><span class="line"></span><br><span class="line">## do specify compact</span><br><span class="line">## time range 24 hours</span><br><span class="line">ldb_specify_compact_time_range=0-6</span><br><span class="line">ldb_specify_compact_max_threshold=10000</span><br><span class="line">## score threshold default = 1</span><br><span class="line">ldb_specify_compact_score_threshold=1</span><br><span class="line"></span><br><span class="line">#### following config effects on FastDump ####</span><br><span class="line">## when ldb_db_instance_count &gt; 1, bucket will be sharded to instance base on config strategy.</span><br><span class="line">## current supported:</span><br><span class="line">##  hash : just do integer hash to bucket number then module to instance, instance&apos;s balance may be</span><br><span class="line">##         not perfect in small buckets set. same bucket will be sharded to same instance</span><br><span class="line">##         all the time, so data will be reused even if buckets owned by server changed(maybe cluster has changed),</span><br><span class="line">##  map  : handle to get better balance among all instances. same bucket may be sharded to different instance based</span><br><span class="line">##         on different buckets set(data will be migrated among instances).</span><br><span class="line">ldb_bucket_index_to_instance_strategy=map</span><br><span class="line">## bucket index can be updated. this is useful if the cluster wouldn&apos;t change once started</span><br><span class="line">## even server down/up accidently.</span><br><span class="line">ldb_bucket_index_can_update=1</span><br><span class="line">## strategy map will save bucket index statistics into file, this is the file&apos;s directory</span><br><span class="line">ldb_bucket_index_file_dir=./data/bindex</span><br><span class="line">## memory usage for memtable sharded by bucket when batch-put(especially for FastDump)</span><br><span class="line">ldb_max_mem_usage_for_memtable=3221225472</span><br><span class="line">####</span><br><span class="line"></span><br><span class="line">#### leveldb config (Warning: you should know what you&apos;re doing.)</span><br><span class="line">## one leveldb instance max open files(actually table_cache_ capacity, consider as working set, see `ldb_table_cache_size)</span><br><span class="line">ldb_max_open_files=65535</span><br><span class="line">## whether return fail when occure fail when init/load db, and</span><br><span class="line">## if true, read data when compactiong will verify checksum</span><br><span class="line">ldb_paranoid_check=0</span><br><span class="line">## memtable size</span><br><span class="line">ldb_write_buffer_size=67108864</span><br><span class="line">## sstable size</span><br><span class="line">ldb_target_file_size=8388608</span><br><span class="line">## max file size in each level. level-n (n &gt; 0): (n - 1) * 10 * ldb_base_level_size</span><br><span class="line">ldb_base_level_size=134217728</span><br><span class="line">## sstable&apos;s block size</span><br><span class="line"># ldb_block_size=4096</span><br><span class="line">## sstable cache size (override `ldb_max_open_files)</span><br><span class="line">ldb_table_cache_size=1073741824</span><br><span class="line">##block cache size</span><br><span class="line">ldb_block_cache_size=16777216</span><br><span class="line">## arena used by memtable, arena block size</span><br><span class="line">#ldb_arenablock_size=4096</span><br><span class="line">## key is prefix-compressed period in block,</span><br><span class="line">## this is period length(how many keys will be prefix-compressed period)</span><br><span class="line"># ldb_block_restart_interval=16</span><br><span class="line">## specifid compression method (snappy only now)</span><br><span class="line"># ldb_compression=1</span><br><span class="line">## compact when sstables count in level-0 is over this trigger</span><br><span class="line">ldb_l0_compaction_trigger=1</span><br><span class="line">## whether limit write with l0&apos;s filecount, if false</span><br><span class="line">ldb_l0_limit_write_with_count=0</span><br><span class="line">## write will slow down when sstables count in level-0 is over this trigger</span><br><span class="line">## or sstables&apos; filesize in level-0 is over trigger * ldb_write_buffer_size if ldb_l0_limit_write_with_count=0</span><br><span class="line">ldb_l0_slowdown_write_trigger=32</span><br><span class="line">## write will stop(wait until trigger down)</span><br><span class="line">ldb_l0_stop_write_trigger=64</span><br><span class="line">## when write memtable, max level to below maybe</span><br><span class="line">ldb_max_memcompact_level=3</span><br><span class="line">## read verify checksum</span><br><span class="line">ldb_read_verify_checksums=0</span><br><span class="line">## write sync log. (one write will sync log once, expensive)</span><br><span class="line">ldb_write_sync=0</span><br><span class="line">## bits per key when use bloom filter</span><br><span class="line">#ldb_bloomfilter_bits_per_key=10</span><br><span class="line">## filter data base logarithm. filterbasesize=1&lt;&lt;ldb_filter_base_logarithm</span><br><span class="line">#ldb_filter_base_logarithm=12</span><br><span class="line"></span><br><span class="line">[extras]</span><br><span class="line">######## RT-related ########</span><br><span class="line">#rt_oplist=1,2</span><br><span class="line"># Threashold of latency beyond which would let the request be dumped out.</span><br><span class="line">rt_threshold=8000</span><br><span class="line"># Enable RT Module at startup</span><br><span class="line">rt_auto_enable=0</span><br><span class="line"># How many requests would be subject to RT Module</span><br><span class="line">rt_percent=100</span><br><span class="line"># Interval to reset the latency statistics, by seconds</span><br><span class="line">rt_reset_interval=10</span><br><span class="line"></span><br><span class="line">######## HotKey-related ########</span><br><span class="line">hotk_oplist=2</span><br><span class="line"># Sample count</span><br><span class="line">hotk_sample_max=50000</span><br><span class="line"># Reap count</span><br><span class="line">hotk_reap_max=32</span><br><span class="line"># Whether to send client feedback response</span><br><span class="line">hotk_need_feedback=0</span><br><span class="line"># Whether to dump out packets, caches or hot keys</span><br><span class="line">hotk_need_dump=0</span><br><span class="line"># Whether to just Do Hot one round</span><br><span class="line">hotk_one_shot=0</span><br><span class="line"># Whether having hot key depends on: sigma &gt;= (average * hotk_hot_factor)</span><br><span class="line">hotk_hot_factor=0.8</span><br></pre></td></tr></table></figure>
+<ul>
+<li>config_server的配置与之前必须完全相同。</li>
+<li>这里面的port和heartbeat_port是data server的端口号和心跳端口号，必须确保系统能给你使用这些端口号。一般默认的即可</li>
+<li>data文件、log文件等很重要，与前一样，最好用绝对路径</li>
+</ul>
+<h3 id="配置group信息"><a href="#配置group信息" class="headerlink" title="配置group信息"></a>配置group信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#group name</span><br><span class="line">[group_1]</span><br><span class="line"># data move is 1 means when some data serve down, the migrating will be start.</span><br><span class="line"># default value is 0</span><br><span class="line">_data_move=0</span><br><span class="line">#_min_data_server_count: when data servers left in a group less than this value, config server will stop serve for this group</span><br><span class="line">#default value is copy count.</span><br><span class="line">_min_data_server_count=1</span><br><span class="line">#_plugIns_list=libStaticPlugIn.so</span><br><span class="line">_build_strategy=1 #1 normal 2 rack</span><br><span class="line">_build_diff_ratio=0.6 #how much difference is allowd between different rack</span><br><span class="line"># diff_ratio =  |data_sever_count_in_rack1 - data_server_count_in_rack2| / max (data_sever_count_in_rack1, data_server_count_in_rack2)</span><br><span class="line"># diff_ration must less than _build_diff_ratio</span><br><span class="line">_pos_mask=65535  # 65535 is 0xffff  this will be used to gernerate rack info. 64 bit serverId &amp; _pos_mask is the rack info,</span><br><span class="line">_copy_count=1</span><br><span class="line">_bucket_number=1023</span><br><span class="line"># accept ds strategy. 1 means accept ds automatically</span><br><span class="line">_accept_strategy=1</span><br><span class="line">_allow_failover_server=0</span><br><span class="line"></span><br><span class="line"># data center A</span><br><span class="line">_server_list=172.17.68.153:5191</span><br><span class="line">#_server_list=192.168.1.2:5191</span><br><span class="line">#_server_list=192.168.1.3:5191</span><br><span class="line">#_server_list=192.168.1.4:5191</span><br><span class="line"></span><br><span class="line"># data center B</span><br><span class="line">#_server_list=192.168.2.1:5191</span><br><span class="line">#_server_list=192.168.2.2:5191</span><br><span class="line">#_server_list=192.168.2.3:5191</span><br><span class="line">#_server_list=192.168.2.4:5191</span><br><span class="line"></span><br><span class="line">#quota info</span><br><span class="line">_areaCapacity_list=0,1124000;</span><br></pre></td></tr></table></figure>
+<p>这个文件我只配置了data server列表，我只有一个dataserver，因此只需配置一个。</p>
+<h1 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h1><p>在完成安装配置之后, 可以启动集群了.  启动的时候需要先启动data server 然后再启动cofnig server.</p>
+<p>进入tair_bin目录后，按顺序启动：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sbin/tair_server -f etc/dataserver.conf     <span class="comment"># 在dataserver端启动</span></span><br><span class="line">sudo sbin/tair_cfg_svr -f etc/configserver.conf   <span class="comment"># 在config server端启动</span></span><br></pre></td></tr></table></figure></p>
+<p>执行启动命令后，在两端通过<code>ps aux | grep tair</code>查看是否启动了，这里启动起来只是第一步，还需要测试看是否真的启动成功，通过下面命令测试：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo sbin/tairclient -c 172.17.68.153:5198 -g group_1</span><br><span class="line">TAIR&gt; put k1 v1       </span><br><span class="line">put: success</span><br><span class="line">TAIR&gt; put k2 v2</span><br><span class="line">put: success</span><br><span class="line">TAIR&gt; get k2</span><br><span class="line">KEY: k2, LEN: 2</span><br></pre></td></tr></table></figure></p>
+<p>其中172.17.68.153:5198是config server IP:PORT，group_1是group name，在group.conf里配置的。</p>
+<h1 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h1><p>按照上面的步骤，可以配置一个可用的Tair测试环境。但是，经过我的测试，这个集群只是在这台机器上可用，不能远程访问。参照网上的教程，把ip换成公网ip或者公网ip和私有ip混合的模式，都不行，不能远程访问。只能把程序发送到机器上去执行。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/中间件/" rel="tag"># 中间件</a>
+          
+            <a href="/tags/tair/" rel="tag"># tair</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/中间件/tair/Tair入门教程(1)：Tair介绍/" rel="next" title="Tair入门教程(1)：Tair介绍">
+                <i class="fa fa-chevron-left"></i> Tair入门教程(1)：Tair介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/中间件/tair/Tair入门教程(3)：使用demo/" rel="prev" title="Tair入门教程(3)：使用demo">
+                Tair入门教程(3)：使用demo <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="winsky">
+            
+              <p class="site-author-name" itemprop="name">winsky</p>
+              <p class="site-description motion-element" itemprop="description">生命不息，折腾不止</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/winsky94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:shunkuan.ysk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          <!-- 原版
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">
+                      winsky wiki
+                    </a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">
+                      Jestom
+                    </a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+          -->
+
+          
+          
+            <div class="links-of-blogroll motion-element">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-link fa-fw"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">winsky wiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">Jestom</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">1.1.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">1.2.</span> <span class="nav-text">遇到的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动"><span class="nav-number">2.</span> <span class="nav-text">启动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部署配置"><span class="nav-number">2.1.</span> <span class="nav-text">部署配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置ConfigServer"><span class="nav-number">2.1.1.</span> <span class="nav-text">配置ConfigServer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置data-server"><span class="nav-number">2.1.2.</span> <span class="nav-text">配置data server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置group信息"><span class="nav-number">2.1.3.</span> <span class="nav-text">配置group信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动集群"><span class="nav-number">3.</span> <span class="nav-text">启动集群</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遗留问题"><span class="nav-number">4.</span> <span class="nav-text">遗留问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">winsky</span>
+
+  <div>
+    <span id="sitetime"></span>
+    <script language="javascript">
+      function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        var t1 = Date.UTC(2018,02,03,14,00,00); 
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML="本站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+      }
+      siteTime();
+    </script>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+<span class="post-meta-divider">|</span>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共235.3k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://winsky.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://blog.winsky.wang/中间件/tair/Tair入门教程(2)：Tair环境搭建/';
+        this.page.identifier = '中间件/tair/Tair入门教程(2)：Tair环境搭建/';
+        this.page.title = 'Tair入门教程(2)：Tair环境搭建';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://winsky.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

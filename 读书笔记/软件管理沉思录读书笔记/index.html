@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="读书笔记,">
+
+
+<meta name="description" content="全书呼吁管理者要树立一个愿景：生产更好的产品，获得更大的职业满足，享受创造出某种能用而又有用的东西时的喜悦。 它向我们描述了一种全面而有序的方法，涵盖软件开发的各个层面，不论是工程师的单兵作战还是团队合作开发大型软件。这本书值得成为每位软件开发管理者和学生的案头必备。 本书要点本书是从沃茨的著作、论文以及专栏文章当中精选而成，包含了许多建议、故事以及来之不易的经验，而非具体介绍PSP或TSP如何">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件管理沉思录读书笔记">
+<meta property="og:url" content="https://blog.winsky.wang/读书笔记/软件管理沉思录读书笔记/index.html">
+<meta property="og:site_name" content="winsky小站">
+<meta property="og:description" content="全书呼吁管理者要树立一个愿景：生产更好的产品，获得更大的职业满足，享受创造出某种能用而又有用的东西时的喜悦。 它向我们描述了一种全面而有序的方法，涵盖软件开发的各个层面，不论是工程师的单兵作战还是团队合作开发大型软件。这本书值得成为每位软件开发管理者和学生的案头必备。 本书要点本书是从沃茨的著作、论文以及专栏文章当中精选而成，包含了许多建议、故事以及来之不易的经验，而非具体介绍PSP或TSP如何">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-18T08:17:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="软件管理沉思录读书笔记">
+<meta name="twitter:description" content="全书呼吁管理者要树立一个愿景：生产更好的产品，获得更大的职业满足，享受创造出某种能用而又有用的东西时的喜悦。 它向我们描述了一种全面而有序的方法，涵盖软件开发的各个层面，不论是工程师的单兵作战还是团队合作开发大型软件。这本书值得成为每位软件开发管理者和学生的案头必备。 本书要点本书是从沃茨的著作、论文以及专栏文章当中精选而成，包含了许多建议、故事以及来之不易的经验，而非具体介绍PSP或TSP如何">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.winsky.wang/读书笔记/软件管理沉思录读书笔记/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>软件管理沉思录读书笔记 | winsky小站</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113502967-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113502967-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7eac22d54f7284a1b355880cd286181d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">winsky小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Good Good Study,  Day Day Up</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.winsky.wang/读书笔记/软件管理沉思录读书笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="winsky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="winsky小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">软件管理沉思录读书笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-18T16:17:13+08:00">2018-02-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/读书笔记/软件管理沉思录读书笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="读书笔记/软件管理沉思录读书笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<p>全书呼吁管理者要树立一个愿景：生产更好的产品，获得更大的职业满足，享受创造出某种能用而又有用的东西时的喜悦。</p>
+<p>它向我们描述了一种全面而有序的方法，涵盖软件开发的各个层面，不论是工程师的单兵作战还是团队合作开发大型软件。这本书值得成为每位软件开发管理者和学生的案头必备。</p>
+<h1 id="本书要点"><a href="#本书要点" class="headerlink" title="本书要点"></a>本书要点</h1><p>本书是从沃茨的著作、论文以及专栏文章当中精选而成，包含了许多建议、故事以及来之不易的经验，而非具体介绍PSP或TSP如何实现。</p>
+<p>本书是想让读者理解，成功的软件项目管理会遭遇许多障碍。为了成功完成项目，工程师需要管理的不仅仅是项目本身，他们必须利用自己和团队的经验，理解项目并提前做出计划。</p>
+<p>这些文章解释了软件发展中固有的挑战，并帮助软件工程师明白如何才能成功。</p>
+<h1 id="精编书摘"><a href="#精编书摘" class="headerlink" title="精编书摘"></a>精编书摘</h1><h2 id="管理你的项目"><a href="#管理你的项目" class="headerlink" title="管理你的项目"></a>管理你的项目</h2><h3 id="交付高质量的产品"><a href="#交付高质量的产品" class="headerlink" title="交付高质量的产品"></a>交付高质量的产品</h3><p>软件质量改进的需求是巨大的，并且这种改进已经不能单纯地靠延续过去那种基于测试的方法来实现</p>
+<p>如果一件产品提供了对用户而言是最重要的功能，那么这就是一件高质量的产品</p>
+<p>与漏洞相比，缺陷更像是定时炸弹。尽管不是所有的缺陷都会带来爆炸性影响，但是有一些缺陷的确会</p>
+<p>只要技术还在不断进步，并且这种进步能引起新的和不同类型用户的兴趣，我们就会面临新的质量需求</p>
+<p>为了完成重要的工作，首先要精确地知道什么是你要努力去实现的</p>
+<p>编程是一项严谨的工作，所有从事此项工作的专业人员都是在完成对质量要求极为苛刻的任务。</p>
+<p>在软件开发过程中，为了保证质量始终如一，必须遵循以下8个步骤：</p>
+<ul>
+<li>确立质量控制的策略、目标和计划</li>
+<li>正确训练、指导和支持开发人员及其团队</li>
+<li>确立和维护软件需求的质量管理过程</li>
+<li>确立和维护软件工程过程的统计控制</li>
+<li>审查、检查并评估所有的产品制品</li>
+<li>评估所有缺陷，加以更正并用以识别、纠正和预防其他类似问题</li>
+<li>确立和维护配置管理和变更控制系统</li>
+<li>持续改进开发过程</li>
+</ul>
+<p>软件产品的质量应当被定义为产品对用户的有用性。</p>
+<p>只有得到了清晰的需求，才有可能开发出高质量的程序。</p>
+<p>软件工程师的工作就是在计划成本和计划进度内交付高质量的产品</p>
+<p>虽然软件质量包括很多方面，但是首先应当关注的质量问题就是软件的缺陷</p>
+<p>目标之所以重要，主要是基于以下两条原因：它们提供了努力的焦点，而且建立了一种优先次序。</p>
+<h3 id="为高质量项目制定计划"><a href="#为高质量项目制定计划" class="headerlink" title="为高质量项目制定计划"></a>为高质量项目制定计划</h3><p>做两类计划，第一类是基于时间段的计划，阶段计划关心在这一时间段内你准备如何利用时间。第二种是基于行动的计划，比如开发一个程序或者撰写一份报告</p>
+<p>产品计划会帮助判断完成工作将需要多少时间，以及会在什么时候完成。计划还可以帮助在工作期间追踪过程</p>
+<p>计划必须是易于理解、清晰明白、详细具体、精确缜密、准确无误的</p>
+<p>动态计划是避免被种种细微变化蚕食至死的唯一解决拌饭</p>
+<p>一份合格的产品计划应当包括三项内容：</p>
+<ul>
+<li>将要生产的产品规格和重要的性能指标</li>
+<li>估算工作需要的时间</li>
+<li>进度预测</li>
+</ul>
+<h2 id="3-2-管理你的团队"><a href="#3-2-管理你的团队" class="headerlink" title="3.2.管理你的团队"></a>3.2.管理你的团队</h2><h3 id="高效团队的基本要素"><a href="#高效团队的基本要素" class="headerlink" title="高效团队的基本要素"></a>高效团队的基本要素</h3><p>高效团队必备的四个条件</p>
+<ul>
+<li>团结</li>
+<li>富有挑战性的目标</li>
+<li>反馈</li>
+<li>通用的工作架构</li>
+</ul>
+<p>团队交流的三要素</p>
+<ul>
+<li>透明</li>
+<li>倾听</li>
+<li>协商</li>
+</ul>
+<p>自主指导型团队的特征是，自己设计开发策略，自己制定计划，并且积极主动、高质量地完成工作</p>
+<p>目标追踪和反馈是极其重要的</p>
+<p>共鸣性倾听是一种主动性倾听，它对软件团队尤其重要。</p>
+<p>群体类型：工作型群体、过程型群体、对抗型群体</p>
+<p>工作风格：开发型群体、随意型群体、封闭型群体、同步型群体</p>
+<p>自主指导型团队的典型行为：团队成员会主动发现需要做什么并及时去做，而不用人告诉要做什么，为了能完成任务他们会去做任何需要做的事情。</p>
+<p>凝聚力是把团队成员紧密联系在一起的纽带，而要想形成凝聚力就需要接触和交往。</p>
+<p>组织-动荡-规范-执行</p>
+<h3 id="做一位高效的团队成员"><a href="#做一位高效的团队成员" class="headerlink" title="做一位高效的团队成员"></a>做一位高效的团队成员</h3><p>优秀的团队成员会去做任何需要做的事</p>
+<p>承诺是一项必须要学习的道德规范</p>
+<p>只有基于计划才能做出负责人的承诺</p>
+<p>对目标状态精确、及时的反馈，是高效能团队绝对必须的前提条件</p>
+<p>要想让团队运行顺畅，每一位成员都应当奉献出他所知道的一切。</p>
+<p>原则式谈判之所以有效的原因是，它避免了立场的两极分化。原则式谈判的基础是，认识到立场只是满足利益的一种方式，把注意力集中在利益而不是立场上。</p>
+<p>剔除不履行职责的团队成员通常会提升团队的整体表现。</p>
+<p>支持的本质是帮助人们达到他所能达到的境界。</p>
+<p>提供有效支持的关键是，帮助团队伙伴相信他们自己的能力。</p>
+<h3 id="领导和指导你的团队"><a href="#领导和指导你的团队" class="headerlink" title="领导和指导你的团队"></a>领导和指导你的团队</h3><p>对于工作团队，有三条最重要的激励因素：恐惧、贪婪和承诺</p>
+<p>可信的团队承诺有四条要求：自愿、可见、可信、和得到承认</p>
+<p>只有当项目团队成员开始自由、开放地交流，开始有自己的主张并协商解决不同意见时，这支团队才有可能是凝胶团队</p>
+<p>理性管理的四要素</p>
+<ul>
+<li>首先，在确定产品或行动目标时，要检查当前的工作情况，并且根据业务目的确立行动目标。</li>
+<li>其次，为短期目标制定计划</li>
+<li>再次，评估和追踪计划完成情况，并且监督工作中的纪律执行情况</li>
+<li>最后，持续监督业务执行情况</li>
+</ul>
+<h2 id="管理你的领导"><a href="#管理你的领导" class="headerlink" title="管理你的领导"></a>管理你的领导</h2><h3 id="讨论项目并捍卫你的计划"><a href="#讨论项目并捍卫你的计划" class="headerlink" title="讨论项目并捍卫你的计划"></a>讨论项目并捍卫你的计划</h3><p>让团队聚焦于优先级最高的事情</p>
+<p>在做出任何承诺之前都要先制定一个计划</p>
+<p>制定一个合理、详细的计划是掌控项目的第一步</p>
+<p>让计划保持更新是极其关键的，因为软件开发是一个时刻变化的事业，并且每一个意外对团队来说通常都意味着更多的工作。</p>
+<p>管理者的层级之所以重要，是因为改进过程处理的是那些具有长期影响的议题，而这正是高层管理者关注的重点</p>
+<p>对管理者来说，工作就是利用所有的团队资源去完成此项工作，其他所有的事情都是第二位。</p>
+<p>要建立一支真正凝聚力和活力的团队，就必须始终高度重视团队目标，在工作表现中为队员作出表率，坚持高标准，并且为团队所有的工作负责。</p>
+<h2 id="管理你自己"><a href="#管理你自己" class="headerlink" title="管理你自己"></a>管理你自己</h2><h3 id="控制你的工作"><a href="#控制你的工作" class="headerlink" title="控制你的工作"></a>控制你的工作</h3><p>成功者赢得胜利，他们决不抱怨。正是那些永远失败的人才会抱怨人生的不公以及别人该如何为自己的失败负责。</p>
+<p>要想生产出优致的产品，必须时不时地休息游戏。不过，为了有较高的效率，同时也是为了优质的完成工作，我们需要对这种休息掌握主动权。</p>
+<p>软件项目失败的主要原因通常是团队合作问题而不是技术问题。</p>
+<p>学习制定好计划的第一步就是制定计划</p>
+<p>要想制定出更加精确的计划，就需要找出先前计划中哪些地方出了错以及怎样改进</p>
+<p>要想管理好时间，就是要计划时间并遵守这个计划</p>
+<p>真正达成一致是个人承诺中必最重要也是唯一的特征。</p>
+<p>管理承诺最主要的原因是，这样就不会忽略或忘记它</p>
+<p>管理承诺的另外一个原因是，当你要做的工作超出了可用的时间时，这样做就可以帮到你</p>
+<p>不断挑战自己去完成更优质的工作</p>
+<p>关键是要保持开放的心态，并时刻做好准备</p>
+<p>执著追求卓越，才有可能臻于卓越</p>
+<h3 id="学会领导"><a href="#学会领导" class="headerlink" title="学会领导"></a>学会领导</h3><p>最成功的团队都有精力充沛、富有热情、满怀信心以及严格要求的领导者</p>
+<p>在开发工作中，目标同样重要，但它们很少会是单一明确的。作为领导者，工作很重要的一个方面就是保持团队目标清晰明确，确保团队每一位成员都知道他当前的工作对实现目标有什么帮助</p>
+<p>目标非常重要，它们提供了团队成功所需的关注点、激励和能量</p>
+<p>工程的本质是质量</p>
+<p>比质量标准更重要的是团队合作和支持的标准</p>
+<p>领导力低下会有很多症状，但它们的根源通常是因为没有认识到什么是真正需要做的，没有明确一个能充分利用可用资源和机会的方向</p>
+<p>领导者和管理者之间最主要的区别是，，管理者命令员工服从他们的指令，而领导者是带领他们完成任务</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>个人开发者正确地完成软件开发工作，这其中很重要的一部分就是，学习成为自己的管理者，学习制定自己的进度表，追踪自己的过程，管理自己的工作质量，做出个人承诺并始终如一地实现你的承诺</p>
+<p>软件能力成熟度模型集成（CMMI）是一种过程改进成熟度模型，用于产品或服务开发。它由一些最佳的实践方法组成，涵盖了产品从概念到发布以及维护的整个生命周期</p>
+<p>软件能力成熟度（CMM）是一种过程改进方法，旨在为组织提升其表现提供所需的高效过程。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/读书笔记/软件随想录读书笔记/" rel="next" title="软件随想录读书笔记">
+                <i class="fa fa-chevron-left"></i> 软件随想录读书笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Git/修改Github项目的语言分类/" rel="prev" title="修改Github项目的语言分类">
+                修改Github项目的语言分类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="winsky">
+            
+              <p class="site-author-name" itemprop="name">winsky</p>
+              <p class="site-description motion-element" itemprop="description">生命不息，折腾不止</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/winsky94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:shunkuan.ysk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          <!-- 原版
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">
+                      winsky wiki
+                    </a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">
+                      Jestom
+                    </a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+          -->
+
+          
+          
+            <div class="links-of-blogroll motion-element">
+              <div class="links-of-blogroll-title">
+                <i class="fa fa-link fa-fw"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wiki.winsky.wang/" title="winsky wiki" target="_blank">winsky wiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.jestom.com/" title="Jestom" target="_blank">Jestom</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#本书要点"><span class="nav-number">1.</span> <span class="nav-text">本书要点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#精编书摘"><span class="nav-number">2.</span> <span class="nav-text">精编书摘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#管理你的项目"><span class="nav-number">2.1.</span> <span class="nav-text">管理你的项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交付高质量的产品"><span class="nav-number">2.1.1.</span> <span class="nav-text">交付高质量的产品</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为高质量项目制定计划"><span class="nav-number">2.1.2.</span> <span class="nav-text">为高质量项目制定计划</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-管理你的团队"><span class="nav-number">2.2.</span> <span class="nav-text">3.2.管理你的团队</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高效团队的基本要素"><span class="nav-number">2.2.1.</span> <span class="nav-text">高效团队的基本要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做一位高效的团队成员"><span class="nav-number">2.2.2.</span> <span class="nav-text">做一位高效的团队成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#领导和指导你的团队"><span class="nav-number">2.2.3.</span> <span class="nav-text">领导和指导你的团队</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理你的领导"><span class="nav-number">2.3.</span> <span class="nav-text">管理你的领导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论项目并捍卫你的计划"><span class="nav-number">2.3.1.</span> <span class="nav-text">讨论项目并捍卫你的计划</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理你自己"><span class="nav-number">2.4.</span> <span class="nav-text">管理你自己</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#控制你的工作"><span class="nav-number">2.4.1.</span> <span class="nav-text">控制你的工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学会领导"><span class="nav-number">2.4.2.</span> <span class="nav-text">学会领导</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">2.5.</span> <span class="nav-text">后记</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">winsky</span>
+
+  <div>
+    <span id="sitetime"></span>
+    <script language="javascript">
+      function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        var t1 = Date.UTC(2018,02,03,14,00,00); 
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML="本站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+      }
+      siteTime();
+    </script>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+<span class="post-meta-divider">|</span>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共235.3k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://winsky.disqus.com/count.js" async></script>
+  
+
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'https://blog.winsky.wang/读书笔记/软件管理沉思录读书笔记/';
+        this.page.identifier = '读书笔记/软件管理沉思录读书笔记/';
+        this.page.title = '软件管理沉思录读书笔记';
+      };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://winsky.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
+  
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
