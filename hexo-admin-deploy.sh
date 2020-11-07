@@ -4,6 +4,7 @@ echo "提交内容： $msg"
 
 # 提交到GitHub
 cd /home/blogSrc/
+git pull
 git add . 
 git commit -m $msg
 git push origin dev
